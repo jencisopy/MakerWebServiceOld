@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+
+            var data = null;
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
+                }
+            }); 
+ 
+            xhr.open("GET", "http://server.oym.com.py:8282/crecerwebservices/webresources/login/web/123456");
+            
+            
+            //xhr.open("GET", "http://server.oym.com.py:8282/crecerwebservices/webresources/gifraccionview/1");
+            //xhr.open("GET", "http://server.oym.com.py:8282/crecerwebservices/webresources/giloteview");
+            //xhr.open("GET", "http://server.oym.com.py:8282/crecerwebservices/webresources/giloteview/135411");
+            //xhr.open("GET", "http://server.oym.com.py:8282/crecerwebservices/webresources/giloteview/fraccion/1");
+            //xhr.open("GET", "http://server.oym.com.py:8282/crecerwebservices/webresources/provinciaview");
+            //xhr.open("GET", "http://server.oym.com.py:8282/crecerwebservices/webresources/gifraccionview?codigo=9999&dpto=CEN");
+            //xhr.open("GET", "http://server.oym.com.py:8282/crecerwebservices/webresources/gifraccionview?dpto=CEN");
+            
+            //xhr.setRequestHeader("accept", "application/json");
+            //xhr.setRequestHeader("Content-type", "application/json");
+            //xhr.setRequestHeader("token", "98-747-FDFCC305A4425FB3A8A9F3CCD975552E");
+            //xhr.setRequestHeader("token", "98-747-FDFCC305A4425FB3A8A9F3CCD975552E");            
+            
+            xhr.send(data);
+            
+        </script> 
+
+    </head>
+
+
+    <body>
+        <div>TODO write content</div>
+    </body>
+</html>
