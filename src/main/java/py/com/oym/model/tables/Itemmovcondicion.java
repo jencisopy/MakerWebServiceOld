@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jenci_000
+ * @author Jorge Enciso
  */
 @Entity
 @Table(name = "itemmovcondicion")
@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Itemmovcondicion.findAll", query = "SELECT i FROM Itemmovcondicion i"),
     @NamedQuery(name = "Itemmovcondicion.findByIditemmovcondicion", query = "SELECT i FROM Itemmovcondicion i WHERE i.iditemmovcondicion = :iditemmovcondicion"),
     @NamedQuery(name = "Itemmovcondicion.findByIdempresa", query = "SELECT i FROM Itemmovcondicion i WHERE i.idempresa = :idempresa"),
+    @NamedQuery(name = "Itemmovcondicion.findByCuotas", query = "SELECT i FROM Itemmovcondicion i WHERE i.idempresa = :idempresa and cuotas = :cuotas"),    
     @NamedQuery(name = "Itemmovcondicion.findByCodigo", query = "SELECT i FROM Itemmovcondicion i WHERE i.idempresa = :idempresa and i.codigo = :codigo")})
 public class Itemmovcondicion implements Serializable {
     private static final long serialVersionUID = 1L;

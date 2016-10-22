@@ -198,7 +198,7 @@ public class GiLotevtaView implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "gi_lote")
-    private long giLote;
+    private String giLote;
     @Size(max = 50)
     @Column(name = "gi_lotenombre")
     private String giLotenombre;
@@ -663,18 +663,18 @@ public class GiLotevtaView implements Serializable {
     }
 
     public String getGiManzana() {
-        return giManzana;
+        return giManzana.trim();
     }
 
     public void setGiManzana(String giManzana) {
         this.giManzana = giManzana;
     }
 
-    public long getGiLote() {
+    public String getGiLote() {
         return giLote;
     }
 
-    public void setGiLote(long giLote) {
+    public void setGiLote(String giLote) {
         this.giLote = giLote;
     }
 

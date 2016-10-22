@@ -17,10 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -37,8 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "GiLotevtapersona.findByRol", query = "SELECT g FROM GiLotevtapersona g WHERE g.rol = :rol"),
     @NamedQuery(name = "GiLotevtapersona.findByFechareplicacion", query = "SELECT g FROM GiLotevtapersona g WHERE g.fechareplicacion = :fechareplicacion"),
     @NamedQuery(name = "GiLotevtapersona.findByFechamodificacion", query = "SELECT g FROM GiLotevtapersona g WHERE g.fechamodificacion = :fechamodificacion"),
-    @NamedQuery(name = "GiLotevtapersona.findByFechacreacion", query = "SELECT g FROM GiLotevtapersona g WHERE g.fechacreacion = :fechacreacion"),
-    @NamedQuery(name = "GiLotevtapersona.findByFirma", query = "SELECT g FROM GiLotevtapersona g WHERE g.firma = :firma"),
     @NamedQuery(name = "GiLotevtapersona.findByAppuser", query = "SELECT g FROM GiLotevtapersona g WHERE g.appuser = :appuser")})
 public class GiLotevtapersona implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -65,6 +65,8 @@ public class GiLotevtapersona implements Serializable {
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
+
+    @Transient
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
@@ -178,5 +180,10 @@ public class GiLotevtapersona implements Serializable {
     public String toString() {
         return "py.com.oym.webservices.model.GiLotevtapersona[ idgiLotevtapersona=" + idgiLotevtapersona + " ]";
     }
-    
+
+    @PrePersist
+    @PreUpdate
+    public void preUpdate() {
+        fechamodificacion = new Date();
+    }    
 }

@@ -22,9 +22,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -142,9 +145,12 @@ public class Ctacte implements Serializable {
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
+    
+    @Transient
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
+    
     @Size(max = 32)
     @Column(name = "firma")
     private String firma;
@@ -637,5 +643,10 @@ public class Ctacte implements Serializable {
     public String toString() {
         return "py.com.oym.webservicesprb.Ctacte[ idctacte=" + idctacte + " ]";
     }
-    
+
+    @PrePersist
+    @PreUpdate
+    public void preUpdate() {
+        fechamodificacion = new Date();
+    }    
 }

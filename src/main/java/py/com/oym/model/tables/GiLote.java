@@ -50,8 +50,9 @@ public class GiLote implements Serializable {
     private Long idgiLote;
     @Basic(optional = false)
     @NotNull
+    @Size(max = 5)
     @Column(name = "codigo")
-    private long codigo;
+    private String codigo;
     @Size(max = 50)
     @Column(name = "nombre")
     private String nombre;
@@ -179,7 +180,7 @@ public class GiLote implements Serializable {
         this.idgiLote = idgiLote;
     }
 
-    public GiLote(Long idgiLote, long codigo, BigDecimal preciocosto, BigDecimal preciovtacontado, BigDecimal porcadminvtacontado, BigDecimal importeinicial, BigDecimal importecuota, long cuotasCnt, String nroctactecatastral) {
+    public GiLote(Long idgiLote, String codigo, BigDecimal preciocosto, BigDecimal preciovtacontado, BigDecimal porcadminvtacontado, BigDecimal importeinicial, BigDecimal importecuota, long cuotasCnt, String nroctactecatastral) {
         this.idgiLote = idgiLote;
         this.codigo = codigo;
         this.preciocosto = preciocosto;
@@ -199,11 +200,11 @@ public class GiLote implements Serializable {
         this.idgiLote = idgiLote;
     }
 
-    public long getCodigo() {
-        return codigo;
+    public String getCodigo() {
+        return codigo.trim();
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

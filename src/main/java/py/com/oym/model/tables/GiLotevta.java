@@ -23,9 +23,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -47,20 +50,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "GiLotevta.findByNrovta", query = "SELECT g FROM GiLotevta g WHERE g.nrovta = :nrovta"),
     @NamedQuery(name = "GiLotevta.findByRecibonro", query = "SELECT g FROM GiLotevta g WHERE g.recibonro = :recibonro"),
     @NamedQuery(name = "GiLotevta.findByCambio", query = "SELECT g FROM GiLotevta g WHERE g.cambio = :cambio"),
-    @NamedQuery(name = "GiLotevta.findByPreciovtacontado", query = "SELECT g FROM GiLotevta g WHERE g.preciovtacontado = :preciovtacontado"),
-    @NamedQuery(name = "GiLotevta.findByPorcadminvtacontado", query = "SELECT g FROM GiLotevta g WHERE g.porcadminvtacontado = :porcadminvtacontado"),
     @NamedQuery(name = "GiLotevta.findByImportesena", query = "SELECT g FROM GiLotevta g WHERE g.importesena = :importesena"),
     @NamedQuery(name = "GiLotevta.findByImporteinicial", query = "SELECT g FROM GiLotevta g WHERE g.importeinicial = :importeinicial"),
     @NamedQuery(name = "GiLotevta.findByImportecuota", query = "SELECT g FROM GiLotevta g WHERE g.importecuota = :importecuota"),
     @NamedQuery(name = "GiLotevta.findByFechaprimervto", query = "SELECT g FROM GiLotevta g WHERE g.fechaprimervto = :fechaprimervto"),
     @NamedQuery(name = "GiLotevta.findByCuotasCnt", query = "SELECT g FROM GiLotevta g WHERE g.cuotasCnt = :cuotasCnt"),
     @NamedQuery(name = "GiLotevta.findByConfirmado", query = "SELECT g FROM GiLotevta g WHERE g.confirmado = :confirmado"),
-    @NamedQuery(name = "GiLotevta.findByAnulado", query = "SELECT g FROM GiLotevta g WHERE g.anulado = :anulado"),
-    @NamedQuery(name = "GiLotevta.findByFechareplicacion", query = "SELECT g FROM GiLotevta g WHERE g.fechareplicacion = :fechareplicacion"),
-    @NamedQuery(name = "GiLotevta.findByFechamodificacion", query = "SELECT g FROM GiLotevta g WHERE g.fechamodificacion = :fechamodificacion"),
-    @NamedQuery(name = "GiLotevta.findByFechacreacion", query = "SELECT g FROM GiLotevta g WHERE g.fechacreacion = :fechacreacion"),
-    @NamedQuery(name = "GiLotevta.findByFirma", query = "SELECT g FROM GiLotevta g WHERE g.firma = :firma"),
-    @NamedQuery(name = "GiLotevta.findByAppuser", query = "SELECT g FROM GiLotevta g WHERE g.appuser = :appuser"),
     @NamedQuery(name = "GiLotevta.findByFecharecupero", query = "SELECT g FROM GiLotevta g WHERE g.fecharecupero = :fecharecupero")})
 public class GiLotevta implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -154,6 +149,8 @@ public class GiLotevta implements Serializable {
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
+
+    @Transient
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
@@ -606,5 +603,11 @@ public class GiLotevta implements Serializable {
         }
         getGiLoteVtaPersona().add(persona);
         persona.setIdgiLotevta(this);
+    }    
+    
+    @PrePersist
+    @PreUpdate
+    public void preUpdate() {
+        fechamodificacion = new Date();
     }    
 }

@@ -61,8 +61,9 @@ public class GiLoteView implements Serializable {
     private Long idvendedorreserva;
     @Basic(optional = false)
     @NotNull
+    @Size(max = 5)
     @Column(name = "codigo")
-    private long codigo;
+    private String codigo;
     @Size(max = 50)
     @Column(name = "nombre")
     private String nombre;
@@ -264,11 +265,11 @@ public class GiLoteView implements Serializable {
         this.idvendedorreserva = idvendedorreserva;
     }
 
-    public long getCodigo() {
-        return codigo;
+    public String getCodigo() {
+        return codigo.trim();
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -569,7 +570,7 @@ public class GiLoteView implements Serializable {
     }
 
     public String getGiManzana() {
-        return giManzana;
+        return giManzana.trim();
     }
 
     public void setGiManzana(String giManzana) {

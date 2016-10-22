@@ -18,6 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -233,4 +235,11 @@ public class GiLotevtacuotaparam implements Serializable {
     public String toString() {
         return "py.com.oym.webservices.model.GiLotevtacuotaparam[ idgiLotevtacuotaparam=" + idgiLotevtacuotaparam + " ]";
     }
+
+    @PrePersist
+    @PreUpdate
+    public void preUpdate() {
+        fechamodificacion = new Date();
+    }    
+    
 }
