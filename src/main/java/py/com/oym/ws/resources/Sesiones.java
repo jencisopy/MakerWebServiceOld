@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import py.com.oym.model.UserSession;
+import py.com.oym.ws.model.UserSession;
 
 /**
  *

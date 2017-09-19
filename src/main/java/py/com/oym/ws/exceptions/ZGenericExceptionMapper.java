@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.oym.exceptions;
+package py.com.oym.ws.exceptions;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import org.apache.log4j.Logger;
-import py.com.oym.model.ErrorMessage;
+import py.com.oym.ws.model.ErrorMessage;
 
 /**
  *

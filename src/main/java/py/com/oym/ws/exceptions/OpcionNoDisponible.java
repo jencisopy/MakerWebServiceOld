@@ -3,25 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.oym.exceptions;
+package py.com.oym.ws.exceptions;
 
 /**
  *
  * @author Jorge Enciso
  */
-public class JpaNoExist extends RuntimeException {
-    public JpaNoExist(){
+public class OpcionNoDisponible extends RuntimeException {
+    public OpcionNoDisponible(){
         super();
     }
-    public JpaNoExist(String message){
+    
+    public OpcionNoDisponible(String message){
         super(message);
     }
 
-    public JpaNoExist(String message, Throwable cause){
+    public OpcionNoDisponible(String message, Throwable cause){
         super(message, cause);
     }
 
-    public JpaNoExist(Throwable cause){
+    public OpcionNoDisponible(Throwable cause){
         super(cause);
     }
 }

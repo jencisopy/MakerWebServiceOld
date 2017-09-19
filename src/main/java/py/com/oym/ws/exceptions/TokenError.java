@@ -3,25 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.oym.exceptions;
+package py.com.oym.ws.exceptions;
+
 /**
  *
  * @author Jorge Enciso
  */
-public class LoteEstado extends RuntimeException{
-    public LoteEstado(){
+public class TokenError extends RuntimeException {
+    public TokenError(){
         super();
     }
     
-    public LoteEstado(String message){
+    public TokenError(String message){
         super(message);
     }
 
-    public LoteEstado(String message, Throwable cause){
+    public TokenError(String message, Throwable cause){
         super(message, cause);
     }
 
-    public LoteEstado(Throwable cause){
+    public TokenError(Throwable cause){
         super(cause);
     }
 }

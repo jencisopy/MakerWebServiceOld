@@ -174,6 +174,11 @@ public class GiFraccion implements Serializable {
     @ManyToOne
     private GiFracciontipo idgiFracciontipo;
 
+    @Basic(optional = false)
+    @Column(name = "noappmovil")
+    private Boolean noappmovil=false;      
+
+
     public GiFraccion() {
     }
 
@@ -478,6 +483,14 @@ public class GiFraccion implements Serializable {
         this.idgiFracciontipo = idgiFracciontipo;
     }
 
+    public Boolean isNoappmovil() {
+        return noappmovil;
+    }
+
+    public void setNoappmovil(boolean noappmovil) {
+        this.noappmovil = noappmovil;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

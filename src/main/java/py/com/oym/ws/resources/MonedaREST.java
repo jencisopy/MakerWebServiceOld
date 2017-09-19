@@ -17,7 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import py.com.oym.model.views.MonedaView;
-import py.com.oym.model.UserSession;
+import py.com.oym.ws.model.UserSession;
 
 /**
  *

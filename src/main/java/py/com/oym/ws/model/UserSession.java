@@ -1,4 +1,4 @@
-package py.com.oym.model;
+package py.com.oym.ws.model;
 
 import java.util.Date;
 

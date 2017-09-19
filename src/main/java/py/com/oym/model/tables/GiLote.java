@@ -170,6 +170,8 @@ public class GiLote implements Serializable {
     @JoinColumn(name = "idgi_loteestado", referencedColumnName = "idgi_loteestado")
     @ManyToOne
     private GiLoteestado idgiLoteestado;
+    @Column(name = "idgi_loteestadoant")
+    private String idgiLoteestadoAnt;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idgiLote")
     private List<GiLotevta> giLotevtaList;
 
@@ -518,6 +520,14 @@ public class GiLote implements Serializable {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+
+    public String getIdgiLoteestadoAnt() {
+        return idgiLoteestadoAnt;
+    }
+
+    public void setIdgiLoteestadoAnt(String idgiLoteestadoAnt) {
+        this.idgiLoteestadoAnt = idgiLoteestadoAnt;
     }
     
     

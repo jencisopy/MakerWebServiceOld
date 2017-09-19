@@ -12,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,33 +26,37 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Jorge Enciso
  */
 @Entity
-@Table(name = "provincia_view")
+@Table(name = "ciudad_view")
 @XmlRootElement
 @NamedQueries({
-    //@NamedQuery(name = "ProvinciaView.findAll",           query = "SELECT p FROM ProvinciaView p where p.idempresa = :idempresa order by p.nombre"),
-    @NamedQuery(name = "ProvinciaView.findByIdempresa",   query = "SELECT p FROM ProvinciaView p WHERE p.idempresa = :idempresa order by p.nombre"),
-    @NamedQuery(name = "ProvinciaView.findByIdprovincia", query = "SELECT p FROM ProvinciaView p WHERE p.idprovincia = :idprovincia"),
-    @NamedQuery(name = "ProvinciaView.findByIdpais",      query = "SELECT p FROM ProvinciaView p WHERE p.idpais = :idpais order by p.nombre"),
-    @NamedQuery(name = "ProvinciaView.findByCodigo",      query = "SELECT p FROM ProvinciaView p WHERE p.idempresa=:idempresa and p.codigo = :codigo")})
-@NamedNativeQuery(name = "ProvinciaView.findAll",         query = "SELECT * FROM datos.provincia_view where idempresa = :idempresa and "
-                                                                    + "exists(select '' from datos.gi_fraccion "
-                                                                    + "inner join  datos.ciudad on gi_fraccion.idciudad = ciudad.idciudad " 
-                                                                    + "where ciudad.idprovincia = provincia_view.idprovincia and noappmovil <> 1) order by nombre", resultClass = ProvinciaView.class)
-public class ProvinciaView implements Serializable {
+    @NamedQuery(name = "CiudadView.findAll", query = "SELECT c FROM CiudadView c WHERE c.idempresa = :idempresa order by c.nombre")
+    , @NamedQuery(name = "CiudadView.findByIdempresa", query = "SELECT c FROM CiudadView c WHERE c.idempresa = :idempresa")
+    , @NamedQuery(name = "CiudadView.findByIdciudad", query = "SELECT c FROM CiudadView c WHERE c.idciudad = :idciudad")
+    , @NamedQuery(name = "CiudadView.findByIdprovincia", query = "SELECT c FROM CiudadView c WHERE c.idprovincia = :idprovincia order by c.nombre")
+    , @NamedQuery(name = "CiudadView.findByCodigo", query = "SELECT c FROM CiudadView c WHERE c.idempresa=:idempresa and c.codigo = :codigo")
+    , @NamedQuery(name = "CiudadView.findByNombre", query = "SELECT c FROM CiudadView c WHERE c.nombre = :nombre")
+    , @NamedQuery(name = "CiudadView.findByLatitud", query = "SELECT c FROM CiudadView c WHERE c.latitud = :latitud")
+    , @NamedQuery(name = "CiudadView.findByLongitud", query = "SELECT c FROM CiudadView c WHERE c.longitud = :longitud")
+    , @NamedQuery(name = "CiudadView.findByProvincia", query = "SELECT c FROM CiudadView c WHERE c.provincia = :provincia")
+    , @NamedQuery(name = "CiudadView.findByProvincianombre", query = "SELECT c FROM CiudadView c WHERE c.provincianombre = :provincianombre")
+    , @NamedQuery(name = "CiudadView.findByIdpais", query = "SELECT c FROM CiudadView c WHERE c.idpais = :idpais")})
+public class CiudadView implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @Id()    
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idprovincia")
-    private long idprovincia;
     @Basic(optional = false)
     @NotNull
     @Column(name = "idempresa")
     private long idempresa;
+    
+    @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idpais")
-    private long idpais;
+    @Column(name = "idciudad")
+    private long idciudad;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idprovincia")
+    private long idprovincia;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4)
@@ -87,6 +90,20 @@ public class ProvinciaView implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4)
+    @Column(name = "provincia")
+    private String provincia;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "provincianombre")
+    private String provincianombre;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idpais")
+    private long idpais;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
     @Column(name = "pais")
     private String pais;
     @Basic(optional = false)
@@ -95,7 +112,7 @@ public class ProvinciaView implements Serializable {
     @Column(name = "paisnombre")
     private String paisnombre;
 
-    public ProvinciaView() {
+    public CiudadView() {
     }
 
     public long getIdempresa() {
@@ -106,20 +123,20 @@ public class ProvinciaView implements Serializable {
         this.idempresa = idempresa;
     }
 
+    public long getIdciudad() {
+        return idciudad;
+    }
+
+    public void setIdciudad(long idciudad) {
+        this.idciudad = idciudad;
+    }
+
     public long getIdprovincia() {
         return idprovincia;
     }
 
     public void setIdprovincia(long idprovincia) {
         this.idprovincia = idprovincia;
-    }
-
-    public long getIdpais() {
-        return idpais;
-    }
-
-    public void setIdpais(long idpais) {
-        this.idpais = idpais;
     }
 
     public String getCodigo() {
@@ -192,6 +209,30 @@ public class ProvinciaView implements Serializable {
 
     public void setAppuser(String appuser) {
         this.appuser = appuser;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getProvincianombre() {
+        return provincianombre;
+    }
+
+    public void setProvincianombre(String provincianombre) {
+        this.provincianombre = provincianombre;
+    }
+
+    public long getIdpais() {
+        return idpais;
+    }
+
+    public void setIdpais(long idpais) {
+        this.idpais = idpais;
     }
 
     public String getPais() {

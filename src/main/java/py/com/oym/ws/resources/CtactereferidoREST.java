@@ -19,8 +19,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import py.com.oym.model.tables.Ctactereferido;
-import py.com.oym.model.ReturnMessage;
-import py.com.oym.model.UserSession;
+import py.com.oym.ws.model.ReturnMessage;
+import py.com.oym.ws.model.UserSession;
 
 /**
  *

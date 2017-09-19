@@ -32,8 +32,8 @@ import py.com.oym.model.tables.Ctacte;
 import py.com.oym.model.tables.Pais;
 import py.com.oym.model.tables.Persona;
 import py.com.oym.model.tables.Personafisica;
-import py.com.oym.model.ReturnMessage;
-import py.com.oym.model.UserSession;
+import py.com.oym.ws.model.ReturnMessage;
+import py.com.oym.ws.model.UserSession;
 
 /**
  *
@@ -69,7 +69,7 @@ public class ClienteREST extends AbstractFacade<ClienteView> {
     public Response create(ClienteView entity,
             @HeaderParam("token") String token) {
         setToken(token);
-
+        
         // Persona
         Persona persona = new Persona();
         Pais pais = (Pais) getData("Pais", "No existe este país",

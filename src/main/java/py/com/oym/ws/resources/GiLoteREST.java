@@ -5,20 +5,29 @@
  */
 package py.com.oym.ws.resources;
 
+import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.OPTIONS;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+import py.com.oym.model.tables.GiLote;
+import py.com.oym.model.tables.Vendedor;
+import py.com.oym.model.tables.GiLoteestado;
 import py.com.oym.model.views.GiLoteView;
-import py.com.oym.model.UserSession;
+import py.com.oym.ws.model.ReturnMessage;
+import py.com.oym.ws.model.UserSession;
 
 /**
  *
@@ -65,6 +74,13 @@ public class GiLoteREST extends AbstractFacade<GiLoteView> {
     public String optionByIdFraccion(){
         return "";
     }    
+
+    @OPTIONS
+    @Path("reservar/{id}")
+    @Produces({"application/json"})
+    public String reservar() {
+        return "";
+    }
     
     @GET
     @Path("{id}")
@@ -146,6 +162,42 @@ public class GiLoteREST extends AbstractFacade<GiLoteView> {
         return String.valueOf(super.count());
     }
 
+    @POST
+    @Path("reservar/{id}")
+    @Consumes({"application/json"})
+    @Produces({"application/json"})
+    public Response reservar(@PathParam("id") Long id,
+                             @HeaderParam("token") String token) {
+        setToken(token);        
+        GiLote lote = em.find(GiLote.class, id);
+        if (!(lote.getIdgiLoteestado().getIdgiLoteestado().equals("1")
+                || lote.getIdgiLoteestado().getIdgiLoteestado().equals("3"))) {
+            throw new py.com.oym.ws.exceptions.LoteEstado("Este lote no esta disponible");
+        }
+        Vendedor vendedor = em.find(Vendedor.class, getIdVendedor());
+        GiLoteestado estado = em.find(GiLoteestado.class,"A");
+        String estadoAnterior = lote.getIdgiLoteestado().getIdgiLoteestado();
+        lote.setIdgiLoteestado(estado);
+        lote.setIdgiLoteestadoAnt(estadoAnterior);
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);        
+        calendar.set(Calendar.MILLISECOND,0);        
+
+        Date today = calendar.getTime();
+
+        lote.setFechacambioestado(new Date());
+        lote.setFechareserva(today);
+        lote.setIdvendedorreserva(vendedor);
+        getEntityManager().merge(lote);
+
+        ReturnMessage returnMsg = new ReturnMessage();
+        returnMsg.setId(lote.getIdgiLote().toString());
+        return Response.ok().entity(returnMsg).build();
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

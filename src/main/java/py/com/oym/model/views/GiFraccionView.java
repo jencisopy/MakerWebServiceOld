@@ -30,10 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "gi_fraccion_view")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "GiFraccionView.findAll",            query = "SELECT g FROM GiFraccionView g where g.idempresa = :idempresa order by g.nombre"),
+    @NamedQuery(name = "GiFraccionView.findAll",            query = "SELECT g FROM GiFraccionView g where g.idempresa = :idempresa and noappmovil <> 1 order by g.nombre"),
     @NamedQuery(name = "GiFraccionView.findByIdgiFraccion", query = "SELECT g FROM GiFraccionView g WHERE g.idgiFraccion = :idgiFraccion"),
     @NamedQuery(name = "GiFraccionView.findByIdempresa",    query = "SELECT g FROM GiFraccionView g WHERE g.idempresa = :idempresa  order by g.nombre"),
-    @NamedQuery(name = "GiFraccionView.findByProvincia",    query = "SELECT g FROM GiFraccionView g WHERE g.idempresa = :idempresa and g.provincia = :provincia  order by g.nombre"),
+    @NamedQuery(name = "GiFraccionView.findByProvincia",    query = "SELECT g FROM GiFraccionView g WHERE g.idempresa = :idempresa and g.provincia = :provincia  and noappmovil <> 1  order by g.nombre"),
     @NamedQuery(name = "GiFraccionView.findByCodigo", query = "SELECT g FROM GiFraccionView g WHERE g.idempresa = :idempresa and g.codigo = :codigo"),
     @NamedQuery(name = "GiFraccionView.findByEstado", query = "SELECT g FROM GiFraccionView g WHERE g.idempresa = :idempresa and g.estado = :estado  order by g.nombre"),
     @NamedQuery(name = "GiFraccionView.findByGiFracciontipo", query = "SELECT g FROM GiFraccionView g WHERE g.idempresa = :idempresa and g.giFracciontipo = :giFracciontipo  order by g.nombre")}) 

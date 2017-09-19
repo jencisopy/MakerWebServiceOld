@@ -3,26 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.oym.exceptions;
+package py.com.oym.ws.exceptions;
+
+import javax.ejb.ApplicationException;
 
 /**
  *
  * @author Jorge Enciso
  */
-public class TokenError extends RuntimeException {
-    public TokenError(){
+@ApplicationException(rollback=true)
+public class DbRollback extends RuntimeException {
+    public DbRollback(){
         super();
     }
-    
-    public TokenError(String message){
+    public DbRollback(String message){
         super(message);
     }
 
-    public TokenError(String message, Throwable cause){
+    public DbRollback(String message, Throwable cause){
         super(message, cause);
     }
 
-    public TokenError(Throwable cause){
+    public DbRollback(Throwable cause){
         super(cause);
     }
 }

@@ -29,15 +29,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "gi_lote_view")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "GiLoteView.findAll", query = "SELECT g FROM GiLoteView g where g.idempresa = :idempresa and g.tipo = 1"),
+    @NamedQuery(name = "GiLoteView.findAll", query = "SELECT g FROM GiLoteView g where g.idempresa = :idempresa and g.tipo = 1 order by gi_fraccion, gi_manzana, codigo"),
     @NamedQuery(name = "GiLoteView.findByCodigo", query = "SELECT g FROM GiLoteView g WHERE g.idempresa = :idempresa and TRIM(g.codigo) = TRIM(:codigo) and g.giFraccion = :giFraccion and g.giManzana = :giManzana  and g.tipo = 1"), 
     @NamedQuery(name = "GiLoteView.findByIdgiLote", query = "SELECT g FROM GiLoteView g WHERE g.idgiLote = :idgiLote"),
-    @NamedQuery(name = "GiLoteView.findByIdgiManzana", query = "SELECT g FROM GiLoteView g WHERE g.idgiManzana = :idgiManzana"),
-    @NamedQuery(name = "GiLoteView.findByIdempresa", query = "SELECT g FROM GiLoteView g WHERE g.idempresa = :idempresa and g.tipo = 1"),
-    @NamedQuery(name = "GiLoteView.findByIdgiFraccion", query = "SELECT g FROM GiLoteView g WHERE g.idgiFraccion = :idgiFraccion  and g.tipo = 1"),
-    @NamedQuery(name = "GiLoteView.findByGiFraccion", query = "SELECT g FROM GiLoteView g WHERE  g.idempresa = :idempresa and g.giFraccion = :giFraccion  and TRIM(g.giLoteestado) = TRIM(:giLoteestado)  and g.tipo = 1"),
-    @NamedQuery(name = "GiLoteView.findByGiFracciontipo", query = "SELECT g FROM GiLoteView g WHERE  g.idempresa = :idempresa and g.giFracciontipo = :giFracciontipo  and g.tipo = 1"),
-    @NamedQuery(name = "GiLoteView.findByGiLoteestado", query = "SELECT g FROM GiLoteView g WHERE g.giLoteestado = :giLoteestado  and g.tipo = 1")})
+    @NamedQuery(name = "GiLoteView.findByIdgiManzana", query = "SELECT g FROM GiLoteView g WHERE g.idgiManzana = :idgiManzana order by gi_fraccion, gi_manzana, codigo"),
+    @NamedQuery(name = "GiLoteView.findByIdempresa", query = "SELECT g FROM GiLoteView g WHERE g.idempresa = :idempresa and g.tipo = 1 order by gi_fraccion, gi_manzana, codigo"),
+    @NamedQuery(name = "GiLoteView.findByIdgiFraccion", query = "SELECT g FROM GiLoteView g WHERE g.idgiFraccion = :idgiFraccion  and g.tipo = 1 order by gi_fraccion, gi_manzana, codigo"),
+    @NamedQuery(name = "GiLoteView.findByGiFraccion", query = "SELECT g FROM GiLoteView g WHERE  g.idempresa = :idempresa and g.giFraccion = :giFraccion  and TRIM(g.giLoteestado) = TRIM(:giLoteestado)  and g.tipo = 1 order by gi_fraccion, gi_manzana, codigo"),
+    @NamedQuery(name = "GiLoteView.findByGiFracciontipo", query = "SELECT g FROM GiLoteView g WHERE  g.idempresa = :idempresa and g.giFracciontipo = :giFracciontipo  and g.tipo = 1 order by gi_fraccion, gi_manzana, codigo"),
+    @NamedQuery(name = "GiLoteView.findByGiLoteestado", query = "SELECT g FROM GiLoteView g WHERE g.giLoteestado = :giLoteestado  and g.tipo = 1 order by gi_fraccion, gi_manzana, codigo")})
 public class GiLoteView implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)

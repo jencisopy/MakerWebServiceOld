@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.oym.filters;
+package py.com.oym.ws.filters;
 
 import java.io.IOException;
 

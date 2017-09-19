@@ -35,8 +35,8 @@ import py.com.oym.model.tables.GiLotevtacuotaparam;
 import py.com.oym.model.tables.GiLotevtapersona;
 import py.com.oym.model.tables.Vendedor;
 import py.com.oym.model.tables.Itemmovcondicion;
-import py.com.oym.model.ReturnMessage;
-import py.com.oym.model.UserSession;
+import py.com.oym.ws.model.ReturnMessage;
+import py.com.oym.ws.model.UserSession;
 import py.com.oym.model.tables.GiContratonroctrl;
 import py.com.oym.model.tables.GiFraccion;
 
@@ -80,6 +80,7 @@ public class GiLotevtaREST extends AbstractFacade<GiLotevta> {
     @Produces({"application/json"})
     public Response create(GiLotevtaView entity,
             @HeaderParam("token") String token) {
+//        throw new py.com.oym.exceptions.OpcionNoDisponible("Esta opción no esta disponible");
         GiLotevta row;
         setToken(token);
         row = setGiLoteVta(entity);
@@ -102,7 +103,6 @@ public class GiLotevtaREST extends AbstractFacade<GiLotevta> {
         row.setRecibonro(r.getRecibonro());
         row.setCambio(r.getCambio());
         row.setPreciovtacontado(r.getPreciovtacontado());
-        row.setPorcadminvtacontado(r.getPreciovtacontado());
         row.setPorcadminvtacontado(r.getPorcadminvtacontado());
         row.setImportesena(r.getImportesena());
         row.setImporteinicial(r.getImporteinicial());
@@ -111,6 +111,7 @@ public class GiLotevtaREST extends AbstractFacade<GiLotevta> {
         row.setCuotasCnt(r.getCuotasCnt());
         row.setObservacion(r.getObservacion());
         row.setIdgiLotevtaestado("C");
+        row.setBoletadeposito(r.getBoletadeposito());
         row.setConfirmado(false);
 
         GiLote lote = (GiLote) getData("GiLote", "No existe Lote",
@@ -122,7 +123,7 @@ public class GiLotevtaREST extends AbstractFacade<GiLotevta> {
         // Validar que el lote este disponible
         if (!(lote.getIdgiLoteestado().getIdgiLoteestado().equals("1")
                 || lote.getIdgiLoteestado().getIdgiLoteestado().equals("3"))) {
-            throw new py.com.oym.exceptions.LoteEstado("Este lote no esta disponible");
+            throw new py.com.oym.ws.exceptions.LoteEstado("Este lote no esta disponible");
         }
         row.setIdgiLote(lote);
 
@@ -234,19 +235,31 @@ public class GiLotevtaREST extends AbstractFacade<GiLotevta> {
         
         // Actualizar nro de contrato si modo es 4
         Object[] results = getContratoNroParam();
-        if ("4".equals(Objects.toString(results[0], ""))) {
-            Query query;
-            query = em.createNativeQuery("SELECT * "
-                    + " from datos.gi_contratonroctrl "
-                    + " where idempresa = " + getIdempresa()
-                    + " and fraccion = " + lote.getGiManzana().getGiFraccion().getCodigo(), GiContratonroctrl.class);
+        if (results != null){
+            if ("4".equals(Objects.toString(results[0], ""))) {
+                Query query;
+                query = em.createNativeQuery("SELECT * "
+                        + " from datos.gi_contratonroctrl "
+                        + " where idempresa = " + getIdempresa()
+                        + " and fraccion = " + lote.getGiManzana().getGiFraccion().getCodigo(), GiContratonroctrl.class);
 
-            GiContratonroctrl obj = (GiContratonroctrl)query.getSingleResult();
-            obj.setUltimonro(row.getCodigo());
-            em.merge(obj);
-            
+                GiContratonroctrl obj = (GiContratonroctrl)query.getSingleResult();
+                obj.setUltimonro(row.getCodigo());
+                em.merge(obj);
+            }
+            if ("5".equals(Objects.toString(results[0], ""))){
+                Query query;
+                query = em.createNativeQuery("SELECT * "
+                        + " from datos.gi_contratonroctrl "
+                        + " where idempresa = " + getIdempresa()
+                        + " and fraccion = 0", GiContratonroctrl.class);
+
+                GiContratonroctrl obj = (GiContratonroctrl)query.getSingleResult();
+                obj.setUltimonro(row.getCodigo());
+                em.merge(obj);
+            }
         }
-        return row;
+        return row;        
     }
 
     private String getNewContratoNro(GiFraccion r) {
@@ -338,6 +351,44 @@ public class GiLotevtaREST extends AbstractFacade<GiLotevta> {
             cnumero = String.format("%0" + parte2.toString() + "d", numero);
             cnumero2 = String.format("%0" + parte1.toString() + "d", gi_fraccion);
             result = cnumero2 + "-" + cnumero.trim();
+        }
+        
+        //recuperar ultimo nro. contrato guardado por fraccion + 1
+        if ("4".equals(Objects.toString(results[0], ""))) {
+            query = em.createNativeQuery("SELECT ultimonro "
+                    + " from datos.gi_contratonroctrl "
+                    + " where idempresa = " + getIdempresa()
+                    + " and fraccion = " + gi_fraccion);
+
+            try {
+                result = (String) query.getSingleResult();
+            } catch (Exception e) {
+                result = "0";
+            }
+
+            result = Objects.toString(result, "0");
+
+            //numero = Integer.valueOf(result.trim()) + 1;
+            numero = Integer.valueOf(result.substring(result.lastIndexOf('-') + 1)) + 1;            
+            cnumero = String.format("%0" + parte2.toString() + "d", numero);
+            cnumero2 = String.format("%0" + parte1.toString() + "d", gi_fraccion);
+            result = cnumero2 + "-" + cnumero.trim();
+        }
+
+        //recuperar ultimo nro. contrato guardado + 1
+        if ("5".equals(Objects.toString(results[0], ""))) {
+            query = em.createNativeQuery("SELECT ultimonro "
+                    + " from datos.gi_contratonroctrl "
+                    + " where idempresa = " + getIdempresa()
+                    + " and fraccion = 0");
+            result = (String) query.getSingleResult();
+            if (result == null) {
+                result = "         1";
+            } else {
+                long l = Long.valueOf(result.trim()) + 1;
+                result = String.valueOf(l);
+                result = String.format("%1$10s", result.trim());
+            }
         }
         return result;
     }

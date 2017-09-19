@@ -3,28 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.oym.exceptions;
-
-import javax.ejb.ApplicationException;
+package py.com.oym.ws.exceptions;
 
 /**
  *
  * @author Jorge Enciso
  */
-@ApplicationException(rollback=true)
-public class DbRollback extends RuntimeException {
-    public DbRollback(){
+public class JpaNoExist extends RuntimeException {
+    public JpaNoExist(){
         super();
     }
-    public DbRollback(String message){
+    public JpaNoExist(String message){
         super(message);
     }
 
-    public DbRollback(String message, Throwable cause){
+    public JpaNoExist(String message, Throwable cause){
         super(message, cause);
     }
 
-    public DbRollback(Throwable cause){
+    public JpaNoExist(Throwable cause){
         super(cause);
     }
 }

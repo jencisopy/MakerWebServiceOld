@@ -29,12 +29,13 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(py.com.oym.exceptions.JpaNoExistExceptionMapper.class);
-        resources.add(py.com.oym.exceptions.LoteEstadoExceptionMapper.class);
-        resources.add(py.com.oym.exceptions.ZGenericExceptionMapper.class);
-        resources.add(py.com.oym.filters.CORSFilter.class);
+        resources.add(py.com.oym.ws.exceptions.JpaNoExistExceptionMapper.class);
+        resources.add(py.com.oym.ws.exceptions.LoteEstadoExceptionMapper.class);
+        resources.add(py.com.oym.ws.exceptions.ZGenericExceptionMapper.class);
+        resources.add(py.com.oym.ws.filters.CORSFilter.class);
         resources.add(py.com.oym.ws.resources.CanalpublicidadREST.class);
         resources.add(py.com.oym.ws.resources.CanalvtaREST.class);
+        resources.add(py.com.oym.ws.resources.CiudadViewREST.class);
         resources.add(py.com.oym.ws.resources.ClienteREST.class);
         resources.add(py.com.oym.ws.resources.CtactereferidoREST.class);
         resources.add(py.com.oym.ws.resources.GiFraccionREST.class);

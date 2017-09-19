@@ -12,12 +12,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
-import javax.ws.rs.OPTIONS;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import py.com.oym.model.views.ItemmovcondicionView;
+import py.com.oym.model.views.CiudadView;
 import py.com.oym.ws.model.UserSession;
 
 /**
@@ -25,54 +24,46 @@ import py.com.oym.ws.model.UserSession;
  * @author Jorge Enciso
  */
 @Stateless
-@Path("itemmovcondicionview")
-public class ItemmovcondicionREST extends AbstractFacade<ItemmovcondicionView> {
+@Path("ciudadview")
+public class CiudadViewREST extends AbstractFacade<CiudadView>{
     @PersistenceContext(unitName = "maker95PU")
     private EntityManager em;
 
     @Inject
     private Sesiones sesiones;
-    
 
-    public ItemmovcondicionREST() {
-        super(ItemmovcondicionView.class);
+    public CiudadViewREST() {
+        super(CiudadView.class);
     }
 
-    @OPTIONS
-    @Produces({"application/json"})
-    public String option() {
-        return "";
-    }
-    
     @GET
     @Path("{id}")
     @Produces({"application/json"})
-    public ItemmovcondicionView find(@PathParam("id")      Long   id,
-                                     @HeaderParam("token") String token) {
-        setToken(token);
+    public CiudadView findById(@PathParam("id") Long id,
+                                 @HeaderParam("token") String token) {
+        setToken(token);                
         return super.find(id);
     }
 
-
-
     @GET
     @Produces({"application/json"})
-    public List<ItemmovcondicionView> find(@HeaderParam("token") String token,
-                                           @QueryParam("codigo") String codigo) {
+    public List<CiudadView> find(@HeaderParam("token") String token,
+                                   @QueryParam("codigo") String codigo) {
         setToken(token);        
         if (codigo != null){
-            return super.findByCodigo("ItemmovcondicionView.findByCodigo", codigo);
+            return super.findByCodigo("CiudadView.findByCodigo", codigo);
         }
         return super.findAll();
     }
     
+
     @GET
     @Path("{from}/{to}")
     @Produces({"application/json"})
-    public List<ItemmovcondicionView> findRange(@PathParam("from")    Integer from, 
-                                                @PathParam("to")      Integer to,
-                                                @HeaderParam("token") String token) {
-        setToken(token);                        
+    public List<CiudadView> findRange(@PathParam("from") Integer from, 
+                                        @PathParam("to") Integer to,
+                                        @HeaderParam("token") String token) {
+        setToken(token);                
         return super.findRange(new int[]{from, to});
     }
 
@@ -82,7 +73,7 @@ public class ItemmovcondicionREST extends AbstractFacade<ItemmovcondicionView> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;

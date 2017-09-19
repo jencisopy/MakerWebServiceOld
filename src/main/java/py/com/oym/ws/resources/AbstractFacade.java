@@ -18,13 +18,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import py.com.oym.others.Params;
-import py.com.oym.model.UserSession;
+import py.com.oym.ws.model.UserSession;
 
 /**
  *
  * @author Jorge Enciso
  */
-public abstract class AbstractFacade<T> {
+public abstract class AbstractFacade<T>{
 
     private Class<T> entityClass;
     private String token;
@@ -124,10 +124,10 @@ public abstract class AbstractFacade<T> {
 
     protected Boolean verifyToken(String token) {
         if (token == null){
-            throw new py.com.oym.exceptions.TokenError("Debe proporcionar el token de autorización");
+            throw new py.com.oym.ws.exceptions.TokenError("Debe proporcionar el token de autorización");
         }
         if (getUserSession(token) == null){
-            throw new py.com.oym.exceptions.TokenError("Este token ya expiró o es es incorrecto");            
+            throw new py.com.oym.ws.exceptions.TokenError("Este token ya expiró o es es incorrecto");            
         }
         return true;
     }
@@ -255,7 +255,7 @@ public abstract class AbstractFacade<T> {
             }
             ejb = query.getSingleResult();
         } catch (NoResultException ex) {
-            throw new py.com.oym.exceptions.JpaNoExist(errorMessage);
+            throw new py.com.oym.ws.exceptions.JpaNoExist(errorMessage);
         }
         return ejb;
     }
@@ -267,7 +267,7 @@ public abstract class AbstractFacade<T> {
         try {
             ejb = getEntityManager().find(clase, id);
         } catch (Exception ex) {
-            throw new py.com.oym.exceptions.JpaNoExist("No existe entidad");
+            throw new py.com.oym.ws.exceptions.JpaNoExist("No existe entidad");
         }
         return ejb;
     }    

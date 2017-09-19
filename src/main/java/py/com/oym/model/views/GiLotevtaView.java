@@ -102,6 +102,10 @@ public class GiLotevtaView implements Serializable {
     private Short nrovta;
     @Column(name = "recibonro")
     private Long recibonro;
+    
+    @Column(name = "boleta_deposito")
+    private String boletadeposito;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "cambio")
     private BigDecimal cambio;
@@ -893,5 +897,14 @@ public class GiLotevtaView implements Serializable {
     public void setGiCategorialiquidacionnombre(String giCategorialiquidacionnombre) {
         this.giCategorialiquidacionnombre = giCategorialiquidacionnombre;
     }
+
+    public String getBoletadeposito() {
+        return boletadeposito;
+    }
+
+    public void setBoletadeposito(String boletadeposito) {
+        this.boletadeposito = boletadeposito;
+    }
+
     
 }
