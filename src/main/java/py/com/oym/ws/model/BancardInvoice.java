@@ -6,6 +6,7 @@
 package py.com.oym.ws.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -18,9 +19,9 @@ public class BancardInvoice   {
     private String due;
     private BigDecimal amt  ;
     private BigDecimal min_amt;
-    private String inv_id;
-    private String addl;
-    private String next_dues;
+    private List<String> inv_id;
+    private List<String> addl;
+    private List<String> next_dues;
     private String curr;
     private Integer cm_amt;
     private String cm_curr;
@@ -50,27 +51,27 @@ public class BancardInvoice   {
         this.min_amt = min_amt;
     }
 
-    public String getInv_id() {
+    public List<String> getInv_id() {
         return inv_id;
     }
 
-    public void setInv_id(String inv_id) {
+    public void setInv_id(List<String> inv_id) {
         this.inv_id = inv_id;
     }
 
-    public String getAddl() {
+    public List<String> getAddl() {
         return addl;
     }
 
-    public void setAddl(String addl) {
+    public void setAddl(List<String> addl) {
         this.addl = addl;
     }
 
-    public String getNext_dues() {
+    public List<String> getNext_dues() {
         return next_dues;
     }
 
-    public void setNext_dues(String next_dues) {
+    public void setNext_dues(List<String> next_dues) {
         this.next_dues = next_dues;
     }
 

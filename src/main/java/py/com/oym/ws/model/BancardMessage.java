@@ -5,6 +5,7 @@
  */
 package py.com.oym.ws.model;
 
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -15,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class BancardMessage {
     private String level;
     private String key;
-    private String dsc;
+    private List<String> dsc;
 
     public String getLevel() {
         return level;
@@ -33,11 +34,11 @@ public class BancardMessage {
         this.key = key;
     }
 
-    public String getDsc() {
+    public List<String> getDsc() {
         return dsc;
     }
 
-    public void setDsc(String dsc) {
+    public void setDsc(List<String> dsc) {
         this.dsc = dsc;
-    }  
+    }
 }

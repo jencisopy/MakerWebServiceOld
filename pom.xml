@@ -49,14 +49,14 @@
                 <version>4.3.6.Final</version>
             </dependency>                 
         -->    
-        <!-- JDBC de Sql Server -->
+        <!-- JDBC de Sql Server
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>sqljdbc4</artifactId>
             <version>4.0</version>
-            <scope>provided</scope>
         </dependency>
-        
+         -->
+         
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
