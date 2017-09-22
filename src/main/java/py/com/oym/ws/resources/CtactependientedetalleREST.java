@@ -23,6 +23,7 @@ import py.com.oym.others.Params;
 import py.com.oym.ws.model.BancardInvoice;
 import py.com.oym.ws.model.BancardInvoiceResponse;
 import py.com.oym.ws.model.BancardMessage;
+import py.com.oym.ws.model.BancardMessageResponse;
 import py.com.oym.ws.model.UserSession;
 
 /**
@@ -30,7 +31,7 @@ import py.com.oym.ws.model.UserSession;
  * @author mtrinidad
  */
 @Stateless
-@Path("invoices")
+@Path("")
 public class CtactependientedetalleREST extends AbstractFacade<CtactependientedetalleView> {
 
     @PersistenceContext(unitName = "maker95PU")
@@ -44,6 +45,7 @@ public class CtactependientedetalleREST extends AbstractFacade<Ctactependientede
     }
 
     @GET
+    @Path("bancard/invoices")
     @Produces({"application/json"})
     public Response find(@QueryParam("tid") String tid,
             @QueryParam("prd_id") Integer prd_id,
@@ -54,22 +56,25 @@ public class CtactependientedetalleREST extends AbstractFacade<Ctactependientede
         List<String> messageDsc = new ArrayList<>();
         BancardMessage message = new BancardMessage();
         BancardInvoiceResponse bancardInvoiceResponse = new BancardInvoiceResponse();
+        BancardMessageResponse bancardMessageResponse = new BancardMessageResponse();
 
-        ClienteView cliente = (ClienteView) getData("ClienteView", "No existe este cliente",
-                new Params("codigo", sub_id),
-                new Params("idempresa", 90L));
-        if (cliente.getIdctacte() == 0) {
+        try {
+            ClienteView cliente = (ClienteView) getData("ClienteView", "No existe este cliente",
+                    new Params("codigo", sub_id),
+                    new Params("idempresa", 90L));
+        } catch (Exception e) {
             message.setLevel("error");
             message.setKey("SubscriberNotFound");
-            messageDsc.add("El abonado con código " + sub_id + " no existe");
+            messageDsc.add("El abonado con código " + sub_id.get(0) + " no existe");
             message.setDsc(messageDsc);
 
-            bancardInvoiceResponse.setStatus("error");
-            bancardInvoiceResponse.setTid(tid);
-            bancardInvoiceResponse.setMessages(message);
+            bancardMessageResponse.setStatus("error");
+            bancardMessageResponse.setTid(tid);
+            bancardMessageResponse.setMessages(message);
 
-            return Response.status(Response.Status.NOT_FOUND).entity(bancardInvoiceResponse).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(bancardMessageResponse).build();
         }
+
         List<BancardInvoice> invoices = findByCtacte(sub_id.get(0));
         if (invoices.isEmpty()) {
             message.setLevel("info");
@@ -77,11 +82,11 @@ public class CtactependientedetalleREST extends AbstractFacade<Ctactependientede
             messageDsc.add("El abonado con código " + sub_id + " no tiene deuda pendiente");
             message.setDsc(messageDsc);
 
-            bancardInvoiceResponse.setStatus("success");
-            bancardInvoiceResponse.setTid(tid);
-            bancardInvoiceResponse.setMessages(message);
+            bancardMessageResponse.setStatus("success");
+            bancardMessageResponse.setTid(tid);
+            bancardMessageResponse.setMessages(message);
 
-            return Response.status(Response.Status.OK).entity(bancardInvoiceResponse).build();
+            return Response.status(Response.Status.OK).entity(bancardMessageResponse).build();
         }
 
         bancardInvoiceResponse.setStatus("success");
@@ -105,10 +110,10 @@ public class CtactependientedetalleREST extends AbstractFacade<Ctactependientede
                 = (List<CtactependientedetalleView>) em.createNamedQuery("CtactependientedetalleView.findByCtacte").
                         setParameter("idempresa", idempresa).
                         setParameter("ctacte", ctacte).getResultList();
-        Integer cont =0;
+        Integer cont = 0;
         for (CtactependientedetalleView ctactependientedetalle1 : ctactependientedetalle) {
             BancardInvoice invoice = new BancardInvoice();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");                     
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             invoice.setDue(formatter.format(ctactependientedetalle1.getFecVen()));
             invoice.setAmt(ctactependientedetalle1.getTotalsaldo());
             invoice.setMin_amt(ctactependientedetalle1.getTotalsaldo());
@@ -120,13 +125,13 @@ public class CtactependientedetalleREST extends AbstractFacade<Ctactependientede
             List<String> invoiceList = new ArrayList<>();
             invoiceList.add(((Long) ctactependientedetalle1.getIdctactependientedetalle()).toString());
             List<String> addlList = new ArrayList<>();
-            addlList.add("Factura Nro: "+ctactependientedetalle1.getSecuencia().trim()+"-"+ctactependientedetalle1.getNro().trim()+" - Cliente: "+ctactependientedetalle1.getCtactenombre());
+            addlList.add("Factura Nro: " + ctactependientedetalle1.getSecuencia().trim() + "-" + ctactependientedetalle1.getNro().trim() + " - Cliente: " + ctactependientedetalle1.getCtactenombre());
             invoice.setAddl(addlList);
             invoice.setInv_id(invoiceList);
             invoice.setCurr(ctactependientedetalle1.getMoneda());
             invoices.add(invoice);
             cont++;
-            if (cont >9){
+            if (cont > 9) {
                 break;
             }
         }

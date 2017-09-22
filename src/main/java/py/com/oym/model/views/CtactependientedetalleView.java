@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "ctactependientedetalle_view")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CtactependientedetalleView.findByCtacte",query = "SELECT c FROM CtactependientedetalleView c where c.idempresa = :idempresa and c.ctacte = :ctacte order by c.fecVen "),
+    @NamedQuery(name = "CtactependientedetalleView.findByCtacte",query = "SELECT c FROM CtactependientedetalleView c where c.saldo> 10 and c.idempresa = :idempresa and c.ctacte = :ctacte order by c.fecVen "),
+    @NamedQuery(name = "CtactependientedetalleView.findById",query = "SELECT c FROM CtactependientedetalleView c where c.saldo> 10 and c.idctactependientedetalle= :idctactependientedetalle "),
     @NamedQuery(name = "CtactependientedetalleView.findAll", query = "SELECT c FROM CtactependientedetalleView c")})
 public class CtactependientedetalleView implements Serializable {
 

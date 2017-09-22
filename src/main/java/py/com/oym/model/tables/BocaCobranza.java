@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -33,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "BocaCobranza.findByIdbocaCobranza", query = "SELECT b FROM BocaCobranza b WHERE b.idbocaCobranza = :idbocaCobranza")
     , @NamedQuery(name = "BocaCobranza.findByIdempresa", query = "SELECT b FROM BocaCobranza b WHERE b.idempresa = :idempresa")
     , @NamedQuery(name = "BocaCobranza.findByIdctactemovimientodetalle", query = "SELECT b FROM BocaCobranza b WHERE b.idctactemovimientodetalle = :idctactemovimientodetalle")
-    , @NamedQuery(name = "BocaCobranza.findByNumeroOperacion", query = "SELECT b FROM BocaCobranza b WHERE b.numeroOperacion = :numeroOperacion")
+    , @NamedQuery(name = "BocaCobranza.findByNumeroOperacion", query = "SELECT b FROM BocaCobranza b WHERE b.idempresa = :idempresa and  b.numeroOperacion = :numeroOperacion")
     , @NamedQuery(name = "BocaCobranza.findByNumBoleta", query = "SELECT b FROM BocaCobranza b WHERE b.numBoleta = :numBoleta")
     , @NamedQuery(name = "BocaCobranza.findByDescripcionOperacion", query = "SELECT b FROM BocaCobranza b WHERE b.descripcionOperacion = :descripcionOperacion")
     , @NamedQuery(name = "BocaCobranza.findByMontocuota", query = "SELECT b FROM BocaCobranza b WHERE b.montocuota = :montocuota")
@@ -52,14 +54,18 @@ public class BocaCobranza implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)        
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idboca_cobranza")
     private Long idbocaCobranza;
     @Basic(optional = false)
     @NotNull
     @Column(name = "idempresa")
     private long idempresa;
+    @Column(name = "idcaja")
+    private Long idcaja;
+    @Column(name = "idctactependientedetalle")
+    private Long idctactependientedetalle;
     @Column(name = "idctactemovimientodetalle")
     private Long idctactemovimientodetalle;
     @Column(name = "numero_operacion")
@@ -268,6 +274,22 @@ public class BocaCobranza implements Serializable {
         int hash = 0;
         hash += (idbocaCobranza != null ? idbocaCobranza.hashCode() : 0);
         return hash;
+    }
+
+    public Long getIdcaja() {
+        return idcaja;
+    }
+
+    public void setIdcaja(Long idcaja) {
+        this.idcaja = idcaja;
+    }
+
+    public Long getIdctactependientedetalle() {
+        return idctactependientedetalle;
+    }
+
+    public void setIdctactependientedetalle(Long idctactependientedetalle) {
+        this.idctactependientedetalle = idctactependientedetalle;
     }
 
     @Override
