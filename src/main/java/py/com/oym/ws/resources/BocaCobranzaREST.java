@@ -138,7 +138,7 @@ public class BocaCobranzaREST extends AbstractFacade<BocaCobranza> {
             bancardPaymentResponse.setAut_cod(0);
             bancardPaymentResponse.setTid(payment.getTid());
             bancardPaymentResponse.setMessages(message);
-            return Response.status(Response.Status.FORBIDDEN).entity(bancardPaymentResponse).build();
+            return Response.status(Response.Status.OK).entity(bancardPaymentResponse).build();
         } catch (Exception ex) {
             message.setLevel("error");
             message.setKey("Error en el origen");
@@ -177,7 +177,7 @@ public class BocaCobranzaREST extends AbstractFacade<BocaCobranza> {
 
         EntityManager em = getEntityManager();
         try {
-            //TODO: faltaria enviar un parametro de idbocacobranza
+            //TODO: faltaria enviar un parametro de IDCAJA
             bocaCobranza = (BocaCobranza) em.createNamedQuery("BocaCobranza.findByNumeroOperacion").
                     setParameter("idempresa", 90L).
                     setParameter("numeroOperacion", Long.parseLong(tid.toString())).getSingleResult();
