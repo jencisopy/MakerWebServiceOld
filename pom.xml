@@ -13,8 +13,15 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
+    <!-- https://mvnrepository.com/artifact/org.json/json -->
+        
     <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20170516</version>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -49,14 +56,15 @@
                 <version>4.3.6.Final</version>
             </dependency>                 
         -->    
-        <!-- JDBC de Sql Server -->
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>sqljdbc4</artifactId>
-            <version>4.0</version>
-            <scope>provided</scope>
-        </dependency>
-        
+        <!-- JDBC de Sql Server
+       <dependency>
+           <groupId>com.microsoft.sqlserver</groupId>
+           <artifactId>sqljdbc4</artifactId>
+           <version>4.0</version>
+       </dependency>
+        -->
+
+                 
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
