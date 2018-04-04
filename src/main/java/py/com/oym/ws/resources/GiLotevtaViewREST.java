@@ -5,7 +5,13 @@
  */
 package py.com.oym.ws.resources;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -26,12 +32,12 @@ import py.com.oym.ws.model.UserSession;
 @Stateless
 @Path("gilotevtaview")
 public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
+
     @PersistenceContext(unitName = "maker95PU")
-    private EntityManager em; 
-    
+    private EntityManager em;
+
     @Inject
     private Sesiones sesiones;
-    
 
     public GiLotevtaViewREST() {
         super(GiLotevtaView.class);
@@ -40,18 +46,18 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
     @GET
     @Path("{id}")
     @Produces({"application/json"})
-    public GiLotevtaView findById(@PathParam("id")      Long   id,
-                                  @HeaderParam("token") String token) {
-        setToken(token);        
+    public GiLotevtaView findById(@PathParam("id") Long id,
+            @HeaderParam("token") String token) {
+        setToken(token);
         return super.find(id);
     }
-    
+
     @GET
     @Produces({"application/json"})
-    public List<GiLotevtaView> find(@QueryParam("nro")    String nro,
-                                    @HeaderParam("token") String token) {
-        setToken(token);            
-        if (nro != null){
+    public List<GiLotevtaView> find(@QueryParam("nro") String nro,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        if (nro != null) {
             return super.findByCodigo("GiLotevtaView.findByCodigo", nro);
         }
         return findByVendedor();
@@ -61,25 +67,51 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
     @Path("vendedor")
     @Produces({"application/json"})
     public List<GiLotevtaView> findByVendedor(@HeaderParam("token") String token) {
-        setToken(token);            
+        setToken(token);
         return findByVendedor();
     }
-    
+
     public List<GiLotevtaView> findByVendedor() {
-        Long idempresa  = this.getIdempresa();
+        Long idempresa = this.getIdempresa();
         Long idvendedor = this.getIdVendedor();
         EntityManager em = getEntityManager();
         return (List<GiLotevtaView>) em.createNamedQuery("GiLotevtaView.findByVendedor").
-                            setParameter("idempresa",idempresa).
-                            setParameter("idvendedor", idvendedor).getResultList();
+                setParameter("idempresa", idempresa).
+                setParameter("idvendedor", idvendedor).getResultList();
     }
-    
+
+    @GET
+    @Path("vendedorfecha/{fromDate}/{toDate}")
+    @Produces({"application/json"})
+    public List<GiLotevtaView> findByVendedorFecha(@PathParam("fromDate") String fromDate,
+            @PathParam("toDate") String toDate,
+            @HeaderParam("token") String token) throws ParseException {
+        setToken(token);
+        return findByVendedorFecha(fromDate,toDate);
+    }
+
+    public List<GiLotevtaView> findByVendedorFecha(String fromDate, String toDate) throws ParseException {
+        Long idempresa = this.getIdempresa();
+        Long idvendedor = this.getIdVendedor();
+        EntityManager em = getEntityManager();
+        DateFormat format = new SimpleDateFormat("yyyyMMdd");
+
+        Date dfromDate = format.parse(fromDate);
+        Date dtoDate = format.parse(toDate);
+
+        return (List<GiLotevtaView>) em.createNamedQuery("GiLotevtaView.findByVendedorFecha").
+                setParameter("idempresa", idempresa).
+                setParameter("fromDate", dfromDate).
+                setParameter("toDate", dtoDate).
+                setParameter("idvendedor", idvendedor).getResultList();
+    }
+
     @GET
     @Path("{from}/{to}")
     @Produces({"application/json"})
-    public List<GiLotevtaView> findRange(@PathParam("from") Integer from, 
-                                         @PathParam("to")   Integer to,
-                                         @HeaderParam("token") String token) {
+    public List<GiLotevtaView> findRange(@PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
         setToken(token);
         return super.findRange(new int[]{from, to});
     }
@@ -95,9 +127,9 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     @Override
-    protected UserSession getUserSession(String key){
+    protected UserSession getUserSession(String key) {
         UserSession userSession = sesiones.getUserSession(key);
         return userSession;
     }
