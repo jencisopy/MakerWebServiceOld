@@ -57,6 +57,14 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
         return findByVendedor();
     }
 
+    @GET
+    @Path("vendedor")
+    @Produces({"application/json"})
+    public List<GiLotevtaView> findByVendedor(@HeaderParam("token") String token) {
+        setToken(token);            
+        return findByVendedor();
+    }
+    
     public List<GiLotevtaView> findByVendedor() {
         Long idempresa  = this.getIdempresa();
         Long idvendedor = this.getIdVendedor();
