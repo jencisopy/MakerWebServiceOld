@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "GiLotevtaView.findAll", query = "SELECT g FROM GiLotevtaView g where g.idempresa = :idempresa"),
     @NamedQuery(name = "GiLotevtaView.findByIdgiLotevta", query = "SELECT g FROM GiLotevtaView g WHERE g.idgiLotevta = :idgiLotevta"),
     @NamedQuery(name = "GiLotevtaView.findByVendedor",   query = "SELECT g FROM GiLotevtaView g where g.idempresa = :idempresa and g.idvendedor = :idvendedor"),    
+    @NamedQuery(name = "GiLotevtaView.findByVendedorFecha",   query = "SELECT g FROM GiLotevtaView g where g.idempresa = :idempresa and g.idvendedor = :idvendedor and g.fecha between :fromDate and :toDate "),    
     @NamedQuery(name = "GiLotevtaView.findByIdgiLote", query = "SELECT g FROM GiLotevtaView g WHERE g.idgiLote = :idgiLote"),
     @NamedQuery(name = "GiLotevtaView.findByIdempresa", query = "SELECT g FROM GiLotevtaView g WHERE g.idempresa = :idempresa"),
     @NamedQuery(name = "GiLotevtaView.findByCodigo", query = "SELECT g FROM GiLotevtaView g WHERE g.idempresa = :idempresa and trim(g.codigo) = :codigo"),
