@@ -22,7 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import py.com.oym.model.tables.GiLotevtaMejora;
+import py.com.oym.model.tables.GiLoteMejora;
 import py.com.oym.ws.model.ReturnMessage;
 import py.com.oym.ws.model.UserSession;
 
@@ -31,8 +31,8 @@ import py.com.oym.ws.model.UserSession;
  * @author mtrinidad
  */
 @Stateless
-@Path("lotevtamejora")
-public class GiLotevtaMejoraFacadeREST extends AbstractFacade<GiLotevtaMejora> {
+@Path("lotemejora")
+public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
 
     @PersistenceContext(unitName = "maker95PU")
     private EntityManager em;
@@ -40,30 +40,30 @@ public class GiLotevtaMejoraFacadeREST extends AbstractFacade<GiLotevtaMejora> {
     @Inject
     private Sesiones sesiones;
     
-    public GiLotevtaMejoraFacadeREST() {
-        super(GiLotevtaMejora.class);
+    public GiLoteMejoraFacadeREST() {
+        super(GiLoteMejora.class);
     }
 
     @POST
     @Path("upload")
     @Consumes({"application/json"})
     @Produces({"application/json"})
-    public Response create(GiLotevtaMejora entity,
+    public Response create(GiLoteMejora entity,
             @HeaderParam("token") String token) {
 
         setToken(token);        
         byte[] imageByteArray = Base64.getDecoder().decode(entity.getDocumentoBase64());
-        entity.setDocumento(imageByteArray);
+        entity.setFoto(imageByteArray);
         super.create(entity);
         ReturnMessage returnMsg = new ReturnMessage();
-        returnMsg.setId(entity.getIdgiLotevtaMejora().toString());
+        returnMsg.setId(entity.getIdgiLoteMejora().toString());
         return Response.ok().entity(returnMsg).build();
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, GiLotevtaMejora entity) {
+    public void edit(@PathParam("id") Long id, GiLoteMejora entity) {
         super.edit(entity);
     }
 
@@ -76,21 +76,21 @@ public class GiLotevtaMejoraFacadeREST extends AbstractFacade<GiLotevtaMejora> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public GiLotevtaMejora find(@PathParam("id") Long id) {
+    public GiLoteMejora find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<GiLotevtaMejora> findAll() {
+    public List<GiLoteMejora> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<GiLotevtaMejora> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<GiLoteMejora> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

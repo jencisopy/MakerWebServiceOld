@@ -31,26 +31,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mtrinidad
  */
 @Entity
-@Table(name = "gi_lotevta_mejora")
+@Table(name = "gi_lote_mejora")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "GiLotevtaMejora.findAll", query = "SELECT g FROM GiLotevtaMejora g")
-    , @NamedQuery(name = "GiLotevtaMejora.findByIdgiLotevtaMejora", query = "SELECT g FROM GiLotevtaMejora g WHERE g.idgiLotevtaMejora = :idgiLotevtaMejora")
-    , @NamedQuery(name = "GiLotevtaMejora.findByIdgiLotevta", query = "SELECT g FROM GiLotevtaMejora g WHERE g.idgiLotevta = :idgiLotevta")
-    , @NamedQuery(name = "GiLotevtaMejora.findByIdgiLotetipomejora", query = "SELECT g FROM GiLotevtaMejora g WHERE g.idgiLotetipomejora = :idgiLotetipomejora")
-    , @NamedQuery(name = "GiLotevtaMejora.findByNombre", query = "SELECT g FROM GiLotevtaMejora g WHERE g.nombre = :nombre")})
-public class GiLotevtaMejora implements Serializable {
+    @NamedQuery(name = "GiLoteMejora.findAll", query = "SELECT g FROM GiLoteMejora g")
+    , @NamedQuery(name = "GiLoteMejora.findByIdgiLoteMejora", query = "SELECT g FROM GiLoteMejora g WHERE g.idgiLoteMejora = :idgiLoteMejora")
+    , @NamedQuery(name = "GiLoteMejora.findByIdgiLote", query = "SELECT g FROM GiLoteMejora g WHERE g.idgiLote = :idgiLote")
+    , @NamedQuery(name = "GiLoteMejora.findByIdgiLotetipomejora", query = "SELECT g FROM GiLoteMejora g WHERE g.idgiLotetipomejora = :idgiLotetipomejora")
+    , @NamedQuery(name = "GiLoteMejora.findByNombre", query = "SELECT g FROM GiLoteMejora g WHERE g.nombre = :nombre")})
+public class GiLoteMejora implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)        
     @Basic(optional = false)
-    @Column(name = "idgi_lotevta_mejora")
-    private Long idgiLotevtaMejora;
+    @Column(name = "idgi_lote_mejora")
+    private Long idgiLoteMejora;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idgi_lotevta")
-    private long idgiLotevta;
+    @Column(name = "idgi_lote")
+    private long idgiLote;
     @Basic(optional = false)
     @NotNull
     @Column(name = "idgi_lotetipomejora")
@@ -61,8 +61,8 @@ public class GiLotevtaMejora implements Serializable {
     @Transient
     private String documentoBase64;    
     @Lob
-    @Column(name = "documento")
-    private byte[] documento;
+    @Column(name = "foto")
+    private byte[] foto;
     @Column(name = "fechareplicacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechareplicacion;
@@ -79,33 +79,33 @@ public class GiLotevtaMejora implements Serializable {
     @Column(name = "appuser")
     private String appuser;
 
-    public GiLotevtaMejora() {
+    public GiLoteMejora() {
     }
 
-    public GiLotevtaMejora(Long idgiLotevtaMejora) {
-        this.idgiLotevtaMejora = idgiLotevtaMejora;
+    public GiLoteMejora(Long idgiLoteMejora) {
+        this.idgiLoteMejora = idgiLoteMejora;
     }
 
-    public GiLotevtaMejora(Long idgiLotevtaMejora, long idgiLotevta, long idgiLotetipomejora) {
-        this.idgiLotevtaMejora = idgiLotevtaMejora;
-        this.idgiLotevta = idgiLotevta;
+    public GiLoteMejora(Long idgiLoteMejora, long idgiLote, long idgiLotetipomejora) {
+        this.idgiLoteMejora = idgiLoteMejora;
+        this.idgiLote = idgiLote;
         this.idgiLotetipomejora = idgiLotetipomejora;
     }
 
-    public Long getIdgiLotevtaMejora() {
-        return idgiLotevtaMejora;
+    public Long getIdgiLoteMejora() {
+        return idgiLoteMejora;
     }
 
-    public void setIdgiLotevtaMejora(Long idgiLotevtaMejora) {
-        this.idgiLotevtaMejora = idgiLotevtaMejora;
+    public void setIdgiLoteMejora(Long idgiLoteMejora) {
+        this.idgiLoteMejora = idgiLoteMejora;
     }
 
-    public long getIdgiLotevta() {
-        return idgiLotevta;
+    public long getIdgiLote() {
+        return idgiLote;
     }
 
-    public void setIdgiLotevta(long idgiLotevta) {
-        this.idgiLotevta = idgiLotevta;
+    public void setIdgiLote(long idgiLote) {
+        this.idgiLote = idgiLote;
     }
 
     public long getIdgiLotetipomejora() {
@@ -124,12 +124,12 @@ public class GiLotevtaMejora implements Serializable {
         this.nombre = nombre;
     }
 
-    public byte[] getDocumento() {
-        return documento;
+    public byte[] getFoto() {
+        return foto;
     }
 
-    public void setDocumento(byte[] documento) {
-        this.documento = documento;
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public Date getFechareplicacion() {
@@ -183,18 +183,18 @@ public class GiLotevtaMejora implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idgiLotevtaMejora != null ? idgiLotevtaMejora.hashCode() : 0);
+        hash += (idgiLoteMejora != null ? idgiLoteMejora.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof GiLotevtaMejora)) {
+        if (!(object instanceof GiLoteMejora)) {
             return false;
         }
-        GiLotevtaMejora other = (GiLotevtaMejora) object;
-        if ((this.idgiLotevtaMejora == null && other.idgiLotevtaMejora != null) || (this.idgiLotevtaMejora != null && !this.idgiLotevtaMejora.equals(other.idgiLotevtaMejora))) {
+        GiLoteMejora other = (GiLoteMejora) object;
+        if ((this.idgiLoteMejora == null && other.idgiLoteMejora != null) || (this.idgiLoteMejora != null && !this.idgiLoteMejora.equals(other.idgiLoteMejora))) {
             return false;
         }
         return true;
@@ -202,7 +202,7 @@ public class GiLotevtaMejora implements Serializable {
 
     @Override
     public String toString() {
-        return "py.com.oym.model.tables.GiLotevtaMejora[ idgiLotevtaMejora=" + idgiLotevtaMejora + " ]";
+        return "py.com.oym.model.tables.GiLoteMejora[ idgiLoteMejora=" + idgiLoteMejora + " ]";
     }
     
     @PrePersist

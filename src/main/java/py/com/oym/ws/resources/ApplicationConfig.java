@@ -41,9 +41,9 @@ public class ApplicationConfig extends Application {
         resources.add(py.com.oym.ws.resources.CtactependientedetalleREST.class);
         resources.add(py.com.oym.ws.resources.CtactereferidoREST.class);
         resources.add(py.com.oym.ws.resources.GiFraccionREST.class);
+        resources.add(py.com.oym.ws.resources.GiLoteMejoraFacadeREST.class);
         resources.add(py.com.oym.ws.resources.GiLoteREST.class);
         resources.add(py.com.oym.ws.resources.GiLotevtaDocumentoFacadeREST.class);
-        resources.add(py.com.oym.ws.resources.GiLotevtaMejoraFacadeREST.class);
         resources.add(py.com.oym.ws.resources.GiLotevtaREST.class);
         resources.add(py.com.oym.ws.resources.GiLotevtaViewREST.class);
         resources.add(py.com.oym.ws.resources.GiManzanaREST.class);
