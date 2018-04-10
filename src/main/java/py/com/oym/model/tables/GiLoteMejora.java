@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mtrinidad
  */
 @Entity
-@Table(name = "gi_lote_mejora")
+@Table(name = "gi_lotemejora")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "GiLoteMejora.findAll", query = "SELECT g FROM GiLoteMejora g")
@@ -45,7 +45,7 @@ public class GiLoteMejora implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)        
     @Basic(optional = false)
-    @Column(name = "idgi_lote_mejora")
+    @Column(name = "idgi_lotemejora")
     private Long idgiLoteMejora;
     @Basic(optional = false)
     @NotNull
