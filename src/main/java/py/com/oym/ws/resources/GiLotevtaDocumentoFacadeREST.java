@@ -5,6 +5,7 @@
  */
 package py.com.oym.ws.resources;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -51,7 +52,7 @@ public class GiLotevtaDocumentoFacadeREST extends AbstractFacade<GiLotevtaDocume
     public Response create(GiLotevtaDocumento entity,
             @HeaderParam("token") String token) {
 
-        setToken(token);        
+        setToken(token);
         byte[] imageByteArray = Base64.getDecoder().decode(entity.getDocumentoBase64());
         entity.setDocumento(imageByteArray);
         super.create(entity);
@@ -81,10 +82,29 @@ public class GiLotevtaDocumentoFacadeREST extends AbstractFacade<GiLotevtaDocume
     }
 
     @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<GiLotevtaDocumento> findAll() {
-        return super.findAll();
+    @Path("list")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<GiLotevtaDocumento> findAll(@HeaderParam("token") String token) {
+        List<GiLotevtaDocumento> list = new ArrayList<>();
+        setToken(token);
+        list = getEntityManager().
+                createNamedQuery("GiLotevtaDocumento.findAll").
+                getResultList();
+
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setDocumento(null);
+        }
+        return list;
+    }
+
+    @GET
+    @Path("listdocumento")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<GiLotevtaDocumento> findAllwithDocumento(@HeaderParam("token") String token) {
+        setToken(token);
+        return getEntityManager().
+                createNamedQuery("GiLotevtaDocumento.findAll").
+                getResultList();
     }
 
     @GET

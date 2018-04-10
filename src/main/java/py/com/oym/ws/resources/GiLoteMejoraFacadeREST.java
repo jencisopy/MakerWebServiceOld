@@ -5,6 +5,7 @@
  */
 package py.com.oym.ws.resources;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -39,7 +40,7 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
 
     @Inject
     private Sesiones sesiones;
-    
+
     public GiLoteMejoraFacadeREST() {
         super(GiLoteMejora.class);
     }
@@ -51,7 +52,7 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
     public Response create(GiLoteMejora entity,
             @HeaderParam("token") String token) {
 
-        setToken(token);        
+        setToken(token);
         byte[] imageByteArray = Base64.getDecoder().decode(entity.getDocumentoBase64());
         entity.setFoto(imageByteArray);
         super.create(entity);
@@ -81,10 +82,29 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
     }
 
     @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<GiLoteMejora> findAll() {
-        return super.findAll();
+    @Path("list")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<GiLoteMejora> findAll(@HeaderParam("token") String token) {
+        List<GiLoteMejora> list = new ArrayList<>();
+        setToken(token);
+        list = getEntityManager().
+                createNamedQuery("GiLoteMejora.findAll").
+                getResultList();
+
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setFoto(null);
+        }
+        return list;
+    }
+
+    @GET
+    @Path("listmejora")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<GiLoteMejora> findAllwithMejora(@HeaderParam("token") String token) {
+        setToken(token);
+        return getEntityManager().
+                createNamedQuery("GiLoteMejora.findAll").
+                getResultList();
     }
 
     @GET
@@ -110,5 +130,5 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
     protected UserSession getUserSession(String key) {
         UserSession userSession = sesiones.getUserSession(key);
         return userSession;
-    }    
+    }
 }
