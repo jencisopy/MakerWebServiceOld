@@ -38,6 +38,7 @@ public class CanalvtaREST extends AbstractFacade<CanalvtaView> {
     }
 
 
+
     @GET
     @Path("{id}")
     @Produces({"application/json"})

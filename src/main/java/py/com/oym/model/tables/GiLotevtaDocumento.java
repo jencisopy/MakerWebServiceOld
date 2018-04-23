@@ -70,6 +70,11 @@ public class GiLotevtaDocumento implements Serializable {
     @Column(name = "appuser")
     private String appuser;
 
+    @Size(max = 100)
+    @Column(name = "nombre")
+    private String nombre;
+    
+    
     public GiLotevtaDocumento() {
     }
 
@@ -154,6 +159,15 @@ public class GiLotevtaDocumento implements Serializable {
         this.documentoBase64 = documentoBase64;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -53,13 +53,7 @@ public class GiLoteREST extends AbstractFacade<GiLoteView> {
     public String option() {
         return "";
     }
-
-    @OPTIONS
-    @Path("{id}")
-    @Produces({"application/json"})
-    public String optionId() {
-        return "";
-    }
+ 
 
     @OPTIONS
     @Path("findbyfraccion")

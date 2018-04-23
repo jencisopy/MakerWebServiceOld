@@ -5,7 +5,6 @@
  */
 package py.com.oym.ws.resources;
 
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -82,30 +81,20 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
     }
 
     @GET
-    @Path("list")
+    @Path("list/{idgilote}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<GiLoteMejora> findAll(@HeaderParam("token") String token) {
-        List<GiLoteMejora> list = new ArrayList<>();
+    public List<GiLoteMejora> findByIdlote(@HeaderParam("token") String token,
+                                            @PathParam("idgilote") Long idgilote) {
+        List<GiLoteMejora> list;
         setToken(token);
         list = getEntityManager().
-                createNamedQuery("GiLoteMejora.findAll").
+                createNamedQuery("GiLoteMejoraSinfoto.findByIdlote").
+                setParameter("idgilote", idgilote).
                 getResultList();
 
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setFoto(null);
-        }
         return list;
     }
 
-    @GET
-    @Path("listmejora")
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<GiLoteMejora> findAllwithMejora(@HeaderParam("token") String token) {
-        setToken(token);
-        return getEntityManager().
-                createNamedQuery("GiLoteMejora.findAll").
-                getResultList();
-    }
 
     @GET
     @Path("{from}/{to}")

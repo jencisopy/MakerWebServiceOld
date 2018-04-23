@@ -17,6 +17,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import py.com.oym.others.Params;
 import py.com.oym.ws.model.UserSession;
 
@@ -24,7 +27,7 @@ import py.com.oym.ws.model.UserSession;
  *
  * @author Jorge Enciso
  */
-public abstract class AbstractFacade<T>{
+    public abstract class AbstractFacade<T>{
 
     private Class<T> entityClass;
     private String token;
@@ -38,11 +41,20 @@ public abstract class AbstractFacade<T>{
     protected abstract EntityManager getEntityManager();
     protected abstract UserSession getUserSession(String key);    
 
+
+    @OPTIONS
+    @Path("{id}")    
+    @Produces({"application/json"})
+    public String optionId() {
+        return "";
+    }
+    
     public void create(T entity) {
         getEntityManager().persist(entity);
     }
 
     
+   
     public void edit(T entity) {
         getEntityManager().merge(entity);
     }

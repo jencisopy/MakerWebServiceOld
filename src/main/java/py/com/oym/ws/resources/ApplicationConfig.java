@@ -33,6 +33,7 @@ public class ApplicationConfig extends Application {
         resources.add(py.com.oym.ws.exceptions.LoteEstadoExceptionMapper.class);
         resources.add(py.com.oym.ws.exceptions.ZGenericExceptionMapper.class);
         resources.add(py.com.oym.ws.filters.CORSFilter.class);
+        resources.add(py.com.oym.ws.filters.RequestFilter.class);
         resources.add(py.com.oym.ws.resources.BocaCobranzaREST.class);
         resources.add(py.com.oym.ws.resources.CanalpublicidadREST.class);
         resources.add(py.com.oym.ws.resources.CanalvtaREST.class);

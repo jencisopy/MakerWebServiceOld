@@ -5,7 +5,6 @@
  */
 package py.com.oym.ws.resources;
 
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -82,30 +81,20 @@ public class GiLotevtaDocumentoFacadeREST extends AbstractFacade<GiLotevtaDocume
     }
 
     @GET
-    @Path("list")
+    @Path("list/{idgiLotevta}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<GiLotevtaDocumento> findAll(@HeaderParam("token") String token) {
-        List<GiLotevtaDocumento> list = new ArrayList<>();
+    public List<GiLotevtaDocumento> findAll(@HeaderParam("token") String token,
+                                            @PathParam("idgiLotevta") Long idgiLotevta) {
+        List<GiLotevtaDocumento> list;
         setToken(token);
         list = getEntityManager().
-                createNamedQuery("GiLotevtaDocumento.findAll").
+                createNamedQuery("GiLotevtaDocumentoSinfoto.findByIdgiLotevta").
+                setParameter("idgiLotevta",idgiLotevta).
                 getResultList();
 
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setDocumento(null);
-        }
         return list;
     }
 
-    @GET
-    @Path("listdocumento")
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<GiLotevtaDocumento> findAllwithDocumento(@HeaderParam("token") String token) {
-        setToken(token);
-        return getEntityManager().
-                createNamedQuery("GiLotevtaDocumento.findAll").
-                getResultList();
-    }
 
     @GET
     @Path("{from}/{to}")
