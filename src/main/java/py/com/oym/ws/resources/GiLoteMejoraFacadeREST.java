@@ -15,6 +15,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -78,6 +79,14 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public GiLoteMejora find(@PathParam("id") Long id) {
         return super.find(id);
+    }
+
+    
+    @OPTIONS
+    @Path("list/{idgilote}")
+    @Produces({"application/json"})
+    public String option() {
+        return "";
     }
 
     @GET

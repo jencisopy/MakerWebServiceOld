@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -61,6 +62,15 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
         return findByVendedor();
     }
 
+    
+    @OPTIONS
+    @Path("vendedor")
+    @Produces({"application/json"})
+    public String option1() {
+        return "";
+    }
+
+    
     @GET
     @Path("vendedor")
     @Produces({"application/json"})
@@ -78,6 +88,13 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
                 setParameter("idvendedor", idvendedor).getResultList();
     }
 
+    @OPTIONS
+    @Path("vendedorfecha/{fromDate}/{toDate}")
+    @Produces({"application/json"})
+    public String option2() {
+        return "";
+    }
+    
     @GET
     @Path("vendedorfecha/{fromDate}/{toDate}")
     @Produces({"application/json"})
