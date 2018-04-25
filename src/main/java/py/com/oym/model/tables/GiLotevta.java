@@ -145,7 +145,6 @@ public class GiLotevta implements Serializable {
     @Column(name = "anulado")
     private boolean anulado;
     
-    @Basic(optional = false)
     @Column(name = "judicializado")
     private Boolean judicializado;
     
@@ -622,11 +621,11 @@ public class GiLotevta implements Serializable {
         persona.setIdgiLotevta(this);
     }    
 
-    public boolean getJudicializado() {
+    public Boolean getJudicializado() {
         return judicializado;
     }
 
-    public void setJudicializado(boolean judicializado) {
+    public void setJudicializado(Boolean judicializado) {
         this.judicializado = judicializado;
     }
 
