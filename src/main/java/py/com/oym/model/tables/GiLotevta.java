@@ -145,6 +145,11 @@ public class GiLotevta implements Serializable {
     @Column(name = "anulado")
     private boolean anulado;
     
+    @Basic(optional = false)
+    @Column(name = "judicializado")
+    private Boolean judicializado;
+    
+    
     
     @Column(name = "fechareplicacion")
     @Temporal(TemporalType.TIMESTAMP)
@@ -616,6 +621,16 @@ public class GiLotevta implements Serializable {
         getGiLoteVtaPersona().add(persona);
         persona.setIdgiLotevta(this);
     }    
+
+    public boolean getJudicializado() {
+        return judicializado;
+    }
+
+    public void setJudicializado(boolean judicializado) {
+        this.judicializado = judicializado;
+    }
+
+
     
     @PrePersist
     @PreUpdate

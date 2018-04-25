@@ -295,6 +295,11 @@ public class GiLotevtaView implements Serializable {
     @Size(max = 50)
     @Column(name = "gi_categorialiquidacionnombre")
     private String giCategorialiquidacionnombre;
+    
+    @Basic(optional = false)
+    @Column(name = "judicializado")
+    private Boolean judicializado;
+    
 
     public GiLotevtaView() {
     }
@@ -907,5 +912,11 @@ public class GiLotevtaView implements Serializable {
         this.boletadeposito = boletadeposito;
     }
 
-    
+    public boolean getJudicializado() {
+        return judicializado;
+    }
+
+    public void setJudicializado(boolean judicializado) {
+        this.judicializado = judicializado;
+    }
 }
