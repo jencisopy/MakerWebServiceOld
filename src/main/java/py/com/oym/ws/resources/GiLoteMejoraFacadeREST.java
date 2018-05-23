@@ -56,6 +56,10 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
         byte[] imageByteArray = Base64.getDecoder().decode(entity.getDocumentoBase64());
         entity.setFoto(imageByteArray);
         super.create(entity);
+        //Leer de empresaparam la carpeta donde guardar
+        //Arma el nombre del archivo.
+        //Guardar en documentlink (xxxxx_{id_gilote}_gi_lote.jpg)
+        //Guardar en la carpeta
         ReturnMessage returnMsg = new ReturnMessage();
         returnMsg.setId(entity.getIdgiLoteMejora().toString());
         return Response.ok().entity(returnMsg).build();

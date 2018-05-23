@@ -57,6 +57,11 @@ public class GiLotevtaDocumentoFacadeREST extends AbstractFacade<GiLotevtaDocume
         byte[] imageByteArray = Base64.getDecoder().decode(entity.getDocumentoBase64());
         entity.setDocumento(imageByteArray);
         super.create(entity);
+        //Leer de empresaparam la carpeta donde guardar
+        //Arma el nombre del archivo.
+        //Guardar en documentlink (xxxxx_{id_gilotevta}_gi_lotevta.jpg)
+        //Guardar en la carpeta
+        
         ReturnMessage returnMsg = new ReturnMessage();
         returnMsg.setId(entity.getIdgiLotevtaDocumento().toString());
         return Response.ok().entity(returnMsg).build();
