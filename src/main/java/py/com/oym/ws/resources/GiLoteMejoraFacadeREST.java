@@ -5,12 +5,20 @@
  */
 package py.com.oym.ws.resources;
 
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Base64;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -23,6 +31,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import py.com.oym.model.tables.Documentlink;
+import py.com.oym.model.tables.DocumentlinkPK;
+import py.com.oym.model.tables.GiContratonroctrl;
 import py.com.oym.model.tables.GiLoteMejora;
 import py.com.oym.ws.model.ReturnMessage;
 import py.com.oym.ws.model.UserSession;
@@ -56,6 +67,41 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
         byte[] imageByteArray = Base64.getDecoder().decode(entity.getDocumentoBase64());
         entity.setFoto(imageByteArray);
         super.create(entity);
+        Query query;
+        query = em.createNativeQuery("SELECT documentlinkpath "
+                + " from datos.empresaparam "
+                + " where idempresa = " + getIdempresa());
+
+        String documentLinkPath = ((Object) query.getSingleResult()).toString();
+        String fileName, fileSystemName;
+
+        fileName = "mejora_"+entity.getIdgiLoteMejora().toString() + ".jpg";
+        fileSystemName = documentLinkPath+"\\mejora_" + entity.getIdgiLoteMejora().toString() + "_" + entity.getIdgiLote() + "_gi_lote.jpg";
+        Documentlink documentLink = new Documentlink();
+        DocumentlinkPK documentLinkPK = new DocumentlinkPK();
+        documentLinkPK.setArchivo(fileName);
+        documentLinkPK.setId(entity.getIdgiLote());
+        documentLinkPK.setTabla("gi_lote");
+        documentLink.setDocumentlinkPK(documentLinkPK);
+
+        OutputStream out = null;
+
+        try {
+            out = new BufferedOutputStream(new FileOutputStream(fileSystemName));
+            out.write(imageByteArray);
+        } catch (IOException ex) {
+            throw new py.com.oym.ws.exceptions.LoteEstado("Error al guardar archivo de imagen");
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ex) {
+                    throw new py.com.oym.ws.exceptions.LoteEstado("Error al cerrar archivo de imagen");
+                }
+            }
+        }
+        em.persist(documentLink);
+
         //Leer de empresaparam la carpeta donde guardar
         //Arma el nombre del archivo.
         //Guardar en documentlink (xxxxx_{id_gilote}_gi_lote.jpg)
@@ -85,7 +131,6 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
         return super.find(id);
     }
 
-    
     @OPTIONS
     @Path("list/{idgilote}")
     @Produces({"application/json"})
@@ -97,7 +142,7 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
     @Path("list/{idgilote}")
     @Produces({MediaType.APPLICATION_JSON})
     public List<GiLoteMejora> findByIdlote(@HeaderParam("token") String token,
-                                            @PathParam("idgilote") Long idgilote) {
+            @PathParam("idgilote") Long idgilote) {
         List<GiLoteMejora> list;
         setToken(token);
         list = getEntityManager().
@@ -107,7 +152,6 @@ public class GiLoteMejoraFacadeREST extends AbstractFacade<GiLoteMejora> {
 
         return list;
     }
-
 
     @GET
     @Path("{from}/{to}")

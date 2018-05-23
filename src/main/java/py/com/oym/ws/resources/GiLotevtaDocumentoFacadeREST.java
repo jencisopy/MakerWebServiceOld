@@ -5,12 +5,17 @@
  */
 package py.com.oym.ws.resources;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -23,6 +28,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import py.com.oym.model.tables.Documentlink;
+import py.com.oym.model.tables.DocumentlinkPK;
 import py.com.oym.model.tables.GiLotevtaDocumento;
 import py.com.oym.ws.model.ReturnMessage;
 import py.com.oym.ws.model.UserSession;
@@ -57,6 +64,42 @@ public class GiLotevtaDocumentoFacadeREST extends AbstractFacade<GiLotevtaDocume
         byte[] imageByteArray = Base64.getDecoder().decode(entity.getDocumentoBase64());
         entity.setDocumento(imageByteArray);
         super.create(entity);
+        
+        Query query;
+        query = em.createNativeQuery("SELECT documentlinkpath "
+                + " from datos.empresaparam "
+                + " where idempresa = " + getIdempresa());
+
+        String documentLinkPath = ((Object) query.getSingleResult()).toString();
+        String fileName, fileSystemName;
+
+        fileName = "documento_"+entity.getIdgiLotevtaDocumento() + ".jpg";
+        fileSystemName = documentLinkPath+"\\documento_" + entity.getIdgiLotevtaDocumento() + "_" + entity.getIdgiLotevta() + "_gi_lotevta.jpg";
+        Documentlink documentLink = new Documentlink();
+        DocumentlinkPK documentLinkPK = new DocumentlinkPK();
+        documentLinkPK.setArchivo(fileName);
+        documentLinkPK.setId(entity.getIdgiLotevta());
+        documentLinkPK.setTabla("gi_lotevta");
+        documentLink.setDocumentlinkPK(documentLinkPK);
+
+        OutputStream out = null;
+
+        try {
+            out = new BufferedOutputStream(new FileOutputStream(fileSystemName));
+            out.write(imageByteArray);
+        } catch (IOException ex) {
+            throw new py.com.oym.ws.exceptions.LoteEstado("Error al guardar archivo de imagen");
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ex) {
+                    throw new py.com.oym.ws.exceptions.LoteEstado("Error al cerrar archivo de imagen");
+                }
+            }
+        }
+        em.persist(documentLink);
+        
         //Leer de empresaparam la carpeta donde guardar
         //Arma el nombre del archivo.
         //Guardar en documentlink (xxxxx_{id_gilotevta}_gi_lotevta.jpg)
