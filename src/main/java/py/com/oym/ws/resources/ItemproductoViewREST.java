@@ -5,11 +5,14 @@
  */
 package py.com.oym.ws.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.OPTIONS;
@@ -66,6 +69,7 @@ public class ItemproductoViewREST extends AbstractFacade<ItemproductoView> {
         return super.findAll();
     }    
 
+    
     @GET
     @Path("{from}/{to}")
     @Produces({"application/json"})
@@ -73,7 +77,46 @@ public class ItemproductoViewREST extends AbstractFacade<ItemproductoView> {
                                       @PathParam("to") Integer to,
                                       @HeaderParam("token") String token) {
         setToken(token);
-        return super.findRange(new int[]{from, to});
+        List<ItemproductoView> result = new ArrayList();
+        try {
+            Query query = getEntityManager()
+                                .createNamedQuery("ItemproductoView.findAll")
+                                .setParameter("idempresa", getIdempresa())
+                                .setFirstResult(from)
+                                .setMaxResults(to - from + 1);
+                                
+            
+            result = query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return result;
+    }
+
+    
+    @GET
+    @Path("{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public List<ItemproductoView> findRange(@PathParam("from") Integer from, 
+                                      @PathParam("to") Integer to,
+                                      @PathParam("search") String search,
+                                      @HeaderParam("token") String token) {
+        setToken(token);
+        List<ItemproductoView> result = new ArrayList();
+        try {
+            Query query = getEntityManager()
+                                .createNamedQuery("ItemproductoView.findByName")
+                                .setParameter("idempresa", getIdempresa())
+                                .setParameter("nombre", "%"+search+"%")  
+                                .setFirstResult(from)
+                                .setMaxResults(to - from + 1);
+                                
+            
+            result = query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return result;
     }
 
     @GET
@@ -82,6 +125,8 @@ public class ItemproductoViewREST extends AbstractFacade<ItemproductoView> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+    
+
 
     @Override
     protected EntityManager getEntityManager() {

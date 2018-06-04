@@ -27,8 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "itemproducto_view")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ItemproductoView.findAll", query = "SELECT i FROM ItemproductoView i where i.idempresa = :idempresa"),
-    @NamedQuery(name = "ItemproductoView.findByCodigo", query = "SELECT i FROM ItemproductoView i WHERE i.idempresa = :idempresa and i.codigo = :codigo")})
+    @NamedQuery(name = "ItemproductoView.findAll", query = "SELECT i FROM ItemproductoView i where i.idempresa = :idempresa order by i.nombre"),
+    @NamedQuery(name = "ItemproductoView.findByCodigo", query = "SELECT i FROM ItemproductoView i WHERE i.idempresa = :idempresa and i.codigo = :codigo"),
+    @NamedQuery(name = "ItemproductoView.findByName", query = "SELECT i FROM ItemproductoView i WHERE i.idempresa = :idempresa and i.nombre like :nombre order by i.nombre")})
 public class ItemproductoView implements Serializable {
 
     private static final long serialVersionUID = 1L;
