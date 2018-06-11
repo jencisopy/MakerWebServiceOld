@@ -19,13 +19,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author jenci_000
+ * @author Jorge Enciso
  */
 @Entity
 @Table(name = "cliente_view")
@@ -35,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ClienteView.findByIdctacte", query = "SELECT c FROM ClienteView c WHERE c.idctacte  = :idctacte"),
     @NamedQuery(name = "ClienteView.findByIdempresa",query = "SELECT c FROM ClienteView c WHERE c.idempresa = :idempresa"),
     @NamedQuery(name = "ClienteView.findByCodigo",   query = "SELECT c FROM ClienteView c WHERE c.idempresa = :idempresa and c.codigo = :codigo"),
-    @NamedQuery(name = "ClienteView.findByRuc", query = "SELECT c FROM ClienteView c WHERE c.ruc = :ruc")})
+    @NamedQuery(name = "ClienteView.findByRuc",      query = "SELECT c FROM ClienteView c WHERE c.ruc = :ruc")})
 public class ClienteView implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)

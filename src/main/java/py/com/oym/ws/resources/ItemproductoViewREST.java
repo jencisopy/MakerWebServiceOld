@@ -69,6 +69,14 @@ public class ItemproductoViewREST extends AbstractFacade<ItemproductoView> {
         return super.findAll();
     }    
 
+
+
+    @OPTIONS
+    @Path("{from}/{to}")
+    @Produces({"application/json"})
+    public String option2() {
+        return "";
+    }    
     
     @GET
     @Path("{from}/{to}")
@@ -93,6 +101,14 @@ public class ItemproductoViewREST extends AbstractFacade<ItemproductoView> {
         return result;
     }
 
+
+
+    @OPTIONS
+    @Path("{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public String option3() {
+        return "";
+    }    
     
     @GET
     @Path("{from}/{to}/{search}")
@@ -105,9 +121,10 @@ public class ItemproductoViewREST extends AbstractFacade<ItemproductoView> {
         List<ItemproductoView> result = new ArrayList();
         try {
             Query query = getEntityManager()
-                                .createNamedQuery("ItemproductoView.findByName")
+                                .createNamedQuery("ItemproductoView.findByCodeAndName")
                                 .setParameter("idempresa", getIdempresa())
                                 .setParameter("nombre", "%"+search+"%")  
+                                .setParameter("codigo", "%"+search+"%")  
                                 .setFirstResult(from)
                                 .setMaxResults(to - from + 1);
                                 

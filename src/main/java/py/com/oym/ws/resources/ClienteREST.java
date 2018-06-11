@@ -6,6 +6,7 @@
 package py.com.oym.ws.resources;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -15,7 +16,9 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -32,6 +35,7 @@ import py.com.oym.model.tables.Ctacte;
 import py.com.oym.model.tables.Pais;
 import py.com.oym.model.tables.Persona;
 import py.com.oym.model.tables.Personafisica;
+import py.com.oym.model.views.ClienteLightView;
 import py.com.oym.ws.model.ReturnMessage;
 import py.com.oym.ws.model.UserSession;
 
@@ -180,14 +184,70 @@ public class ClienteREST extends AbstractFacade<ClienteView> {
         return super.findAll();
     }
 
+
+    @OPTIONS
+    @Path("{from}/{to}")
+    @Produces({"application/json"})
+    public String option2() {
+        return "";
+    }    
+    
     @GET
     @Path("{from}/{to}")
     @Produces({"application/json"})
-    public List<ClienteView> findRange(@PathParam("from") Integer from,
-            @PathParam("to") Integer to,
-            @HeaderParam("token") String token) {
+    public List<ClienteLightView> findRange(@PathParam("from") Integer from, 
+                                      @PathParam("to") Integer to,
+                                      @HeaderParam("token") String token) {
         setToken(token);
-        return super.findRange(new int[]{from, to});
+        List<ClienteLightView> result = new ArrayList();
+        try {
+            Query query = getEntityManager()
+                                .createNamedQuery("ClienteLightView.findAll")
+                                .setParameter("idempresa", getIdempresa())
+                                .setFirstResult(from)
+                                .setMaxResults(to - from + 1);
+                                
+            
+            result = query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return result;
+    }
+
+
+
+    @OPTIONS
+    @Path("{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public String option3() {
+        return "";
+    }    
+    
+    @GET
+    @Path("{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public List<ClienteLightView> findRange(@PathParam("from") Integer from, 
+                                      @PathParam("to") Integer to,
+                                      @PathParam("search") String search,
+                                      @HeaderParam("token") String token) {
+        setToken(token);
+        List<ClienteLightView> result = new ArrayList();
+        try {
+            Query query = getEntityManager()
+                                .createNamedQuery("ClienteLightView.findByCodeAndName")
+                                .setParameter("idempresa", getIdempresa())
+                                .setParameter("nombre", "%"+search+"%")  
+                                .setParameter("codigo", "%"+search+"%")  
+                                .setFirstResult(from)
+                                .setMaxResults(to - from + 1);
+                                
+            
+            result = query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return result;
     }
 
     @GET
