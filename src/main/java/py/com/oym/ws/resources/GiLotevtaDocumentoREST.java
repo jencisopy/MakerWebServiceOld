@@ -70,7 +70,7 @@ public class GiLotevtaDocumentoREST extends AbstractFacade<GiLotevtaDocumento> {
                 + " from datos.empresaparam "
                 + " where idempresa = " + getIdempresa());
 
-        String documentLinkPath = ((Object) query.getSingleResult()).toString();
+        String documentLinkPath = ((Object) query.getSingleResult()).toString().trim();
         String fileName, fileSystemName;
 
         fileName = "documento_"+entity.getIdgiLotevtaDocumento() + ".jpg";
@@ -84,20 +84,20 @@ public class GiLotevtaDocumentoREST extends AbstractFacade<GiLotevtaDocumento> {
 
         OutputStream out = null;
 
-//        try {
-//            out = new BufferedOutputStream(new FileOutputStream(fileSystemName));
-//            out.write(imageByteArray);
-//        } catch (IOException ex) {
-//            throw new py.com.oym.ws.exceptions.LoteEstado("Error al guardar archivo de imagen");
-//        } finally {
-//            if (out != null) {
-//                try {
-//                    out.close();
-//                } catch (IOException ex) {
-//                    throw new py.com.oym.ws.exceptions.LoteEstado("Error al cerrar archivo de imagen");
-//                }
-//            }
-//        }
+        try {
+            out = new BufferedOutputStream(new FileOutputStream(fileSystemName));
+            out.write(imageByteArray);
+        } catch (IOException ex) {
+            throw new py.com.oym.ws.exceptions.LoteEstado("Error al guardar archivo de imagen");
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ex) {
+                    throw new py.com.oym.ws.exceptions.LoteEstado("Error al cerrar archivo de imagen");
+                }
+            }
+        }
         em.persist(documentLink);
         
         //Leer de empresaparam la carpeta donde guardar

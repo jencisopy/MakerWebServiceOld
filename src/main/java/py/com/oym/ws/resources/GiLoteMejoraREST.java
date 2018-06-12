@@ -70,7 +70,7 @@ public class GiLoteMejoraREST extends AbstractFacade<GiLoteMejora> {
                 + " from datos.empresaparam "
                 + " where idempresa = " + getIdempresa());
 
-        String documentLinkPath = ((Object) query.getSingleResult()).toString();
+        String documentLinkPath = ((Object) query.getSingleResult()).toString().trim();
         String fileName, fileSystemName;
 
         fileName = "mejora_"+entity.getIdgiLoteMejora().toString() + ".jpg";
@@ -84,22 +84,22 @@ public class GiLoteMejoraREST extends AbstractFacade<GiLoteMejora> {
 
         OutputStream out = null;
 
-//        try {
-//            out = new BufferedOutputStream(new FileOutputStream(fileSystemName));
-//            out.write(imageByteArray);
-//        } catch (IOException ex) {
-//            LOGGER.error(ex.getCause());
-//            throw new py.com.oym.ws.exceptions.LoteEstado("Error al guardar archivo de imagen");
-//        } finally {
-//            if (out != null) {
-//                try {
-//                    out.close();
-//                } catch (IOException ex) {
-//                    LOGGER.error(ex.getCause());
-//                    throw new py.com.oym.ws.exceptions.LoteEstado("Error al cerrar archivo de imagen");
-//                }
-//            }
-//        }
+        try {
+            out = new BufferedOutputStream(new FileOutputStream(fileSystemName));
+            out.write(imageByteArray);
+        } catch (IOException ex) {
+            LOGGER.error(ex.getCause());
+            throw new py.com.oym.ws.exceptions.LoteEstado("Error al guardar archivo de imagen");
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ex) {
+                    LOGGER.error(ex.getCause());
+                    throw new py.com.oym.ws.exceptions.LoteEstado("Error al cerrar archivo de imagen");
+                }
+            }
+        }
         em.persist(documentLink);
 
         //Leer de empresaparam la carpeta donde guardar
