@@ -23,13 +23,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author JORGE
+ * @author Jorge Enciso
  */
 @Entity
 @Table(name = "itemmovimiento_view")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ItemmovimientoLightView.findAll", query = "SELECT i FROM ItemmovimientoLightView i")})
+    @NamedQuery(name = "ItemmovimientoLightView.findAll", query = "SELECT i FROM ItemmovimientoLightView i"),
+    @NamedQuery(name = "ItemmovimientoLightView.findFacturasByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'V' order by i.fecha desc"),
+    @NamedQuery(name = "ItemmovimientoLightView.findPedidosByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'VP' order by i.fecha desc"), 
+})
 public class ItemmovimientoLightView implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -55,11 +58,17 @@ public class ItemmovimientoLightView implements Serializable {
     @Size(min = 1, max = 35)
     @Column(name = "idnro")
     private String idnro;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "idempresa")
     private long idempresa;
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idctacte")
+    private long idctacte;
+    
     @Size(max = 7)
     @Column(name = "secuencia")
     private String secuencia;
@@ -333,5 +342,11 @@ public class ItemmovimientoLightView implements Serializable {
         this.iddocumentotipo = iddocumentotipo;
     }
 
+    public long getIdctacte() {
+        return idctacte;
+    }
 
+    public void setIdctacte(long idctacte) {
+        this.idctacte = idctacte;
+    }
 }
