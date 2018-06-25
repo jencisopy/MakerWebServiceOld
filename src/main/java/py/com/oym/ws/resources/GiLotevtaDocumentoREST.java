@@ -31,6 +31,7 @@ import javax.ws.rs.core.Response;
 import py.com.oym.model.tables.Documentlink;
 import py.com.oym.model.tables.DocumentlinkPK;
 import py.com.oym.model.tables.GiLotevtaDocumento;
+import py.com.oym.model.tables.GiLotevtaDocumentoSinfoto;
 import py.com.oym.ws.model.ReturnMessage;
 import py.com.oym.ws.model.UserSession;
 
@@ -141,9 +142,9 @@ public class GiLotevtaDocumentoREST extends AbstractFacade<GiLotevtaDocumento> {
     @GET
     @Path("list/{idgiLotevta}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<GiLotevtaDocumento> findAll(@HeaderParam("token") String token,
+    public List<GiLotevtaDocumentoSinfoto> findAll(@HeaderParam("token") String token,
                                             @PathParam("idgiLotevta") Long idgiLotevta) {
-        List<GiLotevtaDocumento> list;
+        List<GiLotevtaDocumentoSinfoto> list;
         setToken(token);
         list = getEntityManager().
                 createNamedQuery("GiLotevtaDocumentoSinfoto.findByIdgiLotevta").

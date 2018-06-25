@@ -32,6 +32,7 @@ import org.apache.log4j.Logger;
 import py.com.oym.model.tables.Documentlink;
 import py.com.oym.model.tables.DocumentlinkPK;
 import py.com.oym.model.tables.GiLoteMejora;
+import py.com.oym.model.tables.GiLoteMejoraSinfoto;
 import py.com.oym.ws.model.ReturnMessage;
 import py.com.oym.ws.model.UserSession;
 
@@ -141,9 +142,9 @@ public class GiLoteMejoraREST extends AbstractFacade<GiLoteMejora> {
     @GET
     @Path("list/{idgilote}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<GiLoteMejora> findByIdlote(@HeaderParam("token") String token,
+    public List<GiLoteMejoraSinfoto> findByIdlote(@HeaderParam("token") String token,
             @PathParam("idgilote") Long idgilote) {
-        List<GiLoteMejora> list;
+        List<GiLoteMejoraSinfoto> list;
         setToken(token);
         list = getEntityManager().
                 createNamedQuery("GiLoteMejoraSinfoto.findByIdlote").
