@@ -37,6 +37,13 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         super(ItemmovimientoLightView.class);
     }
     
+    @OPTIONS
+    @Path("facturas/{idctacte}")    
+    @Produces({"application/json"})
+    public String option() {
+        return "";
+    }
+
     @GET
     @Path("facturas/{idctacte}")
     @Produces({"application/json"})
@@ -46,6 +53,14 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         return findFacturasByIdctacte(idctacte);
     }
 
+    
+    @OPTIONS
+    @Path("pedidos/{idctacte}")
+    @Produces({"application/json"})
+    public String option1() {
+        return "";
+    }
+    
     @GET
     @Path("pedidos/{idctacte}")
     @Produces({"application/json"})
