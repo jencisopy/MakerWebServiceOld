@@ -54,6 +54,7 @@ public class ApplicationConfig extends Application {
         resources.add(py.com.oym.ws.resources.ItemproductoViewREST.class);
         resources.add(py.com.oym.ws.resources.ItemproductostockViewREST.class);
         resources.add(py.com.oym.ws.resources.MonedaREST.class);
+        resources.add(py.com.oym.ws.resources.ProveedorREST.class);
         resources.add(py.com.oym.ws.resources.ProvinciaREST.class);
         resources.add(py.com.oym.ws.resources.UserBean.class);
         resources.add(py.com.oym.ws.resources.VendedorREST.class);

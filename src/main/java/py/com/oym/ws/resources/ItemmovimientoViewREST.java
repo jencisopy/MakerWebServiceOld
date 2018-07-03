@@ -25,7 +25,7 @@ import py.com.oym.ws.model.UserSession;
  * @author Jorge Enciso
  */
 @Stateless
-@Path("clientes")
+@Path("")
 public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightView> {
     @PersistenceContext(unitName = "maker95PU")
     private EntityManager em;
@@ -38,14 +38,36 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
     
     @OPTIONS
-    @Path("facturas/{idctacte}")    
+    @Path("clientes/facturas/{idctacte}")    
     @Produces({"application/json"})
     public String option() {
         return "";
     }
 
+    @OPTIONS
+    @Path("proveedores/ordenes/{idctacte}")    
+    @Produces({"application/json"})
+    public String option2() {
+        return "";
+    }
+    
+    @OPTIONS
+    @Path("clientes/pedidos/{idctacte}")
+    @Produces({"application/json"})
+    public String option1() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("proveedores/compras/{idctacte}")
+    @Produces({"application/json"})
+    public String option3() {
+        return "";
+    }
+    
+    
     @GET
-    @Path("facturas/{idctacte}")
+    @Path("clientes/facturas/{idctacte}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findFacturas(@PathParam("idctacte")     Long   idctacte,
                            @HeaderParam("token") String token) {
@@ -54,15 +76,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     
-    @OPTIONS
-    @Path("pedidos/{idctacte}")
-    @Produces({"application/json"})
-    public String option1() {
-        return "";
-    }
-    
     @GET
-    @Path("pedidos/{idctacte}")
+    @Path("clientes/pedidos/{idctacte}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findPedidos(@PathParam("idctacte")     Long   idctacte,
                            @HeaderParam("token") String token) {
@@ -70,6 +85,23 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         return findPedidosByIdctacte(idctacte);
     }
     
+    @GET
+    @Path("proveedores/ordenes/{idctacte}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findOrdenes(@PathParam("idctacte")     Long   idctacte,
+                           @HeaderParam("token") String token) {
+        setToken(token);
+        return findOrdenesByIdctacte(idctacte);
+    }
+
+    @GET
+    @Path("proveedores/compras/{idctacte}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findCompras(@PathParam("idctacte")     Long   idctacte,
+                           @HeaderParam("token") String token) {
+        setToken(token);
+        return findComprasByIdctacte(idctacte);
+    }
     
     protected List<ItemmovimientoLightView> findFacturasByIdctacte(Long idctacte) {
         try {
@@ -88,6 +120,25 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             return null;
         }
     }
+
+    protected List<ItemmovimientoLightView> findOrdenesByIdctacte(Long idctacte) {
+        try {
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findOrdenesByIdctacte").
+                    setParameter("idctacte", idctacte).getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    protected List<ItemmovimientoLightView> findComprasByIdctacte(Long idctacte) {
+        try {
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findComprasByIdctacte").
+                    setParameter("idctacte", idctacte).getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
     
     @Override
     protected EntityManager getEntityManager() {

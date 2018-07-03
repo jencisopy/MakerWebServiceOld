@@ -32,6 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ItemmovimientoLightView.findAll", query = "SELECT i FROM ItemmovimientoLightView i"),
     @NamedQuery(name = "ItemmovimientoLightView.findFacturasByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'V' order by i.fecha desc"),
     @NamedQuery(name = "ItemmovimientoLightView.findPedidosByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'VP' order by i.fecha desc"), 
+    @NamedQuery(name = "ItemmovimientoLightView.findOrdenesByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'COR' order by i.fecha desc"),
+    @NamedQuery(name = "ItemmovimientoLightView.findComprasByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'C' order by i.fecha desc"), 
 })
 public class ItemmovimientoLightView implements Serializable {
     private static final long serialVersionUID = 1L;
