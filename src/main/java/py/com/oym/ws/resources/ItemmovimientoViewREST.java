@@ -45,7 +45,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @OPTIONS
-    @Path("proveedores/ordenes/{idctacte}")    
+    @Path("proveedor/ordenes/{idctacte}")    
     @Produces({"application/json"})
     public String option2() {
         return "";
@@ -59,7 +59,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @OPTIONS
-    @Path("proveedores/compras/{idctacte}")
+    @Path("proveedor/compras/{idctacte}")
     @Produces({"application/json"})
     public String option3() {
         return "";
@@ -86,7 +86,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
     
     @GET
-    @Path("proveedores/ordenes/{idctacte}")
+    @Path("proveedor/ordenes/{idctacte}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findOrdenes(@PathParam("idctacte")     Long   idctacte,
                            @HeaderParam("token") String token) {
@@ -95,7 +95,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @GET
-    @Path("proveedores/compras/{idctacte}")
+    @Path("proveedor/compras/{idctacte}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findCompras(@PathParam("idctacte")     Long   idctacte,
                            @HeaderParam("token") String token) {

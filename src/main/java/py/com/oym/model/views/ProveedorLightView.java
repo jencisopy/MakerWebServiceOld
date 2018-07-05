@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "proveedor_view")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ProveedorLightView.findAll",           query = "SELECT c FROM ProveedorLightView c where c.idempresa = :idempresa"),
+    @NamedQuery(name = "ProveedorLightView.findAll",           query = "SELECT c FROM ProveedorLightView c where c.idempresa = :idempresa order by c.ctactenombre"),
     @NamedQuery(name = "ProveedorLightView.findByCodeAndName", query = "SELECT c FROM ProveedorLightView c WHERE c.idempresa = :idempresa and (c.ctactenombre like :nombre or c.codigo like :codigo) order by c.ctactenombre")})
 public class ProveedorLightView implements Serializable {
     private static final long serialVersionUID = 1L;
