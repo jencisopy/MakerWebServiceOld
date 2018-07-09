@@ -39,6 +39,7 @@ public class ApplicationConfig extends Application {
         resources.add(py.com.oym.ws.resources.CanalvtaREST.class);
         resources.add(py.com.oym.ws.resources.CiudadViewREST.class);
         resources.add(py.com.oym.ws.resources.ClienteREST.class);
+        resources.add(py.com.oym.ws.resources.CtactemovimientodetalleViewFacadeREST.class);
         resources.add(py.com.oym.ws.resources.CtactependientedetalleREST.class);
         resources.add(py.com.oym.ws.resources.CtactereferidoREST.class);
         resources.add(py.com.oym.ws.resources.GiFraccionREST.class);
