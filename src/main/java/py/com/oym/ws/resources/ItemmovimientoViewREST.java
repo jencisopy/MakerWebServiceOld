@@ -27,30 +27,31 @@ import py.com.oym.ws.model.UserSession;
 @Stateless
 @Path("")
 public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightView> {
+
     @PersistenceContext(unitName = "maker95PU")
     private EntityManager em;
-    
+
     @Inject
     private Sesiones sesiones;
 
     public ItemmovimientoViewREST() {
         super(ItemmovimientoLightView.class);
     }
-    
+
     @OPTIONS
-    @Path("clientes/facturas/{idctacte}")    
+    @Path("clientes/facturas/{idctacte}")
     @Produces({"application/json"})
     public String option() {
         return "";
     }
 
     @OPTIONS
-    @Path("proveedor/ordenes/{idctacte}")    
+    @Path("proveedor/ordenes/{idctacte}")
     @Produces({"application/json"})
     public String option2() {
         return "";
     }
-    
+
     @OPTIONS
     @Path("clientes/pedidos/{idctacte}")
     @Produces({"application/json"})
@@ -64,32 +65,102 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     public String option3() {
         return "";
     }
-    
+
+   @OPTIONS
+    @Path("clientes/facturas/{from}/{to}")
+    @Produces({"application/json"})
+    public String option4() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("proveedor/ordenes/{from}/{to}")
+    @Produces({"application/json"})
+    public String option5() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("clientes/pedidos/{from}/{to}")
+    @Produces({"application/json"})
+    public String option6() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("proveedor/compras/{from}/{to}")
+    @Produces({"application/json"})
+    public String option7() {
+        return "";
+    }
     
     @GET
     @Path("clientes/facturas/{idctacte}")
     @Produces({"application/json"})
-    public List<ItemmovimientoLightView> findFacturas(@PathParam("idctacte")     Long   idctacte,
-                           @HeaderParam("token") String token) {
+    public List<ItemmovimientoLightView> findFacturas(@PathParam("idctacte") Long idctacte,
+            @HeaderParam("token") String token) {
         setToken(token);
         return findFacturasByIdctacte(idctacte);
     }
 
-    
     @GET
     @Path("clientes/pedidos/{idctacte}")
     @Produces({"application/json"})
-    public List<ItemmovimientoLightView> findPedidos(@PathParam("idctacte")     Long   idctacte,
-                           @HeaderParam("token") String token) {
+    public List<ItemmovimientoLightView> findPedidos(@PathParam("idctacte") Long idctacte,
+            @HeaderParam("token") String token) {
         setToken(token);
         return findPedidosByIdctacte(idctacte);
+    }
+
+    @GET
+    @Path("clientes/pedidos/{from}/{to}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findPedidosRango(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findPedidosByIdempresa(from, to);
+    }
+
+    @GET
+    @Path("clientes/facturas/{from}/{to}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findFacturasRango(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findFacturasByIdempresa(from, to);
+    }
+    
+    @GET
+    @Path("proveedor/ordenes/{from}/{to}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findOrdenesRango(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findOrdenesByIdempresa(from, to);
+    }
+    
+    @GET
+    @Path("proveedor/compras/{from}/{to}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findComprasRango(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findComprasByIdempresa(from, to);
     }
     
     @GET
     @Path("proveedor/ordenes/{idctacte}")
     @Produces({"application/json"})
-    public List<ItemmovimientoLightView> findOrdenes(@PathParam("idctacte")     Long   idctacte,
-                           @HeaderParam("token") String token) {
+    public List<ItemmovimientoLightView> findOrdenes(@PathParam("idctacte") Long idctacte,
+            @HeaderParam("token") String token) {
         setToken(token);
         return findOrdenesByIdctacte(idctacte);
     }
@@ -97,12 +168,12 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     @GET
     @Path("proveedor/compras/{idctacte}")
     @Produces({"application/json"})
-    public List<ItemmovimientoLightView> findCompras(@PathParam("idctacte")     Long   idctacte,
-                           @HeaderParam("token") String token) {
+    public List<ItemmovimientoLightView> findCompras(@PathParam("idctacte") Long idctacte,
+            @HeaderParam("token") String token) {
         setToken(token);
         return findComprasByIdctacte(idctacte);
     }
-    
+
     protected List<ItemmovimientoLightView> findFacturasByIdctacte(Long idctacte) {
         try {
             return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findFacturasByIdctacte").
@@ -112,6 +183,53 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
+    protected List<ItemmovimientoLightView> findPedidosByIdempresa(Integer from, Integer to) {
+        try {
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findPedidosByIdempresa").
+                    setParameter("idempresa", super.getIdempresa())
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    protected List<ItemmovimientoLightView> findFacturasByIdempresa(Integer from, Integer to) {
+        try {
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findFacturasByIdempresa").
+                    setParameter("idempresa", super.getIdempresa())
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    protected List<ItemmovimientoLightView> findOrdenesByIdempresa(Integer from, Integer to) {
+        try {
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findOrdenesByIdempresa").
+                    setParameter("idempresa", super.getIdempresa())
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    protected List<ItemmovimientoLightView> findComprasByIdempresa(Integer from, Integer to) {
+        try {
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findOrdenesByIdempresa").
+                    setParameter("idempresa", super.getIdempresa())
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    
     protected List<ItemmovimientoLightView> findPedidosByIdctacte(Long idctacte) {
         try {
             return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findPedidosByIdctacte").
@@ -139,14 +257,13 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
-    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
     @Override
-    protected UserSession getUserSession(String key){
+    protected UserSession getUserSession(String key) {
         UserSession userSession = sesiones.getUserSession(key);
         return userSession;
     }
