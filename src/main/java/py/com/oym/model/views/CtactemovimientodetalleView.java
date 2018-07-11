@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "CtactemovimientodetalleView.findAll", query = "SELECT c FROM CtactemovimientodetalleView c")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByIdempresa", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.idempresa = :idempresa")
-    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdempresaDocumento", query = "SELECT d,c.fecha as fechax FROM CtactemovimientodetalleView d LEFT OUTER JOIN CtactemovimientoView c  ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")
-    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdctacte", query = "SELECT d,c.fecha FROM CtactemovimientodetalleView d LEFT OUTER JOIN CtactemovimientoView c ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idctacte = :idctacte and c.iddocumento = :iddocumento order by c.fecha desc")
+    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdempresaDocumento", query = "SELECT d,c.fecha as fecha  FROM CtactemovimientodetalleView d LEFT OUTER JOIN CtactemovimientoView c  ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")
+    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdctacte", query = "SELECT d,c.fecha FROM CtactemovimientodetalleView d LEFT OUTER JOIN CtactemovimientoView c ON d.idctactemovimiento = c.idctactemovimiento WHERE (c.ctacte = :search or c.ctactenombre like :search or c.nro= :search)  and c.iddocumento = :iddocumento order by c.fecha desc")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByIdctactemovimiento", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.idctactemovimiento = :idctactemovimiento")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByNro", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.nro = :nro")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByIddocumento", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.iddocumento = :iddocumento")
@@ -114,7 +114,6 @@ public class CtactemovimientodetalleView implements Serializable {
     public CtactemovimientodetalleView() {
     }
 
-
     public long getIdempresa() {
         return idempresa;
     }
@@ -138,6 +137,7 @@ public class CtactemovimientodetalleView implements Serializable {
     public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
+
     public String getNro() {
         return nro;
     }
@@ -232,7 +232,7 @@ public class CtactemovimientodetalleView implements Serializable {
 
     public void setIdctactemovimientodetalle(long idctactemovimientodetalle) {
         this.idctactemovimientodetalle = idctactemovimientodetalle;
-    }    
+    }
 
     public Date getFecha() {
         return fecha;
@@ -241,5 +241,5 @@ public class CtactemovimientodetalleView implements Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
+
 }

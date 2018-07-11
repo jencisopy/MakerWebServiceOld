@@ -6,6 +6,7 @@
 package py.com.oym.ws.resources;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -37,6 +38,8 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @Inject
     private Sesiones sesiones;
 
+    List<CtactemovimientodetalleView> resultList;
+
     public CtactemovimientodetalleViewREST() {
         super(CtactemovimientodetalleView.class);
     }
@@ -67,27 +70,58 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @Produces({"application/json"})
     public List<CtactemovimientodetalleView> findRangeCobranza(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
-            @PathParam("search") Long search,
+            @PathParam("search") String search,
             @HeaderParam("token") String token) {
         setToken(token);
-        //TODO es este el modelo correcto ?
-        List<CtactemovimientodetalleView> result = new ArrayList();
+        List<Object[]> result ;
         try {
-            //TODO Analizar {search} debe buscar por nro, codigo de cliente o nombre del cliente
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
-                    .setParameter("idctacte", search)
+                    .setParameter("search", search)
                     .setParameter("iddocumento", "CO")
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
 
             result = query.getResultList();
+            resultList = resolveFecha(result);
         } catch (NoResultException e) {
             return null;
         }
-        return result;
+        return resultList;
     }
 
+    @OPTIONS
+    @Path("documentos/pagos/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public String option3() {
+        return "";
+    }
+    
+    @GET
+    @Path("documentos/pagos/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public List<CtactemovimientodetalleView> findRangePago(@PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        List<Object[]> result;
+        try {
+            Query query = getEntityManager()
+                    .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
+                    .setParameter("search", search)
+                    .setParameter("iddocumento", "PP")
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1);
+
+            result = query.getResultList();
+            resultList = resolveFecha(result);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return resultList;
+    }
+    
     @OPTIONS
     @Path("documentos/cobranzas/{from}/{to}")
     @Produces({"application/json"})
@@ -102,8 +136,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        //TODO es este el modelo correcto ?
-        List<CtactemovimientodetalleView> result = new ArrayList();
+        List<Object[]> result ;
         try {
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByIdempresaDocumento")
@@ -113,44 +146,13 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
                     .setMaxResults(to - from + 1);
 
             result = query.getResultList();
+            resultList = resolveFecha(result);
         } catch (NoResultException e) {
             return null;
         }
-        return result;
+        return resultList;
     }
 
-    @OPTIONS
-    @Path("documentos/pagos/{from}/{to}/{search}")
-    @Produces({"application/json"})
-    public String option3() {
-        return "";
-    }
-
-    @GET
-    @Path("documentos/pagos/{from}/{to}/{search}")
-    @Produces({"application/json"})
-    public List<CtactemovimientodetalleView> findRangePago(@PathParam("from") Integer from,
-            @PathParam("to") Integer to,
-            @PathParam("search") Long search,
-            @HeaderParam("token") String token) {
-        setToken(token);
-        //TODO es este el modelo correcto ?
-        List<CtactemovimientodetalleView> result = new ArrayList();
-        try {
-            //TODO Analizar {search} debe buscar por nro, codigo de proveedor o nombre del proveedor
-            Query query = getEntityManager()
-                    .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
-                    .setParameter("idctacte", search)
-                    .setParameter("iddocumento", "PP")
-                    .setFirstResult(from)
-                    .setMaxResults(to - from + 1);
-
-            result = query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-        return result;
-    }
 
     @OPTIONS
     @Path("documentos/pagos/{from}/{to}")
@@ -166,8 +168,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        //TODO es este el modelo correcto ?
-        List<CtactemovimientodetalleView> result = new ArrayList();
+        List<Object[]> result;
         try {
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByIdempresaDocumento")
@@ -177,15 +178,11 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
                     .setMaxResults(to - from + 1);
 
             result = query.getResultList();
-
-            CtactemovimientodetalleView objeto;
-            for (int i = 0; i < result.size(); i++) {
-                //  result.get(i).setFecha(result.get(i)[1]);
-            }
+            resultList = resolveFecha(result);
         } catch (NoResultException e) {
             return null;
         }
-        return result;
+        return resultList;
     }
 
     @GET
@@ -198,6 +195,18 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    protected List<CtactemovimientodetalleView> resolveFecha(List<Object[]> result) {
+        resultList = new ArrayList<>();
+        CtactemovimientodetalleView row;
+        for (int i = 0; i < result.size(); i++) {
+            Date fecha = (Date) result.get(i)[1];
+            row = (CtactemovimientodetalleView) result.get(i)[0];
+            row.setFecha(fecha);
+            resultList.add(row);
+        }
+        return resultList;
     }
 
     @Override
