@@ -67,28 +67,28 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
    @OPTIONS
-    @Path("clientes/facturas/{from}/{to}")
+    @Path("documentos/facturas/{from}/{to}")
     @Produces({"application/json"})
     public String option4() {
         return "";
     }
 
     @OPTIONS
-    @Path("proveedor/ordenes/{from}/{to}")
+    @Path("documentos/ordenes/{from}/{to}")
     @Produces({"application/json"})
     public String option5() {
         return "";
     }
 
     @OPTIONS
-    @Path("clientes/pedidos/{from}/{to}")
+    @Path("documentos/pedidos/{from}/{to}")
     @Produces({"application/json"})
     public String option6() {
         return "";
     }
 
     @OPTIONS
-    @Path("proveedor/compras/{from}/{to}")
+    @Path("documentos/compras/{from}/{to}")
     @Produces({"application/json"})
     public String option7() {
         return "";
@@ -113,7 +113,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @GET
-    @Path("clientes/pedidos/{from}/{to}")
+    @Path("documentos/pedidos/{from}/{to}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findPedidosRango(
             @PathParam("from") Integer from,
@@ -124,7 +124,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @GET
-    @Path("clientes/facturas/{from}/{to}")
+    @Path("documentos/facturas/{from}/{to}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findFacturasRango(
             @PathParam("from") Integer from,
@@ -135,7 +135,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
     
     @GET
-    @Path("proveedor/ordenes/{from}/{to}")
+    @Path("documentos/ordenes/{from}/{to}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findOrdenesRango(
             @PathParam("from") Integer from,
@@ -146,7 +146,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
     
     @GET
-    @Path("proveedor/compras/{from}/{to}")
+    @Path("documentos/compras/{from}/{to}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findComprasRango(
             @PathParam("from") Integer from,

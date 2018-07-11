@@ -6,7 +6,6 @@
 package py.com.oym.ws.resources;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -29,8 +28,8 @@ import py.com.oym.ws.model.UserSession;
  * @author mtrinidad
  */
 @Stateless
-@Path("ctactemovimientodetalleview")
-public class CtactemovimientodetalleViewFacadeREST extends AbstractFacade<CtactemovimientodetalleView> {
+@Path("")
+public class CtactemovimientodetalleViewREST extends AbstractFacade<CtactemovimientodetalleView> {
 
     @PersistenceContext(unitName = "maker95PU")
     private EntityManager em;
@@ -38,41 +37,43 @@ public class CtactemovimientodetalleViewFacadeREST extends AbstractFacade<Ctacte
     @Inject
     private Sesiones sesiones;
 
-    public CtactemovimientodetalleViewFacadeREST() {
+    public CtactemovimientodetalleViewREST() {
         super(CtactemovimientodetalleView.class);
     }
 
     @OPTIONS
-    @Path("{id}")
+    @Path("documentos/ctactemovimientodetalle/{id}")
     @Produces({"application/json"})
     public String option() {
         return "";
     }
 
     @GET
-    @Path("{id}")
+    @Path("documentos/ctactemovimientodetalle/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public CtactemovimientodetalleView find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @OPTIONS
-    @Path("cobranza/{from}/{to}/{search}")
+    @Path("documentos/cobranzas/{from}/{to}/{search}")
     @Produces({"application/json"})
     public String option2() {
         return "";
     }
 
     @GET
-    @Path("cobranza/{from}/{to}/{search}")
+    @Path("documentos/cobranzas/{from}/{to}/{search}")
     @Produces({"application/json"})
     public List<CtactemovimientodetalleView> findRangeCobranza(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") Long search,
             @HeaderParam("token") String token) {
         setToken(token);
+        //TODO es este el modelo correcto ?
         List<CtactemovimientodetalleView> result = new ArrayList();
         try {
+            //TODO Analizar {search} debe buscar por nro, codigo de cliente o nombre del cliente
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
                     .setParameter("idctacte", search)
@@ -88,19 +89,20 @@ public class CtactemovimientodetalleViewFacadeREST extends AbstractFacade<Ctacte
     }
 
     @OPTIONS
-    @Path("cobranza/{from}/{to}")
+    @Path("documentos/cobranzas/{from}/{to}")
     @Produces({"application/json"})
     public String option5() {
         return "";
     }
 
     @GET
-    @Path("cobranza/{from}/{to}")
+    @Path("documentos/cobranzas/{from}/{to}")
     @Produces({"application/json"})
     public List<CtactemovimientodetalleView> findRangeCobranzaAll(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
+        //TODO es este el modelo correcto ?
         List<CtactemovimientodetalleView> result = new ArrayList();
         try {
             Query query = getEntityManager()
@@ -118,22 +120,24 @@ public class CtactemovimientodetalleViewFacadeREST extends AbstractFacade<Ctacte
     }
 
     @OPTIONS
-    @Path("pago/{from}/{to}/{search}")
+    @Path("documentos/pagos/{from}/{to}/{search}")
     @Produces({"application/json"})
     public String option3() {
         return "";
     }
 
     @GET
-    @Path("pago/{from}/{to}/{search}")
+    @Path("documentos/pagos/{from}/{to}/{search}")
     @Produces({"application/json"})
     public List<CtactemovimientodetalleView> findRangePago(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") Long search,
             @HeaderParam("token") String token) {
         setToken(token);
+        //TODO es este el modelo correcto ?
         List<CtactemovimientodetalleView> result = new ArrayList();
         try {
+            //TODO Analizar {search} debe buscar por nro, codigo de proveedor o nombre del proveedor
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
                     .setParameter("idctacte", search)
@@ -149,19 +153,20 @@ public class CtactemovimientodetalleViewFacadeREST extends AbstractFacade<Ctacte
     }
 
     @OPTIONS
-    @Path("pago/{from}/{to}")
+    @Path("documentos/pagos/{from}/{to}")
     @Produces({"application/json"})
     public String option4() {
         return "";
     }
 
     @GET
-    @Path("pago/{from}/{to}")
+    @Path("documentos/pagos/{from}/{to}")
     @Produces({"application/json"})
     public List<CtactemovimientodetalleView> findRangePagoAll(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
+        //TODO es este el modelo correcto ?
         List<CtactemovimientodetalleView> result = new ArrayList();
         try {
             Query query = getEntityManager()
