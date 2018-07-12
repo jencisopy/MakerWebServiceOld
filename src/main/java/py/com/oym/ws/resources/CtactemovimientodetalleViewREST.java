@@ -75,9 +75,10 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<Object[]> result ;
         try {
+            //TODO findByIdctacte no es nombre apropiado
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
-                    .setParameter("search", search)
+                    .setParameter("search", "%"+search.trim()+"%")  
                     .setParameter("iddocumento", "CO")
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
@@ -107,9 +108,10 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<Object[]> result;
         try {
+            //TODO findByIdctacte no es nombre apropiado            
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
-                    .setParameter("search", search)
+                    .setParameter("search", "%"+search.trim()+"%")  
                     .setParameter("iddocumento", "PP")
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);

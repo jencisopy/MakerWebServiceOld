@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "CtactemovimientodetalleView.findAll", query = "SELECT c FROM CtactemovimientodetalleView c")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByIdempresa", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.idempresa = :idempresa")
-    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdempresaDocumento", query = "SELECT d,c.fecha as fecha  FROM CtactemovimientodetalleView d LEFT OUTER JOIN CtactemovimientoView c  ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")
-    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdctacte", query = "SELECT d,c.fecha FROM CtactemovimientodetalleView d LEFT OUTER JOIN CtactemovimientoView c ON d.idctactemovimiento = c.idctactemovimiento WHERE (c.ctacte = :search or c.ctactenombre like :search or c.nro= :search)  and c.iddocumento = :iddocumento order by c.fecha desc")
+    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdempresaDocumento", query = "SELECT d,c.fecha as fecha  FROM CtactemovimientodetalleView d INNER JOIN CtactemovimientoView c  ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")
+    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdctacte", query = "SELECT d,c.fecha FROM CtactemovimientodetalleView d INNER JOIN CtactemovimientoView c ON d.idctactemovimiento = c.idctactemovimiento WHERE (c.ctacte = :search or LOWER(c.ctactenombre) like LOWER(:search) or c.nro= :search)  and c.iddocumento = :iddocumento order by c.fecha desc")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByIdctactemovimiento", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.idctactemovimiento = :idctactemovimiento")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByNro", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.nro = :nro")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByIddocumento", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.iddocumento = :iddocumento")
@@ -81,10 +81,11 @@ public class CtactemovimientodetalleView implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "nrodoc")
     private String nrodoc;
+
     @Transient
-    @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechadoc")
