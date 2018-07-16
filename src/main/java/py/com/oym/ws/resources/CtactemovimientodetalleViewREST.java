@@ -59,14 +59,14 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     }
 
     @OPTIONS
-    @Path("documentos/cobranzas/{from}/{to}/{search}")
+    @Path("documentos/cobrosdetalle/{from}/{to}/{search}")
     @Produces({"application/json"})
     public String option2() {
         return "";
     }
 
     @GET
-    @Path("documentos/cobranzas/{from}/{to}/{search}")
+    @Path("documentos/cobrosdetalle/{from}/{to}/{search}")
     @Produces({"application/json"})
     public List<CtactemovimientodetalleView> findRangeCobranza(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
@@ -92,14 +92,14 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     }
 
     @OPTIONS
-    @Path("documentos/pagos/{from}/{to}/{search}")
+    @Path("documentos/pagosdetalle/{from}/{to}/{search}")
     @Produces({"application/json"})
     public String option3() {
         return "";
     }
     
     @GET
-    @Path("documentos/pagos/{from}/{to}/{search}")
+    @Path("documentos/pagosdetalle/{from}/{to}/{search}")
     @Produces({"application/json"})
     public List<CtactemovimientodetalleView> findRangePago(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
@@ -125,14 +125,14 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     }
     
     @OPTIONS
-    @Path("documentos/cobranzas/{from}/{to}")
+    @Path("documentos/cobrosdetalle/{from}/{to}")
     @Produces({"application/json"})
     public String option5() {
         return "";
     }
 
     @GET
-    @Path("documentos/cobranzas/{from}/{to}")
+    @Path("documentos/cobrosdetalle/{from}/{to}")
     @Produces({"application/json"})
     public List<CtactemovimientodetalleView> findRangeCobranzaAll(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
@@ -157,14 +157,14 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
 
 
     @OPTIONS
-    @Path("documentos/pagos/{from}/{to}")
+    @Path("documentos/pagosdetalle/{from}/{to}")
     @Produces({"application/json"})
     public String option4() {
         return "";
     }
 
     @GET
-    @Path("documentos/pagos/{from}/{to}")
+    @Path("documentos/pagosdetalle/{from}/{to}")
     @Produces({"application/json"})
     public List<CtactemovimientodetalleView> findRangePagoAll(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
