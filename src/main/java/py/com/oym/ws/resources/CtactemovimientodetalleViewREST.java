@@ -118,6 +118,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())
                     .setParameter("iddocumento", "CO")
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
@@ -216,6 +217,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())                    
                     .setParameter("iddocumento", "PP")
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
@@ -313,6 +315,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientoView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())
                     .setParameter("iddocumento", "CO")
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
@@ -358,6 +361,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientoView.findByRefDocumentoFecha")
                     .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())
                     .setParameter("fechaini", fechaini)
                     .setParameter("fechafin", fechafin)
                     .setParameter("iddocumento", "CO")
@@ -427,6 +431,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientoView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())
                     .setParameter("iddocumento", "PP")
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
