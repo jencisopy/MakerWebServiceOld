@@ -114,7 +114,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<Object[]> result;
         try {
-            //TODO findByIdctacte no es nombre apropiado
+            //TODO findByRefDocumento no esta filtrando por empresa
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
@@ -146,7 +146,6 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<Object[]> result;
         try {
-            //TODO findByIdctacte no es nombre apropiado
             result = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
                     .setParameter("idctacte", idctacte)
@@ -213,7 +212,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<Object[]> result;
         try {
-            //TODO findByIdctacte no es nombre apropiado            
+            //TODO findByRefDocumento no esta filtrado por idempresa
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
@@ -245,7 +244,6 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<Object[]> result;
         try {
-            //TODO findByIdctacte no es nombre apropiado
             result = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
                     .setParameter("idctacte", idctacte)
@@ -311,7 +309,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<CtactemovimientoView> result;
         try {
-            //TODO findByIdctacte no es nombre apropiado
+            //TODO findByRefDocumento no esta filtrando por idempresa
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientoView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
@@ -425,7 +423,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<CtactemovimientoView> result;
         try {
-            //TODO findByIdctacte no es nombre apropiado
+            //TODO findByRefDocumento no filtra por idempresa
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientoView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
