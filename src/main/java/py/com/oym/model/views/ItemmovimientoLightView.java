@@ -31,11 +31,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ItemmovimientoLightView.findAll", query = "SELECT i FROM ItemmovimientoLightView i"),
     @NamedQuery(name = "ItemmovimientoLightView.findFacturasByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'V' order by i.fecha desc"),
+    @NamedQuery(name = "ItemmovimientoLightView.findFacturasByRefDocumento", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'V' order by i.fecha desc"), 
+    @NamedQuery(name = "ItemmovimientoLightView.findFacturasByRefDocumentoFecha", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'V' and i.fecha between :fechaini and :fechafin  order by i.fecha desc"), 
     @NamedQuery(name = "ItemmovimientoLightView.findPedidosByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'VP' order by i.fecha desc"), 
     @NamedQuery(name = "ItemmovimientoLightView.findOrdenesByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'COR' order by i.fecha desc"),
     @NamedQuery(name = "ItemmovimientoLightView.findComprasByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'C' order by i.fecha desc"), 
     @NamedQuery(name = "ItemmovimientoLightView.findFacturasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa = :idempresa and i.iddocumento = 'V' order by i.fecha desc"),
     @NamedQuery(name = "ItemmovimientoLightView.findPedidosByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa = :idempresa and i.iddocumento = 'VP' order by i.fecha desc"), 
+    @NamedQuery(name = "ItemmovimientoLightView.findPedidosByRefDocumento", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'VP' order by i.fecha desc"), 
+    @NamedQuery(name = "ItemmovimientoLightView.findPedidosByRefDocumentoFecha", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'VP' and i.fecha between :fechaini and :fechafin  order by i.fecha desc"), 
     @NamedQuery(name = "ItemmovimientoLightView.findOrdenesByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa = :idempresa and i.iddocumento = 'COR' order by i.fecha desc"),
     @NamedQuery(name = "ItemmovimientoLightView.findComprasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'C' order by i.fecha desc"), 
 })
@@ -152,6 +156,14 @@ public class ItemmovimientoLightView implements Serializable {
     private Short cuotas;
     @Column(name = "saldo")
     private BigDecimal saldo;
+
+    @Size(max = 11)
+    @Column(name = "ctacte")
+    private String ctacte;
+    @Size(max = 50)
+    @Column(name = "ctactenombre")
+    private String ctactenombre;
+    
     
     public ItemmovimientoLightView() {
     }
@@ -355,4 +367,21 @@ public class ItemmovimientoLightView implements Serializable {
     public void setIdctacte(long idctacte) {
         this.idctacte = idctacte;
     }
+
+    public String getCtacte() {
+        return ctacte;
+    }
+
+    public void setCtacte(String ctacte) {
+        this.ctacte = ctacte;
+    }
+
+    public String getCtactenombre() {
+        return ctactenombre;
+    }
+
+    public void setCtactenombre(String ctactenombre) {
+        this.ctactenombre = ctactenombre;
+    }
+    
 }
