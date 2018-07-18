@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CtactemovimientoView.findAll", query = "SELECT c FROM CtactemovimientoView c"),
-    @NamedQuery(name = "CtactemovimientoView.findByRefDocumento", query = "SELECT c FROM CtactemovimientoView c WHERE (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento order by c.fecha desc") ,   
-    @NamedQuery(name = "CtactemovimientoView.findByRefDocumentoFecha", query = "SELECT c FROM CtactemovimientoView c WHERE (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento and c.fecha between :fechaini and :fechafin order by c.fecha desc") ,   
+    @NamedQuery(name = "CtactemovimientoView.findByRefDocumento", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento order by c.fecha desc") ,   
+    @NamedQuery(name = "CtactemovimientoView.findByRefDocumentoFecha", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento and c.fecha between :fechaini and :fechafin order by c.fecha desc") ,   
     @NamedQuery(name = "CtactemovimientoView.findByIdempresaDocumento", query = "SELECT c  FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")})
 public class CtactemovimientoView implements Serializable {
 

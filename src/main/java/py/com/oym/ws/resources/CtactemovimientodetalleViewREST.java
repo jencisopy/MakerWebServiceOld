@@ -5,9 +5,8 @@
  */
 package py.com.oym.ws.resources;
 
-import java.time.LocalDate;
-import java.time.Year;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -40,6 +39,9 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
 
     @Inject
     private Sesiones sesiones;
+
+    Date fechaini;
+    Date fechafin;
 
     List<CtactemovimientodetalleView> resultList;
 
@@ -114,12 +116,12 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<Object[]> result;
         try {
-            //TODO findByRefDocumento no esta filtrando por empresa
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
                     .setParameter("searchExact", search.trim())
                     .setParameter("iddocumento", "CO")
+                    .setParameter("idempresa", super.getIdempresa())
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
 
@@ -213,12 +215,12 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<Object[]> result;
         try {
-            //TODO findByRefDocumento no esta filtrado por idempresa
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientodetalleView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
-                    .setParameter("searchExact", search.trim())                    
+                    .setParameter("searchExact", search.trim())
                     .setParameter("iddocumento", "PP")
+                    .setParameter("idempresa", super.getIdempresa())
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
 
@@ -311,12 +313,12 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<CtactemovimientoView> result;
         try {
-            //TODO findByRefDocumento no esta filtrando por idempresa
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientoView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
                     .setParameter("searchExact", search.trim())
                     .setParameter("iddocumento", "CO")
+                    .setParameter("idempresa", super.getIdempresa())
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
 
@@ -328,35 +330,26 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     }
 
     @OPTIONS
-    @Path("documentos/cobranzas/{from}/{to}/{search}/anho/mes")
+    @Path("documentos/cobranzas/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
     public String option11() {
         return "";
     }
 
-    //TODO este aun falta terminar
     @GET
-    @Path("documentos/cobranzas/{from}/{to}/{search}/anho/mes")
+    @Path("documentos/cobranzas/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
     public List<CtactemovimientoView> findRangeCobranzaSearchAnhoMes(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
-            @PathParam("anho") String anho,
+            @PathParam("anho") Integer anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
         List<CtactemovimientoView> result;
         try {
-            LocalDate fechaini = null;
-            LocalDate fechafin = null;
-            if ("*".equals(mes)) {
-                fechaini = Year.parse(anho).atMonth(1).atDay(1);
-                fechafin = Year.parse(anho).atMonth(12).atDay(31);
-            } else {
-                int month = Integer.parseInt(mes);
-                fechaini = Year.parse(anho).atMonth(month).atDay(1);
-                fechafin = Year.parse(anho).atMonth(12).atDay(31);
-            }
+
+            calculateRangeFecha(anho, mes);
 
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientoView.findByRefDocumentoFecha")
@@ -364,6 +357,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
                     .setParameter("searchExact", search.trim())
                     .setParameter("fechaini", fechaini)
                     .setParameter("fechafin", fechafin)
+                    .setParameter("idempresa", super.getIdempresa())
                     .setParameter("iddocumento", "CO")
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
@@ -427,11 +421,11 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         setToken(token);
         List<CtactemovimientoView> result;
         try {
-            //TODO findByRefDocumento no filtra por idempresa
             Query query = getEntityManager()
                     .createNamedQuery("CtactemovimientoView.findByRefDocumento")
                     .setParameter("search", "%" + search.trim() + "%")
                     .setParameter("searchExact", search.trim())
+                    .setParameter("idempresa", super.getIdempresa())
                     .setParameter("iddocumento", "PP")
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1);
@@ -443,6 +437,47 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         return result;
     }
 
+    @OPTIONS
+    @Path("documentos/pagos/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String option13() {
+        return "";
+    }
+
+    @GET
+    @Path("documentos/pagos/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public List<CtactemovimientoView> findRangePagoSearchAnhoMes(@PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @PathParam("anho") Integer anho,
+            @PathParam("mes") String mes,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        List<CtactemovimientoView> result;
+        try {
+
+            calculateRangeFecha(anho, mes);
+
+            Query query = getEntityManager()
+                    .createNamedQuery("CtactemovimientoView.findByRefDocumentoFecha")
+                    .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())
+                    .setParameter("fechaini", fechaini)
+                    .setParameter("fechafin", fechafin)
+                    .setParameter("idempresa", super.getIdempresa())
+                    .setParameter("iddocumento", "PP")
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1);
+
+            result = query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return result;
+    }
+    
+
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -453,6 +488,23 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    protected void calculateRangeFecha(Integer anho, String mes) {
+        Calendar cal = Calendar.getInstance();
+        if ("*".equals(mes)) {
+            cal.set(anho, 0, 1, 0, 0, 0);
+            fechaini = cal.getTime();
+            cal.set(anho, 11, 31, 23, 59, 59);
+            fechafin = cal.getTime();
+        } else {
+            cal.set(anho, Integer.parseInt(mes) - 1, 1, 0, 0, 0);
+            fechaini = cal.getTime();
+            cal.set(anho, Integer.parseInt(mes) - 1, 1, 23, 59, 59);
+            cal.add(Calendar.MONTH, +1);
+            cal.add(Calendar.DATE, -1);
+            fechafin = cal.getTime();
+        }
     }
 
     protected List<CtactemovimientodetalleView> resolveFecha(List<Object[]> result) {
