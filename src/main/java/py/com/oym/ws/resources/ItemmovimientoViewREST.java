@@ -38,7 +38,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
 
     Date fechaini;
     Date fechafin;
-    
+
     public ItemmovimientoViewREST() {
         super(ItemmovimientoLightView.class);
     }
@@ -100,6 +100,20 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @OPTIONS
+    @Path("documentos/ordenes/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public String docordfromtosearch() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("documentos/ordenes/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String docordfromtosearchanhomes() {
+        return "";
+    }
+
+    @OPTIONS
     @Path("documentos/pedidos/{from}/{to}")
     @Produces({"application/json"})
     public String option6() {
@@ -124,6 +138,20 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     @Path("documentos/compras/{from}/{to}")
     @Produces({"application/json"})
     public String option7() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("documentos/compras/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public String doccomfromtosearch() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("documentos/compras/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String doccomfromtosearchanhomes() {
         return "";
     }
 
@@ -231,6 +259,32 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @GET
+    @Path("documentos/ordenes/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findOrdenesRangoSearch(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findOrdenesByIdempresa(from, to, search);
+    }
+
+    @GET
+    @Path("documentos/ordenes/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findOrdenesRangoSearchAnhoMes(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @PathParam("anho") Integer anho,
+            @PathParam("mes") String mes,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findOrdenesByIdempresa(from, to, search, anho, mes);
+    }
+
+    @GET
     @Path("documentos/compras/{from}/{to}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findComprasRango(
@@ -239,6 +293,32 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @HeaderParam("token") String token) {
         setToken(token);
         return findComprasByIdempresa(from, to);
+    }
+
+    @GET
+    @Path("documentos/compras/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findComprasRangoSearch(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findComprasByIdempresa(from, to, search);
+    }
+
+    @GET
+    @Path("documentos/compras/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findComprasRangoSearchAnhomes(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @PathParam("anho") Integer anho,
+            @PathParam("mes") String mes,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findComprasByIdempresa(from, to, search, anho,mes);
     }
 
     @GET
@@ -268,7 +348,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
-    protected List<ItemmovimientoLightView> findPedidosByIdempresa(Integer from, Integer to) {
+    protected List<ItemmovimientoLightView> findPedidosByIdempresa(Integer from,
+            Integer to) {
         try {
             return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findPedidosByIdempresa").
                     setParameter("idempresa", super.getIdempresa())
@@ -280,7 +361,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
-    protected List<ItemmovimientoLightView> findPedidosByIdempresa(Integer from, Integer to, String search) {
+    protected List<ItemmovimientoLightView> findPedidosByIdempresa(Integer from,
+            Integer to, String search) {
         try {
             return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findPedidosByRefDocumento").
                     setParameter("idempresa", super.getIdempresa())
@@ -294,7 +376,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
-    protected List<ItemmovimientoLightView> findPedidosByIdempresa(Integer from, Integer to, String search, Integer anho, String mes) {
+    protected List<ItemmovimientoLightView> findPedidosByIdempresa(Integer from, 
+            Integer to, String search, Integer anho, String mes) {
         try {
             calculateRangeFecha(anho, mes);
 
@@ -312,7 +395,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
-    protected List<ItemmovimientoLightView> findFacturasByIdempresa(Integer from, Integer to) {
+    protected List<ItemmovimientoLightView> findFacturasByIdempresa(Integer from, 
+            Integer to) {
         try {
             return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findFacturasByIdempresa").
                     setParameter("idempresa", super.getIdempresa())
@@ -324,7 +408,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
-    protected List<ItemmovimientoLightView> findFacturasByIdempresa(Integer from, Integer to,String search) {
+    protected List<ItemmovimientoLightView> findFacturasByIdempresa(Integer from,
+            Integer to, String search) {
         try {
             return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findFacturasByRefDocumento").
                     setParameter("idempresa", super.getIdempresa())
@@ -337,10 +422,11 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             return null;
         }
     }
-    
-    protected List<ItemmovimientoLightView> findFacturasByIdempresa(Integer from, Integer to,String search,Integer anho,String mes) {
+
+    protected List<ItemmovimientoLightView> findFacturasByIdempresa(Integer from,
+            Integer to, String search, Integer anho, String mes) {
         try {
-            calculateRangeFecha(anho, mes);            
+            calculateRangeFecha(anho, mes);
             return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findFacturasByRefDocumentoFecha").
                     setParameter("idempresa", super.getIdempresa())
                     .setParameter("search", "%" + search.trim() + "%")
@@ -355,7 +441,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
-    protected List<ItemmovimientoLightView> findOrdenesByIdempresa(Integer from, Integer to) {
+    protected List<ItemmovimientoLightView> findOrdenesByIdempresa(Integer from, 
+            Integer to) {
         try {
             return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findOrdenesByIdempresa").
                     setParameter("idempresa", super.getIdempresa())
@@ -367,10 +454,77 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
-    protected List<ItemmovimientoLightView> findComprasByIdempresa(Integer from, Integer to) {
+    protected List<ItemmovimientoLightView> findOrdenesByIdempresa(Integer from,
+            Integer to, String search) {
         try {
-            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findOrdenesByIdempresa").
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findOrdenesByRefDocumento").
                     setParameter("idempresa", super.getIdempresa())
+                    .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    protected List<ItemmovimientoLightView> findOrdenesByIdempresa(Integer from, 
+            Integer to, String search, Integer anho, String mes) {
+        try {
+            calculateRangeFecha(anho, mes);
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findOrdenesByRefDocumentoFecha").
+                    setParameter("idempresa", super.getIdempresa())
+                    .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())
+                    .setParameter("fechaini", fechaini)
+                    .setParameter("fechafin", fechafin)
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    protected List<ItemmovimientoLightView> findComprasByIdempresa(Integer from, 
+            Integer to) {
+        try {
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findComprasByIdempresa").
+                    setParameter("idempresa", super.getIdempresa())
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    protected List<ItemmovimientoLightView> findComprasByIdempresa(Integer from, 
+            Integer to, String search) {
+        try {
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findComprasByRefDocumento").
+                    setParameter("idempresa", super.getIdempresa())
+                    .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    protected List<ItemmovimientoLightView> findComprasByIdempresa(Integer from,
+            Integer to, String search, Integer anho, String mes) {
+        try {
+            calculateRangeFecha(anho, mes);
+            return (List<ItemmovimientoLightView>) em.createNamedQuery("ItemmovimientoLightView.findComprasByRefDocumentoFecha").
+                    setParameter("idempresa", super.getIdempresa())
+                    .setParameter("search", "%" + search.trim() + "%")
+                    .setParameter("searchExact", search.trim())
+                    .setParameter("fechaini", fechaini)
+                    .setParameter("fechafin", fechafin)
                     .setFirstResult(from)
                     .setMaxResults(to - from + 1)
                     .getResultList();
