@@ -46,6 +46,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ItemmovimientoLightView.findComprasByRefDocumento", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'C' order by i.fecha desc"), 
     @NamedQuery(name = "ItemmovimientoLightView.findComprasByRefDocumentoFecha", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'C' and i.fecha between :fechaini and :fechafin  order by i.fecha desc"), 
     @NamedQuery(name = "ItemmovimientoLightView.findComprasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'C' order by i.fecha desc"), 
+    @NamedQuery(name = "ItemmovimientoLightView.findEntradasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'E' order by i.fecha desc"),    
+    @NamedQuery(name = "ItemmovimientoLightView.findSalidasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'S' order by i.fecha desc"),        
+    @NamedQuery(name = "ItemmovimientoLightView.findEnviosByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'EN' order by i.fecha desc"),        
 })
 public class ItemmovimientoLightView implements Serializable {
     private static final long serialVersionUID = 1L;
