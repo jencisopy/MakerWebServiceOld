@@ -568,7 +568,9 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             }
             String sql = "SELECT i FROM ItemmovimientoLightView i "
                     + "where i.idempresa = :idempresa "
-                    + "and i.iddocumento = :iddocumento ";
+                    + "and i.iddocumento = :iddocumento "
+                    + "and i.confirmado = 1 "
+                    + "and i.anulado = 0 ";
 
             if (idctacte != null) {
                 sql += " and i.idctacte = :idctacte";
