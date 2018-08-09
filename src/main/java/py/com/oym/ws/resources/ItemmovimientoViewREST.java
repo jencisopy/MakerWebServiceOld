@@ -579,7 +579,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             if (anho != null) {
                 sql += " and i.fecha between :fechaini and :fechafin";
             }
-            Query query = em.createQuery(sql + " order by i.fecha desc, nro")
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
                     .setParameter("iddocumento", iddocumento)
                     .setParameter("idempresa", super.getIdempresa());
 
