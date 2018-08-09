@@ -51,10 +51,25 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         return "";
     }
 
+    
+    @OPTIONS
+    @Path("clientes/ventas/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public String optionb() {
+        return "";
+    }
+    
     @OPTIONS
     @Path("proveedor/ordenes/{idctacte}")
     @Produces({"application/json"})
     public String option2() {
+        return "";
+    }
+    
+    @OPTIONS
+    @Path("proveedor/ordenes/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public String option2b() {
         return "";
     }
 
@@ -66,9 +81,24 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @OPTIONS
+    @Path("clientes/pedidos/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public String option1b() {
+        return "";
+    }
+
+
+    @OPTIONS
     @Path("proveedor/compras/{idctacte}")
     @Produces({"application/json"})
     public String option3() {
+        return "";
+    }
+    
+    @OPTIONS
+    @Path("proveedor/compras/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public String option3b() {
         return "";
     }
 
@@ -155,27 +185,93 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     public String doccomfromtosearchanhomes() {
         return "";
     }
+    
+    @OPTIONS
+    @Path("documentos/envios/{from}/{to}")
+    @Produces({"application/json"})
+    public String option8() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("documentos/envios/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public String option8b() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("documentos/envios/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String option8c() {
+        return "";
+    }
+    
+     @OPTIONS
+    @Path("documentos/entradas/{from}/{to}")
+    @Produces({"application/json"})
+    public String option9() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("documentos/entradas/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public String option9b() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("documentos/entradas/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String option9c() {
+        return "";
+    }
+    
+     @OPTIONS
+    @Path("documentos/salidas/{from}/{to}")
+    @Produces({"application/json"})
+    public String option10() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("documentos/salidas/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public String option10b() {
+        return "";
+    }
+
+    @OPTIONS
+    @Path("documentos/salidas/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String option10c() {
+        return "";
+    }
+    
+    
+    
 
     @GET
-    @Path("clientes/ventas/{idctacte}")
+    @Path("clientes/ventas/{idctacte}/{from}/{to}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findFacturas(@PathParam("idctacte") Long idctacte,
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("V",idctacte,null, null,from, to, null);
+        return findItemmov("V", idctacte, null, null, from, to, null);
     }
 
     @GET
-    @Path("clientes/pedidos/{idctacte}")
+    @Path("clientes/pedidos/{idctacte}/{from}/{to}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findPedidos(@PathParam("idctacte") Long idctacte,
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("VP",idctacte,null, null,from, to, null);        
+        return findItemmov("VP", idctacte, null, null, from, to, null);
     }
 
     @GET
@@ -186,7 +282,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("VP",null,null, null,from, to, null);
+        return findItemmov("VP", null, null, null, from, to, null);
     }
 
     @GET
@@ -198,7 +294,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("search") String search,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("VP",null,null, null, from, to, search);
+        return findItemmov("VP", null, null, null, from, to, search);
     }
 
     @GET
@@ -212,7 +308,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("VP",null, anho, mes, from, to, search);
+        return findItemmov("VP", null, anho, mes, from, to, search);
     }
 
     @GET
@@ -223,7 +319,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("V",null, null, null,from, to, null);
+        return findItemmov("V", null, null, null, from, to, null);
     }
 
     @GET
@@ -235,7 +331,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("search") String search,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("V",null, null, null, from, to, search);
+        return findItemmov("V", null, null, null, from, to, search);
     }
 
     @GET
@@ -249,10 +345,9 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("V",null, anho, mes, from, to, search);
+        return findItemmov("V", null, anho, mes, from, to, search);
     }
 
-    
     @GET
     @Path("documentos/entradas/{from}/{to}")
     @Produces({"application/json"})
@@ -261,7 +356,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("E",null, null, null, from, to, null);
+        return findItemmov("E", null, null, null, from, to, null);
     }
 
     @GET
@@ -273,7 +368,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("search") String search,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("E",null,null, null, from, to, search);
+        return findItemmov("E", null, null, null, from, to, search);
     }
 
     @GET
@@ -287,9 +382,83 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("E",null, anho, mes, from, to, search);
+        return findItemmov("E", null, anho, mes, from, to, search);
     }
-    
+
+    @GET
+    @Path("documentos/salidas/{from}/{to}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findSalidasRango(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findItemmov("S", null, null, null, from, to, null);
+    }
+
+    @GET
+    @Path("documentos/salidas/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findSalidasRangoSearch(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findItemmov("S", null, null, null, from, to, search);
+    }
+
+    @GET
+    @Path("documentos/salidas/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findSalidasRangoSearchAnhomes(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @PathParam("anho") Integer anho,
+            @PathParam("mes") String mes,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findItemmov("S", null, anho, mes, from, to, search);
+    }
+
+    @GET
+    @Path("documentos/envios/{from}/{to}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findEnviosRango(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findItemmov("EN", null, null, null, from, to, null);
+    }
+
+    @GET
+    @Path("documentos/envios/{from}/{to}/{search}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findEnviosRangoSearch(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findItemmov("EN", null, null, null, from, to, search);
+    }
+
+    @GET
+    @Path("documentos/envios/{from}/{to}/{search}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public List<ItemmovimientoLightView> findEnviosRangoSearchAnhomes(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("search") String search,
+            @PathParam("anho") Integer anho,
+            @PathParam("mes") String mes,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findItemmov("EN", null, anho, mes, from, to, search);
+    }
+
     @GET
     @Path("documentos/ordenes/{from}/{to}")
     @Produces({"application/json"})
@@ -298,7 +467,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("COR",null,null, null,from, to, null);
+        return findItemmov("COR", null, null, null, from, to, null);
     }
 
     @GET
@@ -310,7 +479,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("search") String search,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("COR",null,null, null, from, to, search);
+        return findItemmov("COR", null, null, null, from, to, search);
     }
 
     @GET
@@ -324,7 +493,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("COR",null, anho, mes, from, to, search);
+        return findItemmov("COR", null, anho, mes, from, to, search);
     }
 
     @GET
@@ -335,7 +504,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("C",null, null, null, from, to, null);
+        return findItemmov("C", null, null, null, from, to, null);
     }
 
     @GET
@@ -347,7 +516,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("search") String search,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("C",null,null, null, from, to, search);
+        return findItemmov("C", null, null, null, from, to, search);
     }
 
     @GET
@@ -361,85 +530,81 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("C",null, anho, mes, from, to, search);
+        return findItemmov("C", null, anho, mes, from, to, search);
     }
 
     @GET
-    @Path("proveedor/ordenes/{idctacte}")
+    @Path("proveedor/ordenes/{idctacte}/{from}/{to}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findOrdenes(@PathParam("idctacte") Long idctacte,
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("COR",idctacte,null, null, from, to, null);
+        return findItemmov("COR", idctacte, null, null, from, to, null);
     }
 
     @GET
-    @Path("proveedor/compras/{idctacte}")
+    @Path("proveedor/compras/{idctacte}/{from}/{to}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findCompras(@PathParam("idctacte") Long idctacte,
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        return findItemmov("C",idctacte,null, null, from, to, null);
+        return findItemmov("C", idctacte, null, null, from, to, null);
     }
 
-
-
-    protected List<ItemmovimientoLightView> findItemmov(String iddocumento, 
-                                                        Long idctacte, 
-                                                        Integer anho, 
-                                                        String mes, 
-                                                        Integer from,
-                                                        Integer to, 
-                                                        String search) {
+    protected List<ItemmovimientoLightView> findItemmov(String iddocumento,
+            Long idctacte,
+            Integer anho,
+            String mes,
+            Integer from,
+            Integer to,
+            String search) {
         try {
-            if (anho != null){
-                calculateRangeFecha(anho, mes);                
+            if (anho != null) {
+                calculateRangeFecha(anho, mes);
             }
             String sql = "SELECT i FROM ItemmovimientoLightView i "
                     + "where i.idempresa = :idempresa "
                     + "and i.iddocumento = :iddocumento ";
-            
-            if (idctacte != null){
+
+            if (idctacte != null) {
                 sql += " and i.idctacte = :idctacte";
             }
-            if (search != null){
+            if (search != null) {
                 sql += " and (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact)";
             }
-            if (anho != null){
+            if (anho != null) {
                 sql += " and i.fecha between :fechaini and :fechafin";
             }
             Query query = em.createQuery(sql + " order by i.fecha desc, nro")
-                            .setParameter("iddocumento", iddocumento)
-                            .setParameter("idempresa", super.getIdempresa());
+                    .setParameter("iddocumento", iddocumento)
+                    .setParameter("idempresa", super.getIdempresa());
 
-            if (idctacte != null){
+            if (idctacte != null) {
                 query.setParameter("idctacte", idctacte);
             }
-            
-            if (search != null){
-                    query.setParameter("search", "%" + search.trim() + "%")
-                         .setParameter("searchExact", search.trim());
-                
+
+            if (search != null) {
+                query.setParameter("search", "%" + search.trim() + "%")
+                        .setParameter("searchExact", search.trim());
+
             }
-            if (anho != null){
+            if (anho != null) {
                 query.setParameter("fechaini", fechaini)
                         .setParameter("fechafin", fechafin);
             }
-            
+
             return (List<ItemmovimientoLightView>) query
-                                                        .setFirstResult(from)
-                                                        .setMaxResults(to - from + 1)
-                                                        .getResultList();
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
         } catch (NoResultException e) {
             return null;
         }
     }
-
-
 
     protected void calculateRangeFecha(Integer anho, String mes) {
         Calendar cal = Calendar.getInstance();

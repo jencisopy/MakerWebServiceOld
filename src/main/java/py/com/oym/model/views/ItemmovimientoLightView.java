@@ -81,10 +81,8 @@ public class ItemmovimientoLightView implements Serializable {
     @Column(name = "idempresa")
     private long idempresa;
 
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "idctacte")
-    private long idctacte;
+    private Long idctacte;
     
     @Size(max = 7)
     @Column(name = "secuencia")
@@ -367,11 +365,11 @@ public class ItemmovimientoLightView implements Serializable {
         this.iddocumentotipo = iddocumentotipo;
     }
 
-    public long getIdctacte() {
+    public Long getIdctacte() {
         return idctacte;
     }
 
-    public void setIdctacte(long idctacte) {
+    public void setIdctacte(Long idctacte) {
         this.idctacte = idctacte;
     }
 
