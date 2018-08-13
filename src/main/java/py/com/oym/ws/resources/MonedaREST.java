@@ -79,6 +79,7 @@ public class MonedaREST extends AbstractFacade<MonedaView> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
 
     @Override
     protected UserSession getUserSession(String key){
