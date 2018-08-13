@@ -261,6 +261,60 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         return resultList;
     }
 
+    @OPTIONS
+    @Path("documentos/ctactemovimientoview/{idctactemovimiento}")
+    @Produces({"application/json"})
+    public String option9() {
+        return "";
+    }
+
+    @GET
+    @Path("documentos/ctactemovimientoview/{idctactemovimiento}")
+    @Produces({"application/json"})
+    public CtactemovimientoView findCtactemovByIdctactemov(
+            @PathParam("idctactemovimiento") Long idctactemovimiento,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        CtactemovimientoView result;
+        try {
+            Query query = getEntityManager()
+                    .createNamedQuery("CtactemovimientoView.findByIdctactemovimiento")
+                    .setParameter("idctactemovimiento", idctactemovimiento);
+
+            result = (CtactemovimientoView) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return result;
+    }
+
+    @OPTIONS
+    @Path("documentos/ctactemovimientodetalleview/{idctactemovimiento}")
+    @Produces({"application/json"})
+    public String option10() {
+        return "";
+    }
+
+    @GET
+    @Path("documentos/ctactemovimientodetalleview/{idctactemovimiento}")
+    @Produces({"application/json"})
+    public List<CtactemovimientodetalleView> findCtactemovdetByIdctactemov(
+            @PathParam("idctactemovimiento") Long idctactemovimiento,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        List<CtactemovimientodetalleView> result;
+        try {
+            Query query = getEntityManager()
+                    .createNamedQuery("CtactemovimientodetalleView.findByIdctactemovimiento")
+                    .setParameter("idctactemovimiento", idctactemovimiento);
+
+            result = query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return result;
+    }
+    
     /**
      * DOCUMENTOS COBROS
      *
@@ -299,7 +353,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @OPTIONS
     @Path("documentos/cobranzas/{from}/{to}/{search}")
     @Produces({"application/json"})
-    public String option9() {
+    public String option19() {
         return "";
     }
 
@@ -377,7 +431,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @OPTIONS
     @Path("documentos/pagos/{from}/{to}")
     @Produces({"application/json"})
-    public String option10() {
+    public String option20() {
         return "";
     }
 
@@ -476,7 +530,6 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         }
         return result;
     }
-    
 
     @GET
     @Path("count")

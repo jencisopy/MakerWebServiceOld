@@ -21,6 +21,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import py.com.oym.model.views.ItemmovimientoLightView;
+import py.com.oym.model.views.ItemmovimientoView;
+import py.com.oym.model.views.ItemmovimientodetalleView;
 import py.com.oym.ws.model.UserSession;
 
 /**
@@ -249,7 +251,19 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         return "";
     }
     
+    @OPTIONS
+    @Path("documentos/itemmovimientoview/{iditemmovimiento}")
+    @Produces({"application/json"})
+    public String option11c() {
+        return "";
+    }
     
+    @OPTIONS
+    @Path("documentos/itemmovimientodetalleview/{iditemmovimiento}")
+    @Produces({"application/json"})
+    public String option12c() {
+        return "";
+    }
     
 
     @GET
@@ -520,6 +534,32 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @GET
+    @Path("documentos/itemmovimientoview/{iditemmovimiento}")
+    @Produces({"application/json"})
+    public ItemmovimientoView findItemmovimientoviewbyId(
+            @PathParam("iditemmovimiento") Long iditemmovimiento,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        return findItemmovView(iditemmovimiento);
+    }
+    
+    @GET
+    @Path("documentos/itemmovimientodetalleview/{iditemmovimiento}")
+    @Produces({"application/json"})
+    public List<ItemmovimientodetalleView> findItemmovimientodetalleviewbyIditemmovimiento(
+            @PathParam("iditemmovimiento") Long iditemmovimiento,
+            @HeaderParam("token") String token) {
+        setToken(token);
+
+            Query query = getEntityManager()
+                    .createNamedQuery("ItemmovimientodetalleView.findByIditemmovimiento")
+                    .setParameter("iditemmovimiento", iditemmovimiento);
+
+            List<ItemmovimientodetalleView> result = query.getResultList();
+        
+        return result;
+    }
+    @GET
     @Path("documentos/compras/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findComprasRangoSearchAnhomes(
@@ -555,6 +595,24 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         return findItemmov("C", idctacte, null, null, from, to, null);
     }
 
+    protected ItemmovimientoView findItemmovView(Long iditemmovimiento) {
+        try {
+            String sql = "SELECT i FROM ItemmovimientoView i "
+                    + "where i.idempresa = :idempresa "
+                    + "and i.iditemmovimiento = :iditemmovimiento "
+                    + "and i.confirmado = 1 "
+                    + "and i.anulado = 0 ";
+
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
+                    .setParameter("iditemmovimiento", iditemmovimiento)
+                    .setParameter("idempresa", super.getIdempresa());
+            
+            return (ItemmovimientoView) query
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }        
+    }
     protected List<ItemmovimientoLightView> findItemmov(String iddocumento,
             Long idctacte,
             Integer anho,
