@@ -29,11 +29,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "ctactemovimiento_view")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CtactemovimientoView.findAll", query = "SELECT c FROM CtactemovimientoView c"),
-    @NamedQuery(name = "CtactemovimientoView.findByRefDocumento", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento order by c.fecha desc") ,   
-    @NamedQuery(name = "CtactemovimientoView.findByIdctactemovimiento", query = "SELECT c FROM CtactemovimientoView c WHERE c.idctactemovimiento = :idctactemovimiento ") ,   
-    @NamedQuery(name = "CtactemovimientoView.findByRefDocumentoFecha", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento and c.fecha between :fechaini and :fechafin order by c.fecha desc") ,   
-    @NamedQuery(name = "CtactemovimientoView.findByIdempresaDocumento", query = "SELECT c  FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")})
+    @NamedQuery(name = "CtactemovimientoLightView.findAll", query = "SELECT c FROM CtactemovimientoView c"),
+    @NamedQuery(name = "CtactemovimientoLightView.findByRefDocumento", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento order by c.fecha desc") ,   
+    @NamedQuery(name = "CtactemovimientoLightView.findByIdctactemovimiento", query = "SELECT c FROM CtactemovimientoView c WHERE c.idctactemovimiento = :idctactemovimiento ") ,   
+    @NamedQuery(name = "CtactemovimientoLightView.findByRefDocumentoFecha", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento and c.fecha between :fechaini and :fechafin order by c.fecha desc") ,   
+    @NamedQuery(name = "CtactemovimientoLightView.findByIdempresaDocumento", query = "SELECT c  FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")})
 public class CtactemovimientoLightView implements Serializable {
 
     private static final long serialVersionUID = 1L;
