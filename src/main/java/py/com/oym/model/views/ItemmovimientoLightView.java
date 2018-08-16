@@ -140,6 +140,21 @@ public class ItemmovimientoLightView implements Serializable {
     @Column(name = "depositonombre")
     private String depositonombre;
 
+    @Size(max = 4)
+    @Column(name = "depdest")
+    private String depdest;
+    
+    @Size(max = 2)
+    @Column(name = "concepto")
+    private String concepto;
+    @Size(max = 30)
+    @Column(name = "conceptonombre")
+    private String conceptonombre;
+    @Size(max = 200)
+    @Column(name = "observacion")
+    private String observacion;
+
+    
     
     @Basic(optional = false)
     @NotNull
@@ -387,6 +402,41 @@ public class ItemmovimientoLightView implements Serializable {
 
     public void setCtactenombre(String ctactenombre) {
         this.ctactenombre = ctactenombre;
+    }
+
+    public String getDepdest() {
+        return depdest;
+    }
+
+    public void setDepdest(String depdest) {
+        this.depdest = depdest;
+    }
+
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
+
+    public String getConceptonombre() {
+        return conceptonombre;
+    }
+
+    public void setConceptonombre(String conceptonombre) {
+        this.conceptonombre = conceptonombre;
+    }
+
+    public String getObservacion() {
+        if (observacion != null){
+            return observacion.trim();
+        }
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
     
 }
