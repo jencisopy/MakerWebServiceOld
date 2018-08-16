@@ -163,6 +163,45 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     }
 
     /**
+     * COBROS POR CLIENTE
+     *
+     * @return
+     */
+    @OPTIONS
+    @Path("clientes/cobrosdetalle/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public String option6a() {
+        return "";
+    }
+
+    @GET
+    @Path("clientes/cobrosdetalle/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public List<CtactemovimientodetalleView> findCobranzaByIdctacte(
+            @PathParam("idctacte") Long idctacte,
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        List<Object[]> result;
+        try {
+            Query query = getEntityManager()
+                    .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
+                    .setParameter("idctacte", idctacte)
+                    .setParameter("iddocumento", "CO")
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1);
+
+             result = query.getResultList();
+
+            resultList = resolveFecha(result);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return resultList;
+    }
+
+    /**
      * PAGOS DETALLES
      *
      * @return
@@ -177,7 +216,8 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @GET
     @Path("documentos/pagosdetalle/{from}/{to}")
     @Produces({"application/json"})
-    public List<CtactemovimientodetalleView> findRangePagoAll(@PathParam("from") Integer from,
+    public List<CtactemovimientodetalleView> findRangePagoAll(
+            @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -261,6 +301,45 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         return resultList;
     }
 
+    
+     /**
+     * PAGOS POR PROVEEDOR
+     *
+     * @return
+     */
+    @OPTIONS
+    @Path("proveedor/pagosdetalle/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public String option7a() {
+        return "";
+    }
+
+    @GET
+    @Path("proveedor/pagosdetalle/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public List<CtactemovimientodetalleView> findRangePagosByIdctacte(
+            @PathParam("idctacte") Long idctacte,
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        List<Object[]> result;
+        try {
+            result = getEntityManager()
+                    .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
+                    .setParameter("idctacte", idctacte)
+                    .setParameter("iddocumento", "PP")
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+
+            resultList = resolveFecha(result);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return resultList;
+    }
+
     @OPTIONS
     @Path("documentos/ctactemovimientoview/{idctactemovimiento}")
     @Produces({"application/json"})
@@ -314,7 +393,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         }
         return result;
     }
-    
+
     /**
      * DOCUMENTOS COBROS
      *
