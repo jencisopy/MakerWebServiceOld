@@ -22,6 +22,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import py.com.oym.model.views.CtactemovimientoLightView;
 import py.com.oym.model.views.CtactemovimientoView;
 import py.com.oym.model.views.CtactemovimientodetalleView;
 import py.com.oym.ws.model.UserSession;
@@ -32,7 +33,7 @@ import py.com.oym.ws.model.UserSession;
  */
 @Stateless
 @Path("")
-public class CtactemovimientodetalleViewREST extends AbstractFacade<CtactemovimientodetalleView> {
+public class CtactemovimientoViewREST extends AbstractFacade<CtactemovimientodetalleView> {
 
     @PersistenceContext(unitName = "maker95PU")
     private EntityManager em;
@@ -45,7 +46,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
 
     List<CtactemovimientodetalleView> resultList;
 
-    public CtactemovimientodetalleViewREST() {
+    public CtactemovimientoViewREST() {
         super(CtactemovimientodetalleView.class);
     }
 
@@ -622,6 +623,60 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         return em;
     }
 
+    
+    protected List<CtactemovimientoLightView> findCtactemov(String iddocumento,
+            Long idctacte,
+            Integer anho,
+            String mes,
+            Integer from,
+            Integer to,
+            String search) {
+        try {
+            if (anho != null) {
+                calculateRangeFecha(anho, mes);
+            }
+            String sql = "SELECT i FROM CtactemovimientoLightView i "
+                    + "where i.idempresa = :idempresa "
+                    + "and i.iddocumento = :iddocumento "
+                    + "and i.confirmado = 1 "
+                    + "and i.anulado = 0 ";
+
+            if (idctacte != null) {
+                sql += " and i.idctacte = :idctacte";
+            }
+            if (search != null) {
+                sql += " and (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact)";
+            }
+            if (anho != null) {
+                sql += " and i.fecha between :fechaini and :fechafin";
+            }
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
+                    .setParameter("iddocumento", iddocumento)
+                    .setParameter("idempresa", super.getIdempresa());
+
+            if (idctacte != null) {
+                query.setParameter("idctacte", idctacte);
+            }
+
+            if (search != null) {
+                query.setParameter("search", "%" + search.trim() + "%")
+                        .setParameter("searchExact", search.trim());
+
+            }
+            if (anho != null) {
+                query.setParameter("fechaini", fechaini)
+                        .setParameter("fechafin", fechafin);
+            }
+
+            return (List<CtactemovimientoLightView>) query
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    
     protected void calculateRangeFecha(Integer anho, String mes) {
         Calendar cal = Calendar.getInstance();
         if ("*".equals(mes)) {
