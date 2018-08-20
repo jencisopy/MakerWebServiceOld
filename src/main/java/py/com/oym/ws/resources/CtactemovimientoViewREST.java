@@ -547,6 +547,11 @@ public class CtactemovimientoViewREST extends AbstractFacade<Ctactemovimientodet
             if (anho != null) {
                 calculateRangeFecha(anho, mes);
             }
+            if (search != null){
+                if (search.trim().isEmpty()){
+                    search = null;
+                }
+            }
             String sql = "SELECT i FROM CtactemovimientoLightView i "
                     + "where i.idempresa = :idempresa "
                     + "and i.iddocumento = :iddocumento "

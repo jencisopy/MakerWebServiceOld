@@ -624,6 +624,11 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             if (anho != null) {
                 calculateRangeFecha(anho, mes);
             }
+            if (search != null){
+                if (search.trim().isEmpty()){
+                    search = null;
+                }
+            }
             String sql = "SELECT i FROM ItemmovimientoLightView i "
                     + "where i.idempresa = :idempresa "
                     + "and i.iddocumento = :iddocumento "
