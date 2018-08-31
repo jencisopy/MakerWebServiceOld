@@ -133,6 +133,12 @@ public class CtactemovimientoView implements Serializable {
     @Column(name = "vendedornombre")
     private String vendedornombre;
 
+    @Column(name = "cobrador")
+    private String cobrador;
+    @Size(max = 50)
+    @Column(name = "cobradornombre")
+    private String cobradornombre;
+    
     public CtactemovimientoView() {
     }
 
@@ -356,4 +362,22 @@ public class CtactemovimientoView implements Serializable {
     public void setVendedornombre(String vendedornombre) {
         this.vendedornombre = vendedornombre;
     }
+
+    public String getCobrador() {
+        return cobrador;
+    }
+
+    public void setCobrador(String cobrador) {
+        this.cobrador = cobrador;
+    }
+
+    public String getCobradornombre() {
+        return cobradornombre;
+    }
+
+    public void setCobradornombre(String cobradornombre) {
+        this.cobradornombre = cobradornombre;
+    }
+    
+    
 }
