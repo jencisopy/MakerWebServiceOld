@@ -138,6 +138,10 @@ public class CtactemovimientoView implements Serializable {
     @Size(max = 50)
     @Column(name = "cobradornombre")
     private String cobradornombre;
+
+    @Size(max = 50)
+    @Column(name = "documentotiponombre")
+    private String documentotiponombre;
     
     public CtactemovimientoView() {
     }
@@ -377,6 +381,14 @@ public class CtactemovimientoView implements Serializable {
 
     public void setCobradornombre(String cobradornombre) {
         this.cobradornombre = cobradornombre;
+    }
+
+    public String getDocumentotiponombre() {
+        return documentotiponombre;
+    }
+
+    public void setDocumentotiponombre(String documentotiponombre) {
+        this.documentotiponombre = documentotiponombre;
     }
     
     

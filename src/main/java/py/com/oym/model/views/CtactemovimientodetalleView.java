@@ -120,6 +120,9 @@ public class CtactemovimientodetalleView implements Serializable {
 
     @Column(name = "documentotiponombre")
     private String documentotiponombre;
+
+    @Column(name = "documentonombre")
+    private String documentonombre;
     
 
     public CtactemovimientodetalleView() {
@@ -269,4 +272,11 @@ public class CtactemovimientodetalleView implements Serializable {
         this.documentotiponombre = documentotiponombre;
     }
 
+    public String getDocumentonombre() {
+        return documentonombre;
+    }
+
+    public void setDocumentonombre(String documentonombre) {
+        this.documentonombre = documentonombre;
+    }
 }
