@@ -8,7 +8,6 @@ package py.com.oym.model.views;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +17,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,8 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "GiLotevtaView.findAll", query = "SELECT g FROM GiLotevtaView g where g.idempresa = :idempresa"),
     @NamedQuery(name = "GiLotevtaView.findByIdgiLotevta", query = "SELECT g FROM GiLotevtaView g WHERE g.idgiLotevta = :idgiLotevta"),
-    @NamedQuery(name = "GiLotevtaView.findByVendedor",   query = "SELECT g FROM GiLotevtaView g where g.idempresa = :idempresa and g.idvendedor = :idvendedor"),    
-    @NamedQuery(name = "GiLotevtaView.findByVendedorFecha",   query = "SELECT g FROM GiLotevtaView g where g.idempresa = :idempresa and g.idvendedor = :idvendedor and g.fecha between :fromDate and :toDate "),    
+    @NamedQuery(name = "GiLotevtaView.findByVendedor",   query = "SELECT g FROM GiLotevtaView g where g.idempresa = :idempresa and g.idvendedor = :idvendedor order by g.fecha desc"),    
+    @NamedQuery(name = "GiLotevtaView.findByVendedorFecha",   query = "SELECT g FROM GiLotevtaView g where g.idempresa = :idempresa and g.idvendedor = :idvendedor and g.fecha between :fromDate and :toDate order by g.fecha desc"),    
     @NamedQuery(name = "GiLotevtaView.findByIdgiLote", query = "SELECT g FROM GiLotevtaView g WHERE g.idgiLote = :idgiLote"),
     @NamedQuery(name = "GiLotevtaView.findByIdempresa", query = "SELECT g FROM GiLotevtaView g WHERE g.idempresa = :idempresa"),
     @NamedQuery(name = "GiLotevtaView.findByCodigo", query = "SELECT g FROM GiLotevtaView g WHERE g.idempresa = :idempresa and trim(g.codigo) = :codigo"),
@@ -42,35 +40,22 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "GiLotevtaView.findByCtacte", query = "SELECT g FROM GiLotevtaView g WHERE g.ctacte = :ctacte")})
 public class GiLotevtaView implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Basic(optional = false)
-    @NotNull
     @Id
     @Column(name = "idgi_lotevta")
     private long idgiLotevta;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 35)
     @Column(name = "idnro")
     private String idnro;
     @Column(name = "idctactemovimiento")
     private Long idctactemovimiento;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "idgi_lote")
     private long idgiLote;
-    @Basic(optional = false)
     @Column(name = "idempresa")
     private long idempresa;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "idperiodo")
     private long idperiodo;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "idimpuestogrupo")
     private long idimpuestogrupo;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "idctacte")
     private long idctacte;
     @Column(name = "idcanalvta")
@@ -94,8 +79,6 @@ public class GiLotevtaView implements Serializable {
     @Size(max = 10)
     @Column(name = "codigo")
     private String codigo;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
@@ -110,41 +93,27 @@ public class GiLotevtaView implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "cambio")
     private BigDecimal cambio;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "preciovtacontado")
     private BigDecimal preciovtacontado;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "porcadminvtacontado")
     private BigDecimal porcadminvtacontado;
     @Column(name = "importesena")
     private BigDecimal importesena;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "importeinicial")
     private BigDecimal importeinicial;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "importecuota")
     private BigDecimal importecuota;
     @Column(name = "fechaprimervto")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaprimervto;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "cuotas_cnt")
     private short cuotasCnt;
     @Lob
     @Size(max = 2147483647)
     @Column(name = "observacion")
     private String observacion;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "confirmado")
     private boolean confirmado;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "anulado")
     private boolean anulado;
     @Column(name = "fechareplicacion")
@@ -165,25 +134,15 @@ public class GiLotevtaView implements Serializable {
     @Column(name = "fecharecupero")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecharecupero;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "idmoneda")
     private long idmoneda;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 3)
     @Column(name = "moneda")
     private String moneda;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "idgi_fraccion")
     private long idgiFraccion;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "gi_fraccion")
     private long giFraccion;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "gi_fraccionnombre")
     private String giFraccionnombre;
@@ -195,13 +154,9 @@ public class GiLotevtaView implements Serializable {
     @Size(max = 50)
     @Column(name = "gi_fracciontiponombre")
     private String giFracciontiponombre;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 5)
     @Column(name = "gi_manzana")
     private String giManzana;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "gi_lote")
     private String giLote;
     @Size(max = 50)
@@ -209,37 +164,23 @@ public class GiLotevtaView implements Serializable {
     private String giLotenombre;
     @Column(name = "superficie_m2")
     private BigDecimal superficieM2;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "nroctactecatastral")
     private String nroctactecatastral;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 3)
     @Column(name = "impuestogrupo")
     private String impuestogrupo;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "impuestogruponombre")
     private String impuestogruponombre;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 11)
     @Column(name = "ctacte")
     private String ctacte;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "ctactenombre")
     private String ctactenombre;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "escliente")
     private short escliente;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "esproveedor")
     private short esproveedor;
     @Size(max = 11)

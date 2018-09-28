@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.swing.text.StyleConstants;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.OPTIONS;
@@ -79,6 +80,16 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
         return findByVendedor();
     }
 
+    @GET
+    @Path("vendedor/{from}/{to}")
+    @Produces({"application/json"})
+    public List<GiLotevtaView> findByVendedor(@HeaderParam("token") String token,
+                                        @PathParam("from") Integer from, 
+                                        @PathParam("to") Integer to) {
+        setToken(token);
+        return findByVendedor(from, to);
+    }
+    
     public List<GiLotevtaView> findByVendedor() {
         Long idempresa = this.getIdempresa();
         Long idvendedor = this.getIdVendedor();
@@ -88,6 +99,18 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
                 setParameter("idvendedor", idvendedor).getResultList();
     }
 
+    public List<GiLotevtaView> findByVendedor(Integer from, Integer to) {
+        Long idempresa = this.getIdempresa();
+        Long idvendedor = this.getIdVendedor();
+        EntityManager em = getEntityManager();
+        return (List<GiLotevtaView>) em.createNamedQuery("GiLotevtaView.findByVendedor").
+                setParameter("idempresa", idempresa).
+                setParameter("idvendedor", idvendedor).
+                setFirstResult(from).
+                setMaxResults(to).
+                getResultList();
+    }
+    
     @OPTIONS
     @Path("vendedorfecha/{fromDate}/{toDate}")
     @Produces({"application/json"})

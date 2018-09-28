@@ -80,6 +80,7 @@ public class GiLotevtaREST extends AbstractFacade<GiLotevta> {
     @Produces({"application/json"})
     public Response create(GiLotevtaView entity,
             @HeaderParam("token") String token) {
+        
 //        throw new py.com.oym.exceptions.OpcionNoDisponible("Esta opción no esta disponible");
         GiLotevta row;
         setToken(token);
