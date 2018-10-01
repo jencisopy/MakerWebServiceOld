@@ -14,7 +14,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.swing.text.StyleConstants;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.OPTIONS;
@@ -71,6 +70,13 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
         return "";
     }
 
+    @OPTIONS
+    @Path("vendedor/{from}/{to}")
+    @Produces({"application/json"})
+    public String option1b() {
+        return "";
+    }
+    
     
     @GET
     @Path("vendedor")
