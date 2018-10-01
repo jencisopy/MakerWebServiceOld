@@ -67,6 +67,7 @@ public class ItemmovimientoView implements Serializable {
     @Size(min = 1, max = 2)
     @Column(name = "iddocumentotipo")
     private String iddocumentotipo;
+
     @Column(name = "idctacte")
     private Long idctacte;
     @Column(name = "idctactesub")

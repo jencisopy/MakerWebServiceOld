@@ -29,12 +29,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "ctactemovimiento_view")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CtactemovimientoView.findAll", query = "SELECT c FROM CtactemovimientoView c"),
-    @NamedQuery(name = "CtactemovimientoView.findByRefDocumento", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento order by c.fecha desc") ,   
-    @NamedQuery(name = "CtactemovimientoView.findByIdctactemovimiento", query = "SELECT c FROM CtactemovimientoView c WHERE c.idctactemovimiento = :idctactemovimiento ") ,   
-    @NamedQuery(name = "CtactemovimientoView.findByRefDocumentoFecha", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento and c.fecha between :fechaini and :fechafin order by c.fecha desc") ,   
-    @NamedQuery(name = "CtactemovimientoView.findByIdempresaDocumento", query = "SELECT c  FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")})
-public class CtactemovimientoView implements Serializable {
+    @NamedQuery(name = "CtactemovimientoLightView.findAll", query = "SELECT c FROM CtactemovimientoView c"),
+    @NamedQuery(name = "CtactemovimientoLightView.findByRefDocumento", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento order by c.fecha desc") ,   
+    @NamedQuery(name = "CtactemovimientoLightView.findByIdctactemovimiento", query = "SELECT c FROM CtactemovimientoView c WHERE c.idctactemovimiento = :idctactemovimiento ") ,   
+    @NamedQuery(name = "CtactemovimientoLightView.findByRefDocumentoFecha", query = "SELECT c FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro) = :searchExact)  and c.iddocumento = :iddocumento and c.fecha between :fechaini and :fechafin order by c.fecha desc") ,   
+    @NamedQuery(name = "CtactemovimientoLightView.findByIdempresaDocumento", query = "SELECT c  FROM CtactemovimientoView c WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")})
+public class CtactemovimientoLightView implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
@@ -92,9 +92,6 @@ public class CtactemovimientoView implements Serializable {
     @NotNull
     @Column(name = "cambio")
     private BigDecimal cambio;
-    @Size(max = 200)
-    @Column(name = "observacion")
-    private String observacion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "confirmado")
@@ -113,37 +110,14 @@ public class CtactemovimientoView implements Serializable {
     @Size(max = 11)
     @Column(name = "ruc")
     private String ruc;
-    @Size(max = 100)
-    @Column(name = "direccion")
-    private String direccion;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
     @Column(name = "moneda")
     private String moneda;
-    @Size(max = 2)
-    @Column(name = "concepto")
-    private String concepto;
-    @Size(max = 30)
-    @Column(name = "conceptonombre")
-    private String conceptonombre;
-    @Column(name = "vendedor")
-    private String vendedor;
-    @Size(max = 50)
-    @Column(name = "vendedornombre")
-    private String vendedornombre;
 
-    @Column(name = "cobrador")
-    private String cobrador;
-    @Size(max = 50)
-    @Column(name = "cobradornombre")
-    private String cobradornombre;
-
-    @Size(max = 50)
-    @Column(name = "documentotiponombre")
-    private String documentotiponombre;
-    
-    public CtactemovimientoView() {
+    public CtactemovimientoLightView() {
     }
 
     public long getIdctactemovimiento() {
@@ -269,14 +243,6 @@ public class CtactemovimientoView implements Serializable {
         this.cambio = cambio;
     }
 
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
-    }
-
 
     public boolean getConfirmado() {
         return confirmado;
@@ -318,13 +284,6 @@ public class CtactemovimientoView implements Serializable {
         this.ruc = ruc;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
 
     public String getMoneda() {
         return moneda;
@@ -333,63 +292,4 @@ public class CtactemovimientoView implements Serializable {
     public void setMoneda(String moneda) {
         this.moneda = moneda;
     }
-
-    public String getConcepto() {
-        return concepto;
-    }
-
-    public void setConcepto(String concepto) {
-        this.concepto = concepto;
-    }
-
-    public String getConceptonombre() {
-        return conceptonombre;
-    }
-
-    public void setConceptonombre(String conceptonombre) {
-        this.conceptonombre = conceptonombre;
-    }
-
-
-    public String getVendedor() {
-        return vendedor;
-    }
-
-    public void setVendedor(String vendedor) {
-        this.vendedor = vendedor;
-    }
-
-    public String getVendedornombre() {
-        return vendedornombre;
-    }
-
-    public void setVendedornombre(String vendedornombre) {
-        this.vendedornombre = vendedornombre;
-    }
-
-    public String getCobrador() {
-        return cobrador;
-    }
-
-    public void setCobrador(String cobrador) {
-        this.cobrador = cobrador;
-    }
-
-    public String getCobradornombre() {
-        return cobradornombre;
-    }
-
-    public void setCobradornombre(String cobradornombre) {
-        this.cobradornombre = cobradornombre;
-    }
-
-    public String getDocumentotiponombre() {
-        return documentotiponombre;
-    }
-
-    public void setDocumentotiponombre(String documentotiponombre) {
-        this.documentotiponombre = documentotiponombre;
-    }
-    
-    
 }

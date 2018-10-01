@@ -113,6 +113,18 @@ public class CtactemovimientodetalleView implements Serializable {
     @Column(name = "saldo")
     private BigDecimal saldo;
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "mora")
+    private BigDecimal mora;
+
+    @Column(name = "documentotiponombre")
+    private String documentotiponombre;
+
+    @Column(name = "documentonombre")
+    private String documentonombre;
+    
+
     public CtactemovimientodetalleView() {
     }
 
@@ -244,4 +256,27 @@ public class CtactemovimientodetalleView implements Serializable {
         this.fecha = fecha;
     }
 
+    public BigDecimal getMora() {
+        return mora;
+    }
+
+    public void setMora(BigDecimal mora) {
+        this.mora = mora;
+    }
+
+    public String getDocumentotiponombre() {
+        return documentotiponombre;
+    }
+
+    public void setDocumentotiponombre(String documentotiponombre) {
+        this.documentotiponombre = documentotiponombre;
+    }
+
+    public String getDocumentonombre() {
+        return documentonombre;
+    }
+
+    public void setDocumentonombre(String documentonombre) {
+        this.documentonombre = documentonombre;
+    }
 }

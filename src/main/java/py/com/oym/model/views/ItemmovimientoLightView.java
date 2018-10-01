@@ -46,6 +46,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ItemmovimientoLightView.findComprasByRefDocumento", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'C' order by i.fecha desc"), 
     @NamedQuery(name = "ItemmovimientoLightView.findComprasByRefDocumentoFecha", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'C' and i.fecha between :fechaini and :fechafin  order by i.fecha desc"), 
     @NamedQuery(name = "ItemmovimientoLightView.findComprasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'C' order by i.fecha desc"), 
+    @NamedQuery(name = "ItemmovimientoLightView.findEntradasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'E' order by i.fecha desc"),    
+    @NamedQuery(name = "ItemmovimientoLightView.findSalidasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'S' order by i.fecha desc"),        
+    @NamedQuery(name = "ItemmovimientoLightView.findEnviosByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'EN' order by i.fecha desc"),        
 })
 public class ItemmovimientoLightView implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -78,10 +81,8 @@ public class ItemmovimientoLightView implements Serializable {
     @Column(name = "idempresa")
     private long idempresa;
 
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "idctacte")
-    private long idctacte;
+    private Long idctacte;
     
     @Size(max = 7)
     @Column(name = "secuencia")
@@ -139,6 +140,21 @@ public class ItemmovimientoLightView implements Serializable {
     @Column(name = "depositonombre")
     private String depositonombre;
 
+    @Size(max = 4)
+    @Column(name = "depdest")
+    private String depdest;
+    
+    @Size(max = 2)
+    @Column(name = "concepto")
+    private String concepto;
+    @Size(max = 30)
+    @Column(name = "conceptonombre")
+    private String conceptonombre;
+    @Size(max = 200)
+    @Column(name = "observacion")
+    private String observacion;
+
+    
     
     @Basic(optional = false)
     @NotNull
@@ -364,11 +380,11 @@ public class ItemmovimientoLightView implements Serializable {
         this.iddocumentotipo = iddocumentotipo;
     }
 
-    public long getIdctacte() {
+    public Long getIdctacte() {
         return idctacte;
     }
 
-    public void setIdctacte(long idctacte) {
+    public void setIdctacte(Long idctacte) {
         this.idctacte = idctacte;
     }
 
@@ -386,6 +402,41 @@ public class ItemmovimientoLightView implements Serializable {
 
     public void setCtactenombre(String ctactenombre) {
         this.ctactenombre = ctactenombre;
+    }
+
+    public String getDepdest() {
+        return depdest;
+    }
+
+    public void setDepdest(String depdest) {
+        this.depdest = depdest;
+    }
+
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
+
+    public String getConceptonombre() {
+        return conceptonombre;
+    }
+
+    public void setConceptonombre(String conceptonombre) {
+        this.conceptonombre = conceptonombre;
+    }
+
+    public String getObservacion() {
+        if (observacion != null){
+            return observacion.trim();
+        }
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
     
 }

@@ -22,6 +22,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import py.com.oym.model.views.CtactemovimientoLightView;
 import py.com.oym.model.views.CtactemovimientoView;
 import py.com.oym.model.views.CtactemovimientodetalleView;
 import py.com.oym.ws.model.UserSession;
@@ -32,7 +33,7 @@ import py.com.oym.ws.model.UserSession;
  */
 @Stateless
 @Path("")
-public class CtactemovimientodetalleViewREST extends AbstractFacade<CtactemovimientodetalleView> {
+public class CtactemovimientoViewREST extends AbstractFacade<CtactemovimientodetalleView> {
 
     @PersistenceContext(unitName = "maker95PU")
     private EntityManager em;
@@ -45,7 +46,7 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
 
     List<CtactemovimientodetalleView> resultList;
 
-    public CtactemovimientodetalleViewREST() {
+    public CtactemovimientoViewREST() {
         super(CtactemovimientodetalleView.class);
     }
 
@@ -163,6 +164,45 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     }
 
     /**
+     * COBROS POR CLIENTE
+     *
+     * @return
+     */
+    @OPTIONS
+    @Path("clientes/cobrosdetalle/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public String option6a() {
+        return "";
+    }
+
+    @GET
+    @Path("clientes/cobrosdetalle/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public List<CtactemovimientodetalleView> findCobranzaByIdctacte(
+            @PathParam("idctacte") Long idctacte,
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        List<Object[]> result;
+        try {
+            Query query = getEntityManager()
+                    .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
+                    .setParameter("idctacte", idctacte)
+                    .setParameter("iddocumento", "CO")
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1);
+
+            result = query.getResultList();
+
+            resultList = resolveFecha(result);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return resultList;
+    }
+
+    /**
      * PAGOS DETALLES
      *
      * @return
@@ -177,7 +217,8 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @GET
     @Path("documentos/pagosdetalle/{from}/{to}")
     @Produces({"application/json"})
-    public List<CtactemovimientodetalleView> findRangePagoAll(@PathParam("from") Integer from,
+    public List<CtactemovimientodetalleView> findRangePagoAll(
+            @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -261,6 +302,99 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
         return resultList;
     }
 
+  
+    /**
+     * PAGOS POR PROVEEDOR
+     *
+     * @return
+     */
+    @OPTIONS
+    @Path("proveedor/pagosdetalle/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public String option7a() {
+        return "";
+    }
+
+    @GET
+    @Path("proveedor/pagosdetalle/{idctacte}/{from}/{to}")
+    @Produces({"application/json"})
+    public List<CtactemovimientodetalleView> findRangePagosByIdctacte(
+            @PathParam("idctacte") Long idctacte,
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        List<Object[]> result;
+        try {
+            result = getEntityManager()
+                    .createNamedQuery("CtactemovimientodetalleView.findByIdctacte")
+                    .setParameter("idctacte", idctacte)
+                    .setParameter("iddocumento", "PP")
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+
+            resultList = resolveFecha(result);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return resultList;
+    }
+
+    @OPTIONS
+    @Path("documentos/ctactemovimientoview/{idctactemovimiento}")
+    @Produces({"application/json"})
+    public String option9() {
+        return "";
+    }
+
+    @GET
+    @Path("documentos/ctactemovimientoview/{idctactemovimiento}")
+    @Produces({"application/json"})
+    public CtactemovimientoView findCtactemovByIdctactemov(
+            @PathParam("idctactemovimiento") Long idctactemovimiento,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        CtactemovimientoView result;
+        try {
+            Query query = getEntityManager()
+                    .createNamedQuery("CtactemovimientoView.findByIdctactemovimiento")
+                    .setParameter("idctactemovimiento", idctactemovimiento);
+
+            result = (CtactemovimientoView) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return result;
+    }
+
+    @OPTIONS
+    @Path("documentos/ctactemovimientodetalleview/{idctactemovimiento}")
+    @Produces({"application/json"})
+    public String option10() {
+        return "";
+    }
+
+    @GET
+    @Path("documentos/ctactemovimientodetalleview/{idctactemovimiento}")
+    @Produces({"application/json"})
+    public List<CtactemovimientodetalleView> findCtactemovdetByIdctactemov(
+            @PathParam("idctactemovimiento") Long idctactemovimiento,
+            @HeaderParam("token") String token) {
+        setToken(token);
+        List<CtactemovimientodetalleView> result;
+        try {
+            Query query = getEntityManager()
+                    .createNamedQuery("CtactemovimientodetalleView.findByIdctactemovimiento")
+                    .setParameter("idctactemovimiento", idctactemovimiento);
+
+            result = query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return result;
+    }
+
     /**
      * DOCUMENTOS COBROS
      *
@@ -276,59 +410,31 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @GET
     @Path("documentos/cobranzas/{from}/{to}")
     @Produces({"application/json"})
-    public List<CtactemovimientoView> findRangeCobranza(@PathParam("from") Integer from,
+    public List<CtactemovimientoLightView> findRangeCobranza(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        List<CtactemovimientoView> result;
-        try {
-            Query query = getEntityManager()
-                    .createNamedQuery("CtactemovimientoView.findByIdempresaDocumento")
-                    .setParameter("idempresa", super.getIdempresa())
-                    .setParameter("iddocumento", "CO")
-                    .setFirstResult(from)
-                    .setMaxResults(to - from + 1);
-
-            result = query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-        return result;
+        return findCtactemov("CO", null, null, null, from, to, null);
     }
 
     @OPTIONS
     @Path("documentos/cobranzas/{from}/{to}/{search}")
     @Produces({"application/json"})
-    public String option9() {
+    public String option19() {
         return "";
     }
 
     @GET
     @Path("documentos/cobranzas/{from}/{to}/{search}")
     @Produces({"application/json"})
-    public List<CtactemovimientoView> findRangeCobranzaSearch(@PathParam("from") Integer from,
+    public List<CtactemovimientoLightView> findRangeCobranzaSearch(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
             @HeaderParam("token") String token) {
         setToken(token);
-        List<CtactemovimientoView> result;
-        try {
-            Query query = getEntityManager()
-                    .createNamedQuery("CtactemovimientoView.findByRefDocumento")
-                    .setParameter("search", "%" + search.trim() + "%")
-                    .setParameter("searchExact", search.trim())
-                    .setParameter("iddocumento", "CO")
-                    .setParameter("idempresa", super.getIdempresa())
-                    .setFirstResult(from)
-                    .setMaxResults(to - from + 1);
-
-            result = query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-        return result;
+        return findCtactemov("CO", null, null, null, from, to, search);
     }
-
+    
     @OPTIONS
     @Path("documentos/cobranzas/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
@@ -339,36 +445,18 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @GET
     @Path("documentos/cobranzas/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
-    public List<CtactemovimientoView> findRangeCobranzaSearchAnhoMes(@PathParam("from") Integer from,
+    public List<CtactemovimientoLightView> findRangeCobranzaSearchAnhoMes(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
             @PathParam("anho") Integer anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
-        List<CtactemovimientoView> result;
-        try {
 
-            calculateRangeFecha(anho, mes);
-
-            Query query = getEntityManager()
-                    .createNamedQuery("CtactemovimientoView.findByRefDocumentoFecha")
-                    .setParameter("search", "%" + search.trim() + "%")
-                    .setParameter("searchExact", search.trim())
-                    .setParameter("fechaini", fechaini)
-                    .setParameter("fechafin", fechafin)
-                    .setParameter("idempresa", super.getIdempresa())
-                    .setParameter("iddocumento", "CO")
-                    .setFirstResult(from)
-                    .setMaxResults(to - from + 1);
-
-            result = query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-        return result;
+        return findCtactemov("CO", null, anho, mes, from, to, search);
+//        return result;
     }
-
+    
     /**
      * DOCUMENTOS PAGOS
      *
@@ -377,31 +465,20 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @OPTIONS
     @Path("documentos/pagos/{from}/{to}")
     @Produces({"application/json"})
-    public String option10() {
+    public String option20() {
         return "";
     }
 
     @GET
     @Path("documentos/pagos/{from}/{to}")
     @Produces({"application/json"})
-    public List<CtactemovimientoView> findRangePagos(@PathParam("from") Integer from,
+    public List<CtactemovimientoLightView> findRangePagos(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @HeaderParam("token") String token) {
         setToken(token);
-        List<CtactemovimientoView> result;
-        try {
-            Query query = getEntityManager()
-                    .createNamedQuery("CtactemovimientoView.findByIdempresaDocumento")
-                    .setParameter("idempresa", super.getIdempresa())
-                    .setParameter("iddocumento", "PP")
-                    .setFirstResult(from)
-                    .setMaxResults(to - from + 1);
 
-            result = query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-        return result;
+        return findCtactemov("PP", null, null, null, from, to, null);
+
     }
 
     @OPTIONS
@@ -414,27 +491,14 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @GET
     @Path("documentos/pagos/{from}/{to}/{search}")
     @Produces({"application/json"})
-    public List<CtactemovimientoView> findRangePagosSearch(@PathParam("from") Integer from,
+    public List<CtactemovimientoLightView> findRangePagosSearch(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
             @HeaderParam("token") String token) {
         setToken(token);
-        List<CtactemovimientoView> result;
-        try {
-            Query query = getEntityManager()
-                    .createNamedQuery("CtactemovimientoView.findByRefDocumento")
-                    .setParameter("search", "%" + search.trim() + "%")
-                    .setParameter("searchExact", search.trim())
-                    .setParameter("idempresa", super.getIdempresa())
-                    .setParameter("iddocumento", "PP")
-                    .setFirstResult(from)
-                    .setMaxResults(to - from + 1);
 
-            result = query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-        return result;
+        return findCtactemov("PP", null, null, null, from, to, search);
+        
     }
 
     @OPTIONS
@@ -447,36 +511,18 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @GET
     @Path("documentos/pagos/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
-    public List<CtactemovimientoView> findRangePagoSearchAnhoMes(@PathParam("from") Integer from,
+    public List<CtactemovimientoLightView> findRangePagoSearchAnhoMes(@PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
             @PathParam("anho") Integer anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
-        List<CtactemovimientoView> result;
-        try {
 
-            calculateRangeFecha(anho, mes);
 
-            Query query = getEntityManager()
-                    .createNamedQuery("CtactemovimientoView.findByRefDocumentoFecha")
-                    .setParameter("search", "%" + search.trim() + "%")
-                    .setParameter("searchExact", search.trim())
-                    .setParameter("fechaini", fechaini)
-                    .setParameter("fechafin", fechafin)
-                    .setParameter("idempresa", super.getIdempresa())
-                    .setParameter("iddocumento", "PP")
-                    .setFirstResult(from)
-                    .setMaxResults(to - from + 1);
+        return findCtactemov("PP", null, anho, mes, from, to, search);
 
-            result = query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-        return result;
     }
-    
 
     @GET
     @Path("count")
@@ -488,6 +534,64 @@ public class CtactemovimientodetalleViewREST extends AbstractFacade<Ctactemovimi
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    protected List<CtactemovimientoLightView> findCtactemov(String iddocumento,
+            Long idctacte,
+            Integer anho,
+            String mes,
+            Integer from,
+            Integer to,
+            String search) {
+        try {
+            if (anho != null) {
+                calculateRangeFecha(anho, mes);
+            }
+            if (search != null){
+                if (search.trim().isEmpty()){
+                    search = null;
+                }
+            }
+            String sql = "SELECT i FROM CtactemovimientoLightView i "
+                    + "where i.idempresa = :idempresa "
+                    + "and i.iddocumento = :iddocumento "
+                    + "and i.confirmado = 1 "
+                    + "and i.anulado = 0 ";
+
+            if (idctacte != null) {
+                sql += " and i.idctacte = :idctacte";
+            }
+            if (search != null) {
+                sql += " and (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact)";
+            }
+            if (anho != null) {
+                sql += " and i.fecha between :fechaini and :fechafin";
+            }
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
+                    .setParameter("iddocumento", iddocumento)
+                    .setParameter("idempresa", super.getIdempresa());
+
+            if (idctacte != null) {
+                query.setParameter("idctacte", idctacte);
+            }
+
+            if (search != null) {
+                query.setParameter("search", "%" + search.trim() + "%")
+                        .setParameter("searchExact", search.trim());
+
+            }
+            if (anho != null) {
+                query.setParameter("fechaini", fechaini)
+                        .setParameter("fechafin", fechafin);
+            }
+
+            return (List<CtactemovimientoLightView>) query
+                    .setFirstResult(from)
+                    .setMaxResults(to - from + 1)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     protected void calculateRangeFecha(Integer anho, String mes) {
