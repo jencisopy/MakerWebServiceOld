@@ -69,6 +69,10 @@ public class GiLotevtaDocumento implements Serializable {
     @Size(max = 32)
     @Column(name = "appuser")
     private String appuser;
+    
+    @Column(name = "iddocumentlink")
+    private long idDocumentlink;
+    
 
     @Size(max = 100)
     @Column(name = "nombre")
@@ -167,7 +171,14 @@ public class GiLotevtaDocumento implements Serializable {
         this.nombre = nombre;
     }
 
-    
+    public long getIdDocumentlink() {
+        return idDocumentlink;
+    }
+
+    public void setIdDocumentlink(long idDocumentlink) {
+        this.idDocumentlink = idDocumentlink;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
