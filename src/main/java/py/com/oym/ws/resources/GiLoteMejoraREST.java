@@ -66,6 +66,7 @@ public class GiLoteMejoraREST extends AbstractFacade<GiLoteMejora> {
         byte[] imageByteArray = Base64.getDecoder().decode(entity.getDocumentoBase64());
         entity.setFoto(imageByteArray);
         super.create(entity);
+        
         Query query;
         query = em.createNativeQuery("SELECT documentlinkpath "
                 + " from datos.empresaparam "
@@ -102,11 +103,10 @@ public class GiLoteMejoraREST extends AbstractFacade<GiLoteMejora> {
             }
         }
         em.persist(documentLink);
-
-        //Leer de empresaparam la carpeta donde guardar
-        //Arma el nombre del archivo.
-        //Guardar en documentlink (xxxxx_{id_gilote}_gi_lote.jpg)
-        //Guardar en la carpeta
+        
+        entity.setIdDocumentlink(documentLink.getDocumentlinkPK().getId());
+        em.merge(entity);
+        
         ReturnMessage returnMsg = new ReturnMessage();
         returnMsg.setId(entity.getIdgiLoteMejora().toString());
         return Response.ok().entity(returnMsg).build();

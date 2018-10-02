@@ -71,7 +71,7 @@ public class GiLotevtaDocumento implements Serializable {
     private String appuser;
     
     @Column(name = "iddocumentlink")
-    private long idDocumentlink;
+    private Long idDocumentlink;
     
 
     @Size(max = 100)
@@ -171,11 +171,11 @@ public class GiLotevtaDocumento implements Serializable {
         this.nombre = nombre;
     }
 
-    public long getIdDocumentlink() {
+    public Long getIdDocumentlink() {
         return idDocumentlink;
     }
 
-    public void setIdDocumentlink(long idDocumentlink) {
+    public void setIdDocumentlink(Long idDocumentlink) {
         this.idDocumentlink = idDocumentlink;
     }
 

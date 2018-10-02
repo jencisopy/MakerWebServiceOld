@@ -79,6 +79,10 @@ public class GiLoteMejora implements Serializable {
     @Column(name = "appuser")
     private String appuser;
 
+    @Column(name = "iddocumentlink")
+    private Long idDocumentlink;
+    
+
     public GiLoteMejora() {
     }
 
@@ -180,6 +184,15 @@ public class GiLoteMejora implements Serializable {
         this.documentoBase64 = documentoBase64;
     }
 
+    public Long getIdDocumentlink() {
+        return idDocumentlink;
+    }
+
+    public void setIdDocumentlink(Long idDocumentlink) {
+        this.idDocumentlink = idDocumentlink;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

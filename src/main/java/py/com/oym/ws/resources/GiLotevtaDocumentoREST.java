@@ -64,6 +64,8 @@ public class GiLotevtaDocumentoREST extends AbstractFacade<GiLotevtaDocumento> {
         setToken(token);
         byte[] imageByteArray = Base64.getDecoder().decode(entity.getDocumentoBase64());
         entity.setDocumento(imageByteArray);
+        entity.setIdDocumentlink(null);
+        super.create(entity);
         
         Query query;
         query = em.createNativeQuery("SELECT documentlinkpath "
@@ -101,7 +103,7 @@ public class GiLotevtaDocumentoREST extends AbstractFacade<GiLotevtaDocumento> {
         em.persist(documentLink);
         
         entity.setIdDocumentlink(documentLink.getDocumentlinkPK().getId());
-        super.create(entity);
+        em.merge(entity);
         
         ReturnMessage returnMsg = new ReturnMessage();
         returnMsg.setId(entity.getIdgiLotevtaDocumento().toString());
