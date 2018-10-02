@@ -123,18 +123,27 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
     public String option2() {
         return "";
     }
+
+    @OPTIONS
+    @Path("vendedorfecha/{fromDate}/{toDate}/{from}/{to}")
+    @Produces({"application/json"})
+    public String option2b() {
+        return "";
+    }
     
     @GET
-    @Path("vendedorfecha/{fromDate}/{toDate}")
+    @Path("vendedorfecha/{fromDate}/{toDate}/{from}/{to}")
     @Produces({"application/json"})
     public List<GiLotevtaView> findByVendedorFecha(@PathParam("fromDate") String fromDate,
             @PathParam("toDate") String toDate,
+            @PathParam("from") Integer from, 
+            @PathParam("to") Integer to,
             @HeaderParam("token") String token) throws ParseException {
         setToken(token);
-        return findByVendedorFecha(fromDate,toDate);
+        return findByVendedorFecha(fromDate,toDate, from, to);
     }
 
-    public List<GiLotevtaView> findByVendedorFecha(String fromDate, String toDate) throws ParseException {
+    public List<GiLotevtaView> findByVendedorFecha(String fromDate, String toDate, int from, int to) throws ParseException {
         Long idempresa = this.getIdempresa();
         Long idvendedor = this.getIdVendedor();
         EntityManager em = getEntityManager();
@@ -147,7 +156,10 @@ public class GiLotevtaViewREST extends AbstractFacade<GiLotevtaView> {
                 setParameter("idempresa", idempresa).
                 setParameter("fromDate", dfromDate).
                 setParameter("toDate", dtoDate).
-                setParameter("idvendedor", idvendedor).getResultList();
+                setParameter("idvendedor", idvendedor).
+                setFirstResult(from).
+                setMaxResults(to).
+                getResultList();
     }
 
     @GET
