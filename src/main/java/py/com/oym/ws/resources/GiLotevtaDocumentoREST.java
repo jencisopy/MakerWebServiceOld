@@ -29,7 +29,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import py.com.oym.model.tables.Documentlink;
-import py.com.oym.model.tables.DocumentlinkPK;
 import py.com.oym.model.tables.GiLotevtaDocumento;
 import py.com.oym.model.tables.GiLotevtaDocumentoSinfoto;
 import py.com.oym.ws.model.ReturnMessage;
@@ -78,11 +77,9 @@ public class GiLotevtaDocumentoREST extends AbstractFacade<GiLotevtaDocumento> {
         fileName = "documento_"+entity.getIdgiLotevtaDocumento() + ".jpg";
         fileSystemName = documentLinkPath+"\\documento_" + entity.getIdgiLotevtaDocumento() + "_" + entity.getIdgiLotevta() + "_gi_lotevta.jpg";
         Documentlink documentLink = new Documentlink();
-        DocumentlinkPK documentLinkPK = new DocumentlinkPK();
-        documentLinkPK.setArchivo(fileName);
-        documentLinkPK.setId(entity.getIdgiLotevta());
-        documentLinkPK.setTabla("gi_lotevta");
-        documentLink.setDocumentlinkPK(documentLinkPK);
+        documentLink.setArchivo(fileName);
+        documentLink.setId(entity.getIdgiLotevta());
+        documentLink.setTabla("gi_lotevta");
 
         OutputStream out = null;
 
@@ -102,7 +99,7 @@ public class GiLotevtaDocumentoREST extends AbstractFacade<GiLotevtaDocumento> {
         }
         em.persist(documentLink);
         
-        entity.setIdDocumentlink(documentLink.getDocumentlinkPK().getId());
+        entity.setIdDocumentlink(documentLink.getIddocumentlink());
         em.merge(entity);
         
         ReturnMessage returnMsg = new ReturnMessage();

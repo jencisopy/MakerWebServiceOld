@@ -7,10 +7,13 @@ package py.com.oym.model.tables;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
@@ -31,9 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Documentlink.findAll", query = "SELECT d FROM Documentlink d")
-    , @NamedQuery(name = "Documentlink.findById", query = "SELECT d FROM Documentlink d WHERE d.documentlinkPK.id = :id")
-    , @NamedQuery(name = "Documentlink.findByTabla", query = "SELECT d FROM Documentlink d WHERE d.documentlinkPK.tabla = :tabla")
-    , @NamedQuery(name = "Documentlink.findByArchivo", query = "SELECT d FROM Documentlink d WHERE d.documentlinkPK.archivo = :archivo")
     , @NamedQuery(name = "Documentlink.findByCamino", query = "SELECT d FROM Documentlink d WHERE d.camino = :camino")
     , @NamedQuery(name = "Documentlink.findByFechamodificacion", query = "SELECT d FROM Documentlink d WHERE d.fechamodificacion = :fechamodificacion")
     , @NamedQuery(name = "Documentlink.findByAppuser", query = "SELECT d FROM Documentlink d WHERE d.appuser = :appuser")
@@ -41,8 +41,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Documentlink implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected DocumentlinkPK documentlinkPK;
+    
+    @Id
+    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
+    @Column(name = "iddocumentlink")
+    private Long iddocumentlink;
+
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id")
+    private long id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "tabla")
+    private String tabla;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
+    @Column(name = "archivo")
+    private String archivo;
+
     @Size(max = 200)
     @Column(name = "camino")
     private String camino;
@@ -61,22 +82,38 @@ public class Documentlink implements Serializable {
     public Documentlink() {
     }
 
-    public Documentlink(DocumentlinkPK documentlinkPK) {
-        this.documentlinkPK = documentlinkPK;
+    public long getIddocumentlink() {
+        return iddocumentlink;
     }
 
-
-    public Documentlink(long id, String tabla, String archivo) {
-        this.documentlinkPK = new DocumentlinkPK(id, tabla, archivo);
+    public void setIddocumentlink(long iddocumentlink) {
+        this.iddocumentlink = iddocumentlink;
     }
 
-    public DocumentlinkPK getDocumentlinkPK() {
-        return documentlinkPK;
+    public long getId() {
+        return id;
     }
 
-    public void setDocumentlinkPK(DocumentlinkPK documentlinkPK) {
-        this.documentlinkPK = documentlinkPK;
+    public void setId(long id) {
+        this.id = id;
     }
+
+    public String getTabla() {
+        return tabla;
+    }
+
+    public void setTabla(String tabla) {
+        this.tabla = tabla;
+    }
+
+    public String getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
+    }
+
 
     public String getCamino() {
         return camino;
@@ -113,18 +150,23 @@ public class Documentlink implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (documentlinkPK != null ? documentlinkPK.hashCode() : 0);
+        hash += (iddocumentlink != null ? iddocumentlink.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Documentlink)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Documentlink other = (Documentlink) object;
-        if ((this.documentlinkPK == null && other.documentlinkPK != null) || (this.documentlinkPK != null && !this.documentlinkPK.equals(other.documentlinkPK))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Documentlink other = (Documentlink) obj;
+        if (!Objects.equals(this.iddocumentlink, other.iddocumentlink)) {
             return false;
         }
         return true;
@@ -132,8 +174,9 @@ public class Documentlink implements Serializable {
 
     @Override
     public String toString() {
-        return "py.com.oym.model.tables.Documentlink[ documentlinkPK=" + documentlinkPK + " ]";
+        return "Documentlink{" + "iddocumentlink=" + iddocumentlink + ", id=" + id + ", tabla=" + tabla + ", archivo=" + archivo + ", camino=" + camino + ", fechamodificacion=" + fechamodificacion + ", appuser=" + appuser + ", clasificacion=" + clasificacion + '}';
     }
+
 
     @PrePersist
     @PreUpdate

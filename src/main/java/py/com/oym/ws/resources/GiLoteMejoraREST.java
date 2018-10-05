@@ -30,7 +30,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import py.com.oym.model.tables.Documentlink;
-import py.com.oym.model.tables.DocumentlinkPK;
 import py.com.oym.model.tables.GiLoteMejora;
 import py.com.oym.model.tables.GiLoteMejoraSinfoto;
 import py.com.oym.ws.model.ReturnMessage;
@@ -78,11 +77,10 @@ public class GiLoteMejoraREST extends AbstractFacade<GiLoteMejora> {
         fileName = "mejora_"+entity.getIdgiLoteMejora().toString() + ".jpg";
         fileSystemName = documentLinkPath+"\\mejora_" + entity.getIdgiLoteMejora().toString() + "_" + entity.getIdgiLote() + "_gi_lote.jpg";
         Documentlink documentLink = new Documentlink();
-        DocumentlinkPK documentLinkPK = new DocumentlinkPK();
-        documentLinkPK.setArchivo(fileName);
-        documentLinkPK.setId(entity.getIdgiLote());
-        documentLinkPK.setTabla("gi_lote");
-        documentLink.setDocumentlinkPK(documentLinkPK);
+
+        documentLink.setArchivo(fileName);
+        documentLink.setId(entity.getIdgiLote());
+        documentLink.setTabla("gi_lote");
 
         OutputStream out = null;
 
@@ -104,7 +102,7 @@ public class GiLoteMejoraREST extends AbstractFacade<GiLoteMejora> {
         }
         em.persist(documentLink);
         
-        entity.setIdDocumentlink(documentLink.getDocumentlinkPK().getId());
+        entity.setIdDocumentlink(documentLink.getIddocumentlink());
         em.merge(entity);
         
         ReturnMessage returnMsg = new ReturnMessage();
