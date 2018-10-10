@@ -267,34 +267,38 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
     
     @GET
-    @Path("clientes/ventas/{idctacte}/{from}/{to}")
+    @Path("clientes/ventas/{idctacte}/{from}/{to}/{anho}/{mes}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findFacturas(
             @PathParam("idctacte") Long idctacte,
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
+            @PathParam("anho") String anho,
+            @PathParam("mes") String mes,
             @QueryParam("cobrados") String cobrados,
             @QueryParam("vencidos") String vencidos,
             @HeaderParam("token") String token) {
         setToken(token);
         String filtro = getFacturaFiltroEstados(cobrados, vencidos);        
-        return findItemmov("V", idctacte, null, null, from, to, null,filtro);
+        return findItemmov("V", idctacte, anho, mes, from, to, null,filtro);
     }
 
     
     @GET
-    @Path("clientes/pedidos/{idctacte}/{from}/{to}")
+    @Path("clientes/pedidos/{idctacte}/{from}/{to}/{anho}/{mes}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findPedidos(
             @PathParam("idctacte") Long idctacte,
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
+            @PathParam("anho") String anho,
+            @PathParam("mes") String mes,
             @QueryParam("pendientes") String pendientes,
             @QueryParam("vencidos") String vencidos,
             @HeaderParam("token") String token) {
         setToken(token);
         String filtro = getPedidoFiltroEstados(pendientes, vencidos);                
-        return findItemmov("VP", idctacte, null, null, from, to, null,filtro);
+        return findItemmov("VP", idctacte, anho, mes, from, to, null,filtro);
     }
 
     @GET
@@ -327,7 +331,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
-            @PathParam("anho") Integer anho,
+            @PathParam("anho") String anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -364,7 +368,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
-            @PathParam("anho") Integer anho,
+            @PathParam("anho") String anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -401,7 +405,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
-            @PathParam("anho") Integer anho,
+            @PathParam("anho") String anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -438,7 +442,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
-            @PathParam("anho") Integer anho,
+            @PathParam("anho") String anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -475,7 +479,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
-            @PathParam("anho") Integer anho,
+            @PathParam("anho") String anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -512,7 +516,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
-            @PathParam("anho") Integer anho,
+            @PathParam("anho") String anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -575,7 +579,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
             @PathParam("search") String search,
-            @PathParam("anho") Integer anho,
+            @PathParam("anho") String anho,
             @PathParam("mes") String mes,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -583,31 +587,35 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
 
     @GET
-    @Path("proveedor/ordenes/{idctacte}/{from}/{to}")
+    @Path("proveedor/ordenes/{idctacte}/{from}/{to}/{anho}/{mes}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findOrdenes(@PathParam("idctacte") Long idctacte,
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
+            @PathParam("anho") String anho,
+            @PathParam("mes") String mes,
             @QueryParam("pendientes") String pendientes,
             @QueryParam("vencidos") String vencidos,
             @HeaderParam("token") String token) {
         setToken(token);
         String filtro = getPedidoFiltroEstados(pendientes, vencidos);
-        return findItemmov("COR", idctacte, null, null, from, to, null,filtro);
+        return findItemmov("COR", idctacte, anho, mes, from, to, null,filtro);
     }
 
     @GET
-    @Path("proveedor/compras/{idctacte}/{from}/{to}")
+    @Path("proveedor/compras/{idctacte}/{from}/{to}/{anho}/{mes}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findCompras(@PathParam("idctacte") Long idctacte,
             @PathParam("from") Integer from,
             @PathParam("to") Integer to,
+            @PathParam("anho") String anho,
+            @PathParam("mes") String mes,
             @QueryParam("pagados") String pagados,
             @QueryParam("vencidos") String vencidos,
             @HeaderParam("token") String token) {
         setToken(token);
         String filtro = getFacturaFiltroEstados(pagados, vencidos);
-        return findItemmov("C", idctacte, null, null, from, to, null,filtro);
+        return findItemmov("C", idctacte, anho, mes, from, to, null,filtro);
     }
 
     protected ItemmovimientoView findItemmovView(Long iditemmovimiento) {
@@ -630,7 +638,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     }
     protected List<ItemmovimientoLightView> findItemmov(String iddocumento,
             Long idctacte,
-            Integer anho,
+            String anho,
             String mes,
             Integer from,
             Integer to,
@@ -657,7 +665,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             if (search != null) {
                 sql += " and (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact)";
             }
-            if (anho != null) {
+            if (anho != null && !anho.equals("*")) {
                 sql += " and i.fecha between :fechaini and :fechafin";
             }
             if (!filtro.isEmpty()){
@@ -689,18 +697,22 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         }
     }
 
-    protected void calculateRangeFecha(Integer anho, String mes) {
+    protected void calculateRangeFecha(String anho, String mes) {
         Calendar cal = Calendar.getInstance();
+        if ("*".equals(anho)){
+            return; 
+        }
+        Integer anho2 = Integer.parseInt(anho);
         // Si mes = * entonces es todo el año
         if ("*".equals(mes)) {
-            cal.set(anho, 0, 1, 0, 0, 0);
+            cal.set(anho2, 0, 1, 0, 0, 0);
             fechaini = cal.getTime();
-            cal.set(anho, 11, 31, 23, 59, 59);
+            cal.set(anho2, 11, 31, 23, 59, 59);
             fechafin = cal.getTime();
         } else {
-            cal.set(anho, Integer.parseInt(mes) - 1, 1, 0, 0, 0);
+            cal.set(anho2, Integer.parseInt(mes) - 1, 1, 0, 0, 0);
             fechaini = cal.getTime();
-            cal.set(anho, Integer.parseInt(mes) - 1, 1, 23, 59, 59);
+            cal.set(anho2, Integer.parseInt(mes) - 1, 1, 23, 59, 59);
             cal.add(Calendar.MONTH, +1);
             cal.add(Calendar.DATE, -1);
             fechafin = cal.getTime();
@@ -709,38 +721,65 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
 
     protected String getFacturaFiltroEstados(String cobrado_o_pagados, String vencidos){
         String filtro = "";
+        String operador = "";
         //Solo cobrados o pagados
         if (cobrado_o_pagados != null && cobrado_o_pagados.equalsIgnoreCase("SI")){
-            filtro += " and saldo < 1";
+            filtro += " saldo <= 1";
+            operador = " or ";
         }
         //No cobrados o pagados
         if (cobrado_o_pagados != null && cobrado_o_pagados.equalsIgnoreCase("NO")){
-            filtro += " and saldo > 10";
+            filtro += operador + "  saldo > 10";
+            operador = " or ";
         }
         //Vencidos
         if (vencidos != null && vencidos.equalsIgnoreCase("SI")){
-            filtro += " and EXISTS (select x from CtactependientedetalleView x where i.idnro = x.idnro and x.fecVen <= getdate())";
+            filtro += operador + " EXISTS (select x from CtactependientedetalleView x "
+                                + "        where i.idnro = x.idnro "
+                                + "        and x.saldo > 1 "
+                                + "        and x.fecVen <= getdate())";
+            operador = " or ";            
         }
         //No Vencidos
         if (vencidos != null && vencidos.equalsIgnoreCase("NO")){
-            filtro += " and EXISTS (select x from CtactependientedetalleView x where i.idnro = x.idnro and x.fecVen > getdate())";
+            filtro += operador + " EXISTS (select x from CtactependientedetalleView x "
+                                + "        where i.idnro = x.idnro "
+                                + "        and x.saldo > 1 "                    
+                                + "        and x.fecVen > getdate())";
+        }
+        if (!filtro.isEmpty()){
+            filtro = " and (" + filtro + ")";
         }
         return filtro;
     }
     
     protected String getPedidoFiltroEstados(String pendientes, String vencidos){
         String filtro = "";
-        //Solo Pendientes (no facturados, remitidos o recibidos)
+        String operador = " ";
+        //Solo Pendientes no vencidos (no facturados, remitidos o recibidos)
         if (pendientes != null && pendientes.equalsIgnoreCase("SI")){
-            filtro += " and EXISTS (select x from ItemmovimientodetalleView x where i.iditemmovimiento = x.iditemmovimiento and pendiente > 0)";            
+            filtro += " EXISTS (select x from ItemmovimientodetalleView x "
+                    + "         where i.iditemmovimiento = x.iditemmovimiento"
+                    + "         and i.vencimiento > getdate() "
+                    + "         and x.pendiente > 0)";
+            operador = " or ";
         }
         //Facturados/Cancelados
         if (pendientes != null && pendientes.equalsIgnoreCase("NO")){
-            filtro += " and NOT EXISTS (select x from ItemmovimientodetalleView x where i.iditemmovimiento = x.iditemmovimiento and pendiente > 0)";
+            filtro += operador + " NOT EXISTS (select x from ItemmovimientodetalleView x "
+                               + "            where i.iditemmovimiento = x.iditemmovimiento "
+                               + "            and pendiente > 0)";
+            operador = " or ";            
         }
         //Vencidos
         if (vencidos != null && vencidos.equalsIgnoreCase("SI")){
-            filtro += " and i.vencimiento <= getdate() and EXISTS (select x from ItemmovimientodetalleView x where i.iditemmovimiento = x.iditemmovimiento and pendiente > 0)";
+            filtro += operador + "  EXISTS (select x from ItemmovimientodetalleView x "
+                                + "             where i.iditemmovimiento = x.iditemmovimiento "
+                                + "             AND i.vencimiento <= getdate()"
+                                + "             and pendiente > 0)";
+        }
+        if (!filtro.isEmpty()){
+            filtro = " and (" + filtro + ")";
         }
         return filtro;
     }
