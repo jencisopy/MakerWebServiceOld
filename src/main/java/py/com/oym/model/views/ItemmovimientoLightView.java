@@ -140,6 +140,10 @@ public class ItemmovimientoLightView implements Serializable {
     @Column(name = "depositonombre")
     private String depositonombre;
 
+    @Column(name = "vencimiento")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date vencimiento;
+    
     @Size(max = 4)
     @Column(name = "depdest")
     private String depdest;
@@ -438,5 +442,12 @@ public class ItemmovimientoLightView implements Serializable {
     public void setObservacion(String observacion) {
         this.observacion = observacion;
     }
-    
+
+    public Date getVencimiento() {
+        return vencimiento;
+    }
+
+    public void setVencimiento(Date vencimiento) {
+        this.vencimiento = vencimiento;
+    }
 }
