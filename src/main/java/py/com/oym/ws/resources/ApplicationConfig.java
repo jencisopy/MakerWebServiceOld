@@ -51,6 +51,7 @@ public class ApplicationConfig extends Application {
         resources.add(py.com.oym.ws.resources.CtactemovimientoViewREST.class);
         resources.add(py.com.oym.ws.resources.CtactependientedetalleREST.class);
         resources.add(py.com.oym.ws.resources.CtactereferidoREST.class);
+        resources.add(py.com.oym.ws.resources.CtacteretencionViewREST.class);
         resources.add(py.com.oym.ws.resources.GiFraccionREST.class);
         resources.add(py.com.oym.ws.resources.GiLoteMejoraREST.class);
         resources.add(py.com.oym.ws.resources.GiLoteREST.class);

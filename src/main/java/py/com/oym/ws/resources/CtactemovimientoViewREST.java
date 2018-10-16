@@ -400,6 +400,8 @@ public class CtactemovimientoViewREST extends AbstractFacade<Ctactemovimientodet
      *
      * @return
      */
+    
+    //TODO: Estas peticiones ya no se utilizan.
     @OPTIONS
     @Path("documentos/cobranzas/{from}/{to}")
     @Produces({"application/json"})
@@ -407,6 +409,7 @@ public class CtactemovimientoViewREST extends AbstractFacade<Ctactemovimientodet
         return "";
     }
 
+    //TODO: Estas peticiones ya no se utilizan.
     @GET
     @Path("documentos/cobranzas/{from}/{to}")
     @Produces({"application/json"})
@@ -416,14 +419,14 @@ public class CtactemovimientoViewREST extends AbstractFacade<Ctactemovimientodet
         setToken(token);
         return findCtactemov("CO", null, null, null, from, to, null);
     }
-
+    //TODO: Estas peticiones ya no se utilizan.
     @OPTIONS
     @Path("documentos/cobranzas/{from}/{to}/{search}")
     @Produces({"application/json"})
     public String option19() {
         return "";
     }
-
+    //TODO: Estas peticiones ya no se utilizan.
     @GET
     @Path("documentos/cobranzas/{from}/{to}/{search}")
     @Produces({"application/json"})
@@ -462,6 +465,7 @@ public class CtactemovimientoViewREST extends AbstractFacade<Ctactemovimientodet
      *
      * @return
      */
+    //TODO: Estas peticiones ya no se utilizan.
     @OPTIONS
     @Path("documentos/pagos/{from}/{to}")
     @Produces({"application/json"})
@@ -469,6 +473,7 @@ public class CtactemovimientoViewREST extends AbstractFacade<Ctactemovimientodet
         return "";
     }
 
+    //TODO: Estas peticiones ya no se utilizan.
     @GET
     @Path("documentos/pagos/{from}/{to}")
     @Produces({"application/json"})
@@ -481,6 +486,7 @@ public class CtactemovimientoViewREST extends AbstractFacade<Ctactemovimientodet
 
     }
 
+    //TODO: Estas peticiones ya no se utilizan.
     @OPTIONS
     @Path("documentos/pagos/{from}/{to}/{search}")
     @Produces({"application/json"})
@@ -488,6 +494,7 @@ public class CtactemovimientoViewREST extends AbstractFacade<Ctactemovimientodet
         return "";
     }
 
+    //TODO: Estas peticiones ya no se utilizan.
     @GET
     @Path("documentos/pagos/{from}/{to}/{search}")
     @Produces({"application/json"})
