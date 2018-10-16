@@ -74,7 +74,36 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
     public String option2b() {
         return "";
     }
+    
+    @OPTIONS
+    @Path("proveedor/compras/{idctacte}/{from}/{to}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String option2c(){
+        return "";
+    }
 
+    @OPTIONS
+    @Path("proveedor/ordenes/{idctacte}/{from}/{to}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String option2d(){
+        return "";
+    }
+    
+    @OPTIONS
+    @Path("clientes/pedidos/{idctacte}/{from}/{to}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String option2e(){
+        return "";
+    }
+
+    @OPTIONS
+    @Path("clientes/ventas/{idctacte}/{from}/{to}/{anho}/{mes}")
+    @Produces({"application/json"})
+    public String option2f(){
+        return "";
+    }
+    
+    
     @OPTIONS
     @Path("clientes/pedidos/{idctacte}")
     @Produces({"application/json"})
@@ -734,7 +763,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             String search,
             String filtro) {
         try {
-            if (anho != null) {
+            if (anho != null && !anho.equals("*")) {
                 calculateRangeFecha(anho, mes);
             }
             if (search != null) {
@@ -773,7 +802,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
                         .setParameter("searchExact", search.trim());
 
             }
-            if (anho != null) {
+            if (anho != null && !anho.equals("*")) {
                 query.setParameter("fechaini", fechaini)
                         .setParameter("fechafin", fechafin);
             }
