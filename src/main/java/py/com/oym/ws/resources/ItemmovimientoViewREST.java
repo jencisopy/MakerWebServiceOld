@@ -688,7 +688,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
 
         return result;
     }
-//TODO : No se utiliza esta peticion
+
     @GET
     @Path("documentos/compras/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
@@ -702,7 +702,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("C", null, anho, mes, from, to, search, "");
     }
-//TODO : No se utiliza esta peticion
+
     @GET
     @Path("proveedor/ordenes/{idctacte}/{from}/{to}/{anho}/{mes}")
     @Produces({"application/json"})
