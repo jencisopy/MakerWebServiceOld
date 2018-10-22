@@ -92,7 +92,7 @@ public class ItemmovplnViewREST extends AbstractFacade<ItemmovplndetalleView> {
     @GET
     @Path("documentos/itemmovplndetalleview/{iditemmovpln}")
     @Produces({"application/json"})
-    public List<ItemmovplndetalleView> findItemMovPlndetByIdctactemov(
+    public List<ItemmovplndetalleView> findItemMovPlndetByIdItemmovpln(
             @PathParam("iditemmovpln") Long iditemmovpln,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -173,7 +173,7 @@ public class ItemmovplnViewREST extends AbstractFacade<ItemmovplndetalleView> {
             if (search != null) {
                 sql += " and (i.deposito like :search or LOWER(i.depositonombre) like LOWER(:search) "
                         + "or i.concepto like :search or LOWER(i.conceptonombre) like LOWER(:search) "
-                        + "or i.observacion like :search  "
+                        + "or LOWER(i.observacion) like LOWER(:search)  "
                         + "or TRIM(i.nro) = :searchExact)";
             }
             if (anho != null) {
