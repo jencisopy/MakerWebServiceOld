@@ -57,11 +57,13 @@ public class ApplicationConfig extends Application {
         resources.add(py.com.oym.ws.resources.GiLoteREST.class);
         resources.add(py.com.oym.ws.resources.GiLotevtaDocumentoREST.class);
         resources.add(py.com.oym.ws.resources.GiLotevtaREST.class);
+        resources.add(py.com.oym.ws.resources.MenuREST.class);
         resources.add(py.com.oym.ws.resources.GiLotevtaViewREST.class);
         resources.add(py.com.oym.ws.resources.GiManzanaREST.class);
         resources.add(py.com.oym.ws.resources.ItemlistaprecioViewREST.class);
         resources.add(py.com.oym.ws.resources.ItemmovcondicionREST.class);
         resources.add(py.com.oym.ws.resources.ItemmovimientoViewREST.class);
+        resources.add(py.com.oym.ws.resources.ItemmovplnViewREST.class);
         resources.add(py.com.oym.ws.resources.ItemproductoViewREST.class);
         resources.add(py.com.oym.ws.resources.ItemproductostockViewREST.class);
         resources.add(py.com.oym.ws.resources.MonedaREST.class);
