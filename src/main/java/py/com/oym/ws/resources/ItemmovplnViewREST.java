@@ -92,7 +92,7 @@ public class ItemmovplnViewREST extends AbstractFacade<ItemmovplndetalleView> {
     @GET
     @Path("documentos/itemmovplndetalleview/{iditemmovpln}")
     @Produces({"application/json"})
-    public List<ItemmovplndetalleView> findCtacteretdetByIdctactemov(
+    public List<ItemmovplndetalleView> findItemMovPlndetByIdctactemov(
             @PathParam("iditemmovpln") Long iditemmovpln,
             @HeaderParam("token") String token) {
         setToken(token);
@@ -132,7 +132,7 @@ public class ItemmovplnViewREST extends AbstractFacade<ItemmovplndetalleView> {
             @HeaderParam("token") String token) {
         setToken(token);
 
-        return findCtacteret("FF", anho, mes, from, to, search);
+        return findItemMovPln("FF", anho, mes, from, to, search);
 
     }
 
@@ -147,9 +147,9 @@ public class ItemmovplnViewREST extends AbstractFacade<ItemmovplndetalleView> {
     protected EntityManager getEntityManager() {
         return em;
     }
-//Trae los datos de la Planilla de Fondo Fijo y los puede filtrar por Deposito y Nro.
+    //Trae los datos de la Planilla de Fondo Fijo y los puede filtrar por Deposito y Nro.
 
-    protected List<ItemmovplnView> findCtacteret(String iddocumento,
+    protected List<ItemmovplnView> findItemMovPln(String iddocumento,
             Integer anho,
             String mes,
             Integer from,
@@ -171,7 +171,10 @@ public class ItemmovplnViewREST extends AbstractFacade<ItemmovplndetalleView> {
                     + "and i.anulado = 0 ";
 
             if (search != null) {
-                sql += " and (i.deposito like :search or LOWER(i.depositonombre) like LOWER(:search) or TRIM(i.nro) = :searchExact)";
+                sql += " and (i.deposito like :search or LOWER(i.depositonombre) like LOWER(:search) "
+                        + "or i.concepto like :search or LOWER(i.conceptonombre) like LOWER(:search) "
+                        + "or i.observacion like :search  "
+                        + "or TRIM(i.nro) or  = :searchExact)";
             }
             if (anho != null) {
                 sql += " and i.fecha between :fechaini and :fechafin";
