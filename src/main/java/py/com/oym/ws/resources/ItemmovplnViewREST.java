@@ -174,7 +174,7 @@ public class ItemmovplnViewREST extends AbstractFacade<ItemmovplndetalleView> {
                 sql += " and (i.deposito like :search or LOWER(i.depositonombre) like LOWER(:search) "
                         + "or i.concepto like :search or LOWER(i.conceptonombre) like LOWER(:search) "
                         + "or i.observacion like :search  "
-                        + "or TRIM(i.nro) or  = :searchExact)";
+                        + "or TRIM(i.nro) = :searchExact)";
             }
             if (anho != null) {
                 sql += " and i.fecha between :fechaini and :fechafin";
