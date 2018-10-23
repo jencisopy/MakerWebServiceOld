@@ -26,30 +26,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Jorge Enciso
  */
 @Entity
-@Table(name = "itemmovimiento_view")
+@Table(name = "itemmovimientoc_view")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ItemmovimientoLightView.findAll", query = "SELECT i FROM ItemmovimientoLightView i"),
-    @NamedQuery(name = "ItemmovimientoLightView.findFacturasByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'V' order by i.fecha desc"),
-    @NamedQuery(name = "ItemmovimientoLightView.findFacturasByRefDocumento", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'V' order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findFacturasByRefDocumentoFecha", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'V' and i.fecha between :fechaini and :fechafin  order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findPedidosByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'VP' order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findOrdenesByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'COR' order by i.fecha desc"),
-    @NamedQuery(name = "ItemmovimientoLightView.findComprasByIdctacte", query = "SELECT i FROM ItemmovimientoLightView i where i.idctacte = :idctacte and i.iddocumento = 'C' order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findFacturasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa = :idempresa and i.iddocumento = 'V' order by i.fecha desc"),
-    @NamedQuery(name = "ItemmovimientoLightView.findPedidosByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa = :idempresa and i.iddocumento = 'VP' order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findPedidosByRefDocumento", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'VP' order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findPedidosByRefDocumentoFecha", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'VP' and i.fecha between :fechaini and :fechafin  order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findOrdenesByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa = :idempresa and i.iddocumento = 'COR' order by i.fecha desc"),
-    @NamedQuery(name = "ItemmovimientoLightView.findOrdenesByRefDocumento", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'COR' order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findOrdenesByRefDocumentoFecha", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'COR' and i.fecha between :fechaini and :fechafin  order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findComprasByRefDocumento", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'C' order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findComprasByRefDocumentoFecha", query = "SELECT i FROM ItemmovimientoLightView i where (i.ctacte like :search or LOWER(i.ctactenombre) like LOWER(:search) or TRIM(i.nro) = :searchExact) and i.idempresa = :idempresa and i.iddocumento = 'C' and i.fecha between :fechaini and :fechafin  order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findComprasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'C' order by i.fecha desc"), 
-    @NamedQuery(name = "ItemmovimientoLightView.findEntradasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'E' order by i.fecha desc"),    
-    @NamedQuery(name = "ItemmovimientoLightView.findSalidasByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'S' order by i.fecha desc"),        
-    @NamedQuery(name = "ItemmovimientoLightView.findEnviosByIdempresa", query = "SELECT i FROM ItemmovimientoLightView i where i.idempresa= :idempresa and i.iddocumento = 'EN' order by i.fecha desc"),        
-})
+    
+    })
 public class ItemmovimientoLightView implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -98,6 +80,10 @@ public class ItemmovimientoLightView implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
 
+    //columna del estado.
+    @Column(name = "status")
+    private int status;
+    
     @Column(name = "subtotal")
     private BigDecimal subtotal;
     @Basic(optional = false)
@@ -216,6 +202,15 @@ public class ItemmovimientoLightView implements Serializable {
         this.idempresa = idempresa;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
+  
     public String getSecuencia() {
         return secuencia;
     }
