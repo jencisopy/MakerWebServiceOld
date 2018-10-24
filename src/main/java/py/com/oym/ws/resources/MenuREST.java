@@ -21,7 +21,7 @@ public class MenuREST {
     @Path("menugestion")
     @Produces({"application/json"})
     public String menugestion() {
-        String menugestion = "[{\"title\":\"Inicio\"," + "\"component\":\"InicioPage\"," + "\"icon\":\"Home\"},"
+        String menugestion = "[{\"title\":\"Inicio\"," + "\"component\":\"InicioPage\"," + "\"icon\":\"home\"},"
                 + "{\"title\":\"Productos\"," + "\"component\":\"ProductosListaPage\"," + "\"icon\":\"basket\"},"
                 + "{\"title\":\"Clientes\"," + "\"component\":\"ClientesListaPage\"," + "\"icon\":\"person\"},"
                 + "{\"title\":\"Proveedores\"," + "\"component\":\"ProveedoresListaPage\"," + "\"icon\":\"cart\"},"
@@ -33,6 +33,7 @@ public class MenuREST {
                 + "{\"title\":\"Compras\"," + "\"icon\":\"basket\"," + ""
                 + "\"submenu\":[{\"title\":\"Ordenes\"," + "\"component\":\"ComprasOrdenesListaPage\"," + "\"icon\":\"document\"},"
                 + "{\"title\":\"Compras\"," + "\"component\":\"ComprasListaPage\"," + "\"icon\":\"cart\"},"
+                + "{\"title\":\"Fondo Fijo\"," + "\"component\":\"FondoFijoListaPage\"," + "\"icon\":\"cart\"},"
                 + "{\"title\":\"Créditos\"," + "\"component\":\"ComprasCreditosListaPage\"," + "\"icon\":\"card\"},"
                 + "{\"title\":\"Débitos\"," + "\"component\":\"ComprasDebitosListaPage\"," + "\"icon\":\"card\"}"
                 + "]}, "
@@ -44,7 +45,9 @@ public class MenuREST {
                 + "]}, "
                 + "{\"title\":\"Finanzas\"," + "\"icon\":\"stats\"," + ""
                 + "\"submenu\":[{\"title\":\"Pagos\"," + "\"component\":\"FinanzasPagosListaPage\"," + "\"icon\":\"cash\"},"
-                + "{\"title\":\"Cobranzas\"," + "\"component\":\"FinanzasCobrosListaPage\"," + "\"icon\":\"cash\"}"
+                + "{\"title\":\"Cobranzas\"," + "\"component\":\"FinanzasCobrosListaPage\"," + "\"icon\":\"cash\"},"
+                + "{\"title\":\"Ret. Cliente\"," + "\"component\":\"FinanzasRetClienteListaPage\"," + "\"icon\":\"cash\"},"
+                + "{\"title\":\"Ret. Proveedor\"," + "\"component\":\"FinanzasRetProveedorListaPage\"," + "\"icon\":\"cash\"}"
                 + "]}, "
                 + "{\"title\":\"Configuración\"," + "\"component\":\"ConfiguracionMenuPage\"," + "\"icon\":\"build\"},"
                 + "{\"title\":\"Acerca de\"," + "\"component\":\"AcercaDePage\"," + "\"icon\":\"paper\"}"
