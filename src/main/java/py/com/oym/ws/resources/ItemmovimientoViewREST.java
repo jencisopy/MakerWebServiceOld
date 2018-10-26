@@ -748,7 +748,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
                     + "and i.confirmado = 1 "
                     + "and i.anulado = 0 ";
 
-            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro desc")
                     .setParameter("iditemmovimiento", iditemmovimiento)
                     .setParameter("idempresa", super.getIdempresa());
 
@@ -794,7 +794,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             if (!filtro.isEmpty()) {
                 sql += filtro;
             }
-            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro desc")
                     .setParameter("iddocumento", iddocumento)
                     .setParameter("idempresa", super.getIdempresa());
 

@@ -201,7 +201,7 @@ public class CtacteretencionViewREST extends AbstractFacade<Ctacteretenciondetal
             if (anho != null) {
                 sql += " and i.fecha between :fechaini and :fechafin";
             }
-            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro desc")
                     .setParameter("iddocumento", iddocumento)
                     .setParameter("idempresa", super.getIdempresa());
 
