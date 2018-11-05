@@ -72,7 +72,7 @@ public class MenuREST {
                 + "{\"title\":\"Fracciones\"," + "\"component\":\"FraccionesListaPage\"," + "\"icon\":\"grid\"},"//Menú Fracciones
                 + "{\"title\":\"Clientes\"," + "\"component\":\"ClientesFormPage\"," + "\"icon\":\"person\"},"//Menú Clientes
                 + "{\"title\":\"Contratos\"," + "\"component\":\"ContratosListaPage\"," + "\"icon\":\"paper\"},"//Menú Contrato
-                + "{\"title\":\"Configuracion\"," + "\"component\":\"ConfigPage\"," + "\"icon\":\"settings\"},"//Menú Configuración
+                + "{\"title\":\"Configuración\"," + "\"component\":\"ConfigPage\"," + "\"icon\":\"settings\"},"//Menú Configuración
                 + "{\"title\":\"Acerca de\"," + "\"component\":\"AcercaDePage\"," + "\"icon\":\"paper\"}"//Menú Acerca De     
                 + "]";
 
