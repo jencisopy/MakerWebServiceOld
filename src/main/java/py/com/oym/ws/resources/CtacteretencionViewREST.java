@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package py.com.oym.ws.resources;
 
 import java.util.ArrayList;
@@ -132,7 +127,7 @@ public class CtacteretencionViewREST extends AbstractFacade<Ctacteretenciondetal
             @HeaderParam("token") String token) {
         setToken(token);
 
-        return findCtacteret("RP", null, anho, mes, from, to, search);
+        return findCtacteRetencion("RP", null, anho, mes, from, to, search);
 
     }
 
@@ -159,7 +154,7 @@ public class CtacteretencionViewREST extends AbstractFacade<Ctacteretenciondetal
             @HeaderParam("token") String token) {
         setToken(token);
 
-        return findCtacteret("RC", null, anho, mes, from, to, search);
+        return findCtacteRetencion("RC", null, anho, mes, from, to, search);
 
     }
 
@@ -175,7 +170,7 @@ public class CtacteretencionViewREST extends AbstractFacade<Ctacteretenciondetal
         return em;
     }
 
-    protected List<CtacteretencionView> findCtacteret(String iddocumento,
+    protected List<CtacteretencionView> findCtacteRetencion(String iddocumento,
             Long idctacte,
             Integer anho,
             String mes,
@@ -206,7 +201,7 @@ public class CtacteretencionViewREST extends AbstractFacade<Ctacteretenciondetal
             if (anho != null) {
                 sql += " and i.fecha between :fechaini and :fechafin";
             }
-            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro desc")
                     .setParameter("iddocumento", iddocumento)
                     .setParameter("idempresa", super.getIdempresa());
 

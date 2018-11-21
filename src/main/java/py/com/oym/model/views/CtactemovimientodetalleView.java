@@ -32,9 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "CtactemovimientodetalleView.findAll", query = "SELECT c FROM CtactemovimientodetalleView c")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByIdempresa", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.idempresa = :idempresa")
-    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdempresaDocumento", query = "SELECT d,c.fecha as fecha  FROM CtactemovimientodetalleView d INNER JOIN CtactemovimientoView c  ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc ")
-    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdctacte", query = "SELECT d,c.fecha FROM CtactemovimientodetalleView d INNER JOIN CtactemovimientoView c ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idctacte = :idctacte and c.iddocumento = :iddocumento order by c.fecha desc")
-    , @NamedQuery(name = "CtactemovimientodetalleView.findByRefDocumento", query = "SELECT d,c.fecha FROM CtactemovimientodetalleView d INNER JOIN CtactemovimientoView c ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idempresa= :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro)= :searchExact)  and c.iddocumento = :iddocumento order by c.fecha desc")
+    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdempresaDocumento", query = "SELECT d,c.fecha as fecha, c.confirmado as confirmado   FROM CtactemovimientodetalleView d INNER JOIN CtactemovimientoView c  ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idempresa = :idempresa and c.iddocumento = :iddocumento order by c.fecha desc, c.secuencia, c.nro desc ")
+    , @NamedQuery(name = "CtactemovimientodetalleView.findByIdctacte", query = "SELECT d,c.fecha, c.confirmado as confirmado FROM CtactemovimientodetalleView d INNER JOIN CtactemovimientoView c ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idctacte = :idctacte and c.iddocumento = :iddocumento order by c.fecha desc, c.secuencia, c.nro desc")
+    , @NamedQuery(name = "CtactemovimientodetalleView.findByRefDocumento", query = "SELECT d,c.fecha, c.confirmado as confirmado FROM CtactemovimientodetalleView d INNER JOIN CtactemovimientoView c ON d.idctactemovimiento = c.idctactemovimiento WHERE c.idempresa= :idempresa and (c.ctacte like :search or LOWER(c.ctactenombre) like LOWER(:search) or TRIM(c.nro)= :searchExact)  and c.iddocumento = :iddocumento order by c.fecha desc, c.secuencia, c.nro desc")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByIdctactemovimiento", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.idctactemovimiento = :idctactemovimiento")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByNro", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.nro = :nro")
     , @NamedQuery(name = "CtactemovimientodetalleView.findByIddocumento", query = "SELECT c FROM CtactemovimientodetalleView c WHERE c.iddocumento = :iddocumento")
@@ -123,8 +123,12 @@ public class CtactemovimientodetalleView implements Serializable {
 
     @Column(name = "documentonombre")
     private String documentonombre;
+
+    @Transient
+    private boolean confirmado;
     
 
+    
     public CtactemovimientodetalleView() {
     }
 
@@ -278,5 +282,13 @@ public class CtactemovimientodetalleView implements Serializable {
 
     public void setDocumentonombre(String documentonombre) {
         this.documentonombre = documentonombre;
+    }
+
+    public boolean getConfirmado() {
+        return confirmado;
+    }
+
+    public void setConfirmado(boolean confirmado) {
+        this.confirmado = confirmado;
     }
 }

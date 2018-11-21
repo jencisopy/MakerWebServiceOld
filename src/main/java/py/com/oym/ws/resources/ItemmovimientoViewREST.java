@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package py.com.oym.ws.resources;
 
 import java.util.Calendar;
@@ -393,8 +388,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("VP", null, anho, mes, from, to, search, "");
     }
-    //COMPRAS CREDITOS
 
+    //COMPRAS CREDITOS
     @GET
     @Path("documentos/comprascreditos/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
@@ -408,8 +403,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("PC", null, anho, mes, from, to, search, "");
     }
-    //COMPRAS DEBITOS
 
+    //COMPRAS DEBITOS
     @GET
     @Path("documentos/comprasdebitos/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
@@ -424,7 +419,6 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         return findItemmov("PD", null, anho, mes, from, to, search, "");
     }
     //VENTAS CREDITOS    
-
     @GET
     @Path("documentos/ventascreditos/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
@@ -438,9 +432,9 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("VC", null, anho, mes, from, to, search, "");
     }
-    //VENTAS DEBITOS
 
-    @GET
+    //VENTAS DEBITOS
+   @GET
     @Path("documentos/ventasdebitos/{from}/{to}/{search}/{anho}/{mes}")
     @Produces({"application/json"})
     public List<ItemmovimientoLightView> findVentasDebitoRangoSearchAnhoMes(
@@ -453,7 +447,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("VD", null, anho, mes, from, to, search, "");
     }
-//TODO : No se utiliza esta peticion
+
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/ventas/{from}/{to}")
     @Produces({"application/json"})
@@ -464,7 +459,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("V", null, null, null, from, to, null, "");
     }
-//TODO : No se utiliza esta peticion
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/ventas/{from}/{to}/{search}")
     @Produces({"application/json"})
@@ -490,7 +485,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("V", null, anho, mes, from, to, search, "");
     }
-//TODO : No se utiliza esta peticion
+
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/entradas/{from}/{to}")
     @Produces({"application/json"})
@@ -501,7 +497,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("E", null, null, null, from, to, null, "");
     }
-//TODO : No se utiliza esta peticion
+
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/entradas/{from}/{to}/{search}")
     @Produces({"application/json"})
@@ -527,7 +524,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("E", null, anho, mes, from, to, search, "");
     }
-//TODO : No se utiliza esta peticion
+    
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/salidas/{from}/{to}")
     @Produces({"application/json"})
@@ -538,7 +536,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("S", null, null, null, from, to, null, "");
     }
-//TODO : No se utiliza esta peticion
+    
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/salidas/{from}/{to}/{search}")
     @Produces({"application/json"})
@@ -564,7 +563,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("S", null, anho, mes, from, to, search, "");
     }
-//TODO : No se utiliza esta peticion
+    
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/envios/{from}/{to}")
     @Produces({"application/json"})
@@ -575,7 +575,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("EN", null, null, null, from, to, null, "");
     }
-//TODO : No se utiliza esta peticion
+
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/envios/{from}/{to}/{search}")
     @Produces({"application/json"})
@@ -601,7 +602,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("EN", null, anho, mes, from, to, search, "");
     }
-//TODO : No se utiliza esta peticion
+    
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/ordenes/{from}/{to}")
     @Produces({"application/json"})
@@ -612,7 +614,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("COR", null, null, null, from, to, null, "");
     }
-//TODO : No se utiliza esta peticion
+    
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/ordenes/{from}/{to}/{search}")
     @Produces({"application/json"})
@@ -638,7 +641,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("COR", null, anho, mes, from, to, search, "");
     }
-//TODO : No se utiliza esta peticion
+
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/compras/{from}/{to}")
     @Produces({"application/json"})
@@ -649,7 +653,8 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
         setToken(token);
         return findItemmov("C", null, null, null, from, to, null, "");
     }
-//TODO : No se utiliza esta peticion
+
+    //TODO : No se utiliza esta peticion
     @GET
     @Path("documentos/compras/{from}/{to}/{search}")
     @Produces({"application/json"})
@@ -743,7 +748,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
                     + "and i.confirmado = 1 "
                     + "and i.anulado = 0 ";
 
-            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro desc")
                     .setParameter("iditemmovimiento", iditemmovimiento)
                     .setParameter("idempresa", super.getIdempresa());
 
@@ -789,7 +794,7 @@ public class ItemmovimientoViewREST extends AbstractFacade<ItemmovimientoLightVi
             if (!filtro.isEmpty()) {
                 sql += filtro;
             }
-            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro")
+            Query query = em.createQuery(sql + " order by i.fecha desc, secuencia, nro desc")
                     .setParameter("iddocumento", iddocumento)
                     .setParameter("idempresa", super.getIdempresa());
 
