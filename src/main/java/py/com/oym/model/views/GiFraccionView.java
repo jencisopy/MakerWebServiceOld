@@ -749,5 +749,4 @@ public class GiFraccionView implements Serializable {
     public void setItemnombre(String itemnombre) {
         this.itemnombre = itemnombre;
     }
-    
 }
