@@ -44,9 +44,9 @@ import py.com.oym.model.views.GiManzanaView;
 @Startup
 @Lock(LockType.READ)
 @TransactionManagement(TransactionManagementType.BEAN)
-public class MigrarDatos {
-
-    private static final Logger LOGGER = Logger.getLogger(MigrarDatos.class);
+public class MigradorDatos {
+    private static final Logger LOGGER = Logger.getLogger(MigradorDatos.class);
+    //TODO
     private final Long idempresa = 98L;
     private int veces;
 
@@ -59,6 +59,7 @@ public class MigrarDatos {
     @Resource
     private UserTransaction userTransaction;
 
+    //Todo cambiar a */10 en minute
     @Schedule(minute = "*", hour = "*", info = "OcrExecutor", persistent = false)
     @Lock(LockType.WRITE)
     @AccessTimeout(value = 10, unit = TimeUnit.MINUTES)
@@ -98,12 +99,7 @@ public class MigrarDatos {
                     giFraccion.setIdgiFraccion(0L);
                     giFraccion.setIdempresa(idempresa);
                     giFraccion.setCodigo(fraccion.getIdFraccion());
-                    int len = 49;
-                    if (fraccion.getDescripcion().length() < 49) {
-                        len = fraccion.getDescripcion().length();
-                    }
-                    giFraccion.setNombre(fraccion.getDescripcion().substring(0, len));
-                    giFraccion.setSuperficieM2(BigDecimal.ZERO);
+                    giFraccion.setSuperficieM2(BigDecimal.ZERO);                    
                 } else {
                     giFraccion = giFracciones.get(0);
                 }
@@ -112,7 +108,6 @@ public class MigrarDatos {
                     len = fraccion.getDescripcion().length();
                 }
                 giFraccion.setNombre(fraccion.getDescripcion().substring(0, len));
-                giFraccion.setSuperficieM2(BigDecimal.ZERO);
                 em.merge(giFraccion);
                 userTransaction.commit();
             } catch (Exception exp) {
@@ -135,7 +130,6 @@ public class MigrarDatos {
                     .getResultList();
             userTransaction.begin();
             try {
-
                 if (giManzanas.isEmpty()) {
                     GiFraccion giFraccion = em.createQuery("select o from GiFraccion o where o.idempresa = :idempresa and o.codigo = :codigo", GiFraccion.class)
                             .setParameter("idempresa", idempresa)
@@ -227,6 +221,7 @@ public class MigrarDatos {
         }
     }
 
+    //TODO verificar
     protected Short getLoteTipo(Lote lote) {
         Short result = 1; // Lote normal.
         if ("H".equals(lote.getEstado())) {  //Plaza
@@ -237,6 +232,7 @@ public class MigrarDatos {
         return result;
     }
 
+    //TODO verificar
     protected String getLoteEstado(Lote lote) {
         String result = "";
         switch (lote.getEstado()) {
