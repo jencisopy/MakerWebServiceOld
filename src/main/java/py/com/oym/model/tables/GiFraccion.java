@@ -13,6 +13,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -61,6 +63,7 @@ public class GiFraccion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
     @NotNull
     @Column(name = "idgi_fraccion")
     private Long idgiFraccion;
@@ -129,8 +132,6 @@ public class GiFraccion implements Serializable {
     private String appuser;
     @Column(name = "gen_factura_porvtalote")
     private Boolean genFacturaPorvtalote;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idgiFraccion")
-    private List<GiCategorialiquidacion> giCategorialiquidacionList;
     @JoinColumn(name = "idpais", referencedColumnName = "idpais")
     @ManyToOne
     private Pais idpais;
@@ -362,14 +363,6 @@ public class GiFraccion implements Serializable {
         this.genFacturaPorvtalote = genFacturaPorvtalote;
     }
 
-    @XmlTransient
-    public List<GiCategorialiquidacion> getGiCategorialiquidacionList() {
-        return giCategorialiquidacionList;
-    }
-
-    public void setGiCategorialiquidacionList(List<GiCategorialiquidacion> giCategorialiquidacionList) {
-        this.giCategorialiquidacionList = giCategorialiquidacionList;
-    }
 
     public Pais getIdpais() {
         return idpais;
