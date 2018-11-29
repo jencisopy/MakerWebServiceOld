@@ -46,7 +46,7 @@ import py.com.oym.model.views.GiManzanaView;
 @TransactionManagement(TransactionManagementType.BEAN)
 public class MigradorDatos {
     private static final Logger LOGGER = Logger.getLogger(MigradorDatos.class);
-    //TODO
+    //TODO cambiar idempresa por el valor que corresponde 
     private final Long idempresa = 98L;
     private int veces;
 
