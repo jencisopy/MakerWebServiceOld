@@ -17,7 +17,7 @@
     </persistence-unit>
     <persistence-unit name="lpiPU" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>jdbc/Maker95Test7DS</jta-data-source>
+        <jta-data-source>jdbc/LpiDS</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>

@@ -48,7 +48,7 @@ public class MigradorDatos {
 
     private static final Logger LOGGER = Logger.getLogger(MigradorDatos.class);
     //TODO cambiar idempresa por el valor que corresponde 
-    private final Long idempresa = 98L;
+    private final Long idempresa = 50L;
     private Long veces = 0L;
 
     @PersistenceContext(unitName = "maker95PU")
