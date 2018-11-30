@@ -88,6 +88,9 @@ public class MigradorDatos {
         } catch (Exception exp) {
             LOGGER.error(exp);
         }
+        if (veces >= 1000000){
+            veces = 0L;
+        }
     }
 
     protected void migrarFracciones(List<Fraccion> fracciones) throws Exception {
