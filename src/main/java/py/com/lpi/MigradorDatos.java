@@ -207,7 +207,7 @@ public class MigradorDatos {
                     GiManzana giManzana = em.find(GiManzana.class, giManzanaView.getIdgiManzana());
                     giLote.setGiManzana(giManzana);
 
-                    giLote.setCuotasCnt(lote.getPlazo());
+                    giLote.setCuotasCnt(nvl(lote.getPlazo(),Short.parseShort("0")));
                     giLote.setIdmoneda(moneda);
                     giLote.setTipo(getLoteTipo(lote));
                 } else {
@@ -215,8 +215,8 @@ public class MigradorDatos {
                 }
                 giLote.setPreciocosto(BigDecimal.ZERO);
                 giLote.setPorcadminvtacontado(BigDecimal.ZERO);
-                giLote.setImportecuota(lote.getMontoCuota().add(lote.getIvaCuota()));
-                giLote.setImporteinicial(lote.getImporteEntregaInicial());
+                giLote.setImportecuota(nvl(lote.getMontoCuota().add(lote.getIvaCuota()),BigDecimal.ZERO));
+                giLote.setImporteinicial(nvl(lote.getImporteEntregaInicial(),BigDecimal.ZERO));
                 giLote.setLinderoNorte(lote.getLinderoNorte());
                 giLote.setLinderoSur(lote.getLinderoSur());
                 giLote.setLinderoOeste(lote.getLinderoOeste());
@@ -226,8 +226,8 @@ public class MigradorDatos {
                 giLote.setLongEste(lote.getDimensionEste());
                 giLote.setLongOeste(lote.getDimensionOeste());
                 giLote.setSuperficieM2(lote.getDimension());
-                giLote.setNroctactecatastral(lote.getCtaCteCtral());
-                giLote.setPreciovtacontado(lote.getPrecioContado());
+                giLote.setNroctactecatastral(nvl(lote.getCtaCteCtral(),""));
+                giLote.setPreciovtacontado(nvl(lote.getPrecioContado(),BigDecimal.ZERO));
                 em.merge(giLote);
                 userTransaction.commit();
             } catch (Exception exp) {
@@ -393,5 +393,12 @@ public class MigradorDatos {
             result = caracter + result;
         }
         return result;
+    }
+    
+    protected <T> T nvl(T valor, T valorReemplazo){
+        if (valor == null){
+            return valorReemplazo;
+        }
+        return valor;
     }
 }
