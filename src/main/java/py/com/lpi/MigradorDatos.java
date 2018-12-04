@@ -47,7 +47,6 @@ import py.com.oym.model.views.GiManzanaView;
 public class MigradorDatos {
 
     private static final Logger LOGGER = Logger.getLogger(MigradorDatos.class);
-    //TODO cambiar idempresa por el valor que corresponde 
     private final Long idempresa = 50L;
     private Long veces = 0L;
 
@@ -210,8 +209,30 @@ public class MigradorDatos {
                     giLote.setCuotasCnt(nvl(lote.getPlazo(),Short.parseShort("0")));
                     giLote.setIdmoneda(moneda);
                     giLote.setTipo(getLoteTipo(lote));
+                    giLote.setFechacambioestado(lote.getFechaEstado());
+                    if ("A".equals(giLote.getIdgiLoteestado().getIdgiLoteestado())){
+                        giLote.setFechareserva(lote.getFechaEstado());
+                    }
                 } else {
                     giLote = em.find(GiLote.class, giLotes.get(0).getIdgiLote());
+                    // Si fecha de reserva es nulo o 
+                    // Si hubo una reserva en la app de este lote y la fecha de cambio de estado en la base de lpi es posterior
+                    if (giLote.getFechareserva() == null || giLote.getFechareserva().before(lote.getFechaEstado())){
+                        GiLoteestado giLoteEstado = em.find(GiLoteestado.class, getLoteEstado(lote));
+                        //Guardar el anterior estado
+                        giLote.setIdgiLoteestadoAnt(giLote.getIdgiLoteestado().getIdgiLoteestado());
+                        giLote.setIdgiLoteestado(giLoteEstado);
+                        giLote.setFechacambioestado(lote.getFechaEstado());                        
+                        if (giLote.getFechareserva() != null){
+                            if ("A".equals(giLote.getIdgiLoteestado().getIdgiLoteestado())){
+                                giLote.setFechareserva(lote.getFechaEstado());
+                            }
+                            else{
+                                giLote.setIdvendedorreserva(null);                                
+                                giLote.setFechareserva(null);
+                            }
+                        }
+                    }
                 }
                 giLote.setPreciocosto(BigDecimal.ZERO);
                 giLote.setPorcadminvtacontado(BigDecimal.ZERO);
