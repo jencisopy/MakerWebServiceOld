@@ -255,7 +255,7 @@ public class MigradorDatos {
                 }
                 giLote.setPreciocosto(BigDecimal.ZERO);
                 giLote.setPorcadminvtacontado(BigDecimal.ZERO);
-                giLote.setImportecuota(nvl(lote.getMontoCuota().add(lote.getIvaCuota()),BigDecimal.ZERO));
+                giLote.setImportecuota(nvl(lote.getMontoCuota(),BigDecimal.ZERO).add(nvl(lote.getIvaCuota(),BigDecimal.ZERO)));
                 giLote.setImporteinicial(nvl(lote.getImporteEntregaInicial(),BigDecimal.ZERO));
                 giLote.setLinderoNorte(lote.getLinderoNorte());
                 giLote.setLinderoSur(lote.getLinderoSur());
@@ -299,6 +299,15 @@ public class MigradorDatos {
             case "V": //Vendido
                 result = "2";
                 break;
+            case "O": //Vendido con seña
+                result = "2";
+                break;
+            case "N": //Pendiente de venta
+                result = "2";
+                break;
+            case "T": //Transferencia de autorización de venta normal
+                result = "2";
+                break;
             case "R": //Reserva vendedor
                 result = "A";
                 break;
@@ -307,6 +316,12 @@ public class MigradorDatos {
                 break;
             case "B": //Bloqueado
                 result = "7";
+                break;
+            case "G": //Bloqueado
+                result = "7";
+                break;
+            case "S": //Escrituración
+                result = "9";
                 break;
             case "C": //Cancelado
                 result = "9";
