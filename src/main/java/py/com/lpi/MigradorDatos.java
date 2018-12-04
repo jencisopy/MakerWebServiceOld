@@ -60,7 +60,6 @@ public class MigradorDatos {
     @Resource
     private UserTransaction userTransaction;
 
-    //Todo cambiar a */10 en minute
     @Schedule(minute = "*/10", hour = "*", info = "OcrExecutor", persistent = false)
     @Lock(LockType.WRITE)
     @AccessTimeout(value = 10, unit = TimeUnit.MINUTES)
@@ -278,7 +277,6 @@ public class MigradorDatos {
         }
     }
 
-    //TODO verificar
     protected Short getLoteTipo(Lote lote) {
         Short result = 1; // Lote normal.
         if ("H".equals(lote.getEstado())) {  //Plaza
@@ -289,7 +287,6 @@ public class MigradorDatos {
         return result;
     }
 
-    //TODO verificar
     protected String getLoteEstado(Lote lote) {
         String result = "";
         switch (lote.getEstado()) {
