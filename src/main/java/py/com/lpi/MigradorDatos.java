@@ -87,6 +87,7 @@ public class MigradorDatos {
             }
         } catch (Exception exp) {
             LOGGER.error(exp);
+            LOGGER.error(exp.getStackTrace()[0].getLineNumber());            
         }
         if (veces >= 1000000){
             veces = 0L;
@@ -120,7 +121,8 @@ public class MigradorDatos {
                 em.merge(giFraccion);
                 userTransaction.commit();
             } catch (Exception exp) {
-                LOGGER.error(exp);                
+                LOGGER.error(exp);
+                LOGGER.error(exp.getStackTrace()[0].getLineNumber());
                 userTransaction.rollback();
             }
         }
@@ -159,6 +161,7 @@ public class MigradorDatos {
                 userTransaction.commit();
             } catch (Exception exp) {
                 LOGGER.error(exp);                
+                LOGGER.error(exp.getStackTrace()[0].getLineNumber());                
                 userTransaction.rollback();
             }
         }
@@ -267,6 +270,7 @@ public class MigradorDatos {
                 userTransaction.commit();
             } catch (Exception exp) {
                 LOGGER.error(exp);
+                LOGGER.error(exp.getStackTrace()[0].getLineNumber());                
                 userTransaction.rollback();
             }
         }
@@ -331,6 +335,7 @@ public class MigradorDatos {
                 }
             } catch (Exception exp) {
                 LOGGER.error(exp);
+                LOGGER.error(exp.getStackTrace()[0].getLineNumber());                
                 userTransaction.rollback();
             }
         }
@@ -353,6 +358,7 @@ public class MigradorDatos {
                 }
             } catch (Exception exp) {
                 LOGGER.error(exp);
+                LOGGER.error(exp.getStackTrace()[0].getLineNumber());                
                 userTransaction.rollback();
             }
         }
@@ -374,6 +380,7 @@ public class MigradorDatos {
                 }
             } catch (Exception exp) {
                 LOGGER.error(exp);
+                LOGGER.error(exp.getStackTrace()[0].getLineNumber());                
                 userTransaction.rollback();
             }
         }
