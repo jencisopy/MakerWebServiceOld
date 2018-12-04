@@ -15,6 +15,7 @@
 package py.com.lpi;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -60,7 +61,7 @@ public class MigradorDatos {
     private UserTransaction userTransaction;
 
     //Todo cambiar a */10 en minute
-    @Schedule(minute = "*", hour = "*", info = "OcrExecutor", persistent = false)
+    @Schedule(minute = "*/10", hour = "*", info = "OcrExecutor", persistent = false)
     @Lock(LockType.WRITE)
     @AccessTimeout(value = 10, unit = TimeUnit.MINUTES)
     protected void execute(Timer timer) {
@@ -170,6 +171,7 @@ public class MigradorDatos {
             manzanaCodigo = mask(manzanaCodigo, 3, "0");
             String loteCodigo = lote.getIdLote().toString();
             loteCodigo = mask(loteCodigo, 3, "0");
+            Date minDate = getMinDate();
             //Buscar en gi_fraccion
             List<GiLoteView> giLotes = em.createQuery("select o from GiLoteView o "
                     + " where o.idempresa = :idempresa "
@@ -213,9 +215,13 @@ public class MigradorDatos {
                     giLote.setCuotasCnt(nvl(lote.getPlazo(),Short.parseShort("0")));
                     giLote.setIdmoneda(moneda);
                     giLote.setTipo(getLoteTipo(lote));
-                    giLote.setFechacambioestado(lote.getFechaEstado());
+                    if (lote.getFechaEstado() != null && lote.getFechaEstado().after(minDate)){
+                        giLote.setFechacambioestado(lote.getFechaEstado());
+                    }
                     if ("A".equals(giLote.getIdgiLoteestado().getIdgiLoteestado())){
-                        giLote.setFechareserva(lote.getFechaEstado());
+                        if (lote.getFechaEstado() != null && lote.getFechaEstado().after(minDate)){
+                            giLote.setFechareserva(lote.getFechaEstado());
+                        }
                     }
                 } else {
                     giLote = em.find(GiLote.class, giLotes.get(0).getIdgiLote());
@@ -226,10 +232,14 @@ public class MigradorDatos {
                         //Guardar el anterior estado
                         giLote.setIdgiLoteestadoAnt(giLote.getIdgiLoteestado().getIdgiLoteestado());
                         giLote.setIdgiLoteestado(giLoteEstado);
-                        giLote.setFechacambioestado(lote.getFechaEstado());                        
+                        if (lote.getFechaEstado() != null && lote.getFechaEstado().after(minDate)){
+                            giLote.setFechacambioestado(lote.getFechaEstado());
+                        }
                         if (giLote.getFechareserva() != null){
                             if ("A".equals(giLote.getIdgiLoteestado().getIdgiLoteestado())){
-                                giLote.setFechareserva(lote.getFechaEstado());
+                                if (lote.getFechaEstado() != null && lote.getFechaEstado().after(minDate)){                                
+                                    giLote.setFechareserva(lote.getFechaEstado());                                    
+                                }
                             }
                             else{
                                 giLote.setIdvendedorreserva(null);                                
@@ -425,5 +435,19 @@ public class MigradorDatos {
             return valorReemplazo;
         }
         return valor;
+    }
+    
+    protected Date getMinDate(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.YEAR, 1900);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();        
     }
 }
