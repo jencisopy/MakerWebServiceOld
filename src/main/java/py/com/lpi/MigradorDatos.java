@@ -221,7 +221,7 @@ public class MigradorDatos {
                     if (lote.getFechaEstado() != null && lote.getFechaEstado().after(minDate)){
                         giLote.setFechacambioestado(lote.getFechaEstado());
                     }
-                    if ("A".equals(giLote.getIdgiLoteestado().getIdgiLoteestado())){
+                    if (giLote.getIdgiLoteestado() != null && "A".equals(giLote.getIdgiLoteestado().getIdgiLoteestado())){
                         if (lote.getFechaEstado() != null && lote.getFechaEstado().after(minDate)){
                             giLote.setFechareserva(lote.getFechaEstado());
                         }
@@ -233,7 +233,9 @@ public class MigradorDatos {
                     if (giLote.getFechareserva() == null || giLote.getFechareserva().before(lote.getFechaEstado())){
                         GiLoteestado giLoteEstado = em.find(GiLoteestado.class, getLoteEstado(lote));
                         //Guardar el anterior estado
-                        giLote.setIdgiLoteestadoAnt(giLote.getIdgiLoteestado().getIdgiLoteestado());
+                        if (giLote.getIdgiLoteestado() != null){
+                            giLote.setIdgiLoteestadoAnt(giLote.getIdgiLoteestado().getIdgiLoteestado());                            
+                        }
                         giLote.setIdgiLoteestado(giLoteEstado);
                         if (lote.getFechaEstado() != null && lote.getFechaEstado().after(minDate)){
                             giLote.setFechacambioestado(lote.getFechaEstado());
@@ -313,7 +315,7 @@ public class MigradorDatos {
                 result = "9";
                 break;
             default: // Optional
-
+                LOGGER.error("Estado "+lote.getEstado());
         }
         return result;
     }
