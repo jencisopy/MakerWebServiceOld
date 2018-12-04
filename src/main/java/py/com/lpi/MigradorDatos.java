@@ -199,9 +199,13 @@ public class MigradorDatos {
                     giLote.setCodigo(loteCodigo);
                     GiLoteestado giLoteEstado = em.find(GiLoteestado.class, getLoteEstado(lote));
                     giLote.setIdgiLoteestado(giLoteEstado);
+                    String monedaCodigo = lote.getIdMoneda();
+                    if (monedaCodigo == null || monedaCodigo.isEmpty()){
+                        monedaCodigo = "GS";
+                    }
                     Moneda moneda = em.createQuery("select o from Moneda o where o.idempresa = :idempresa and o.codigo = :codigo", Moneda.class)
                             .setParameter("idempresa", idempresa)
-                            .setParameter("codigo", lote.getIdMoneda())
+                            .setParameter("codigo", monedaCodigo)
                             .getSingleResult();
                     GiManzana giManzana = em.find(GiManzana.class, giManzanaView.getIdgiManzana());
                     giLote.setGiManzana(giManzana);
